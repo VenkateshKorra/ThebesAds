@@ -1,0 +1,39 @@
+<body>
+    <!-- Background overlay -->
+    <div class="background-overlay" [ngClass]="{'show': isOpen}"></div>
+
+    <div class="background">
+        <dialog [open]="isOpen" *ngIf="isOpen"  class="modal">
+            <form #form="ngForm" (ngSubmit)="onSave(form)"> 
+                <!-- <p>{{form.valid |json}}</p> -->
+                <div class="heading">
+                    <h2>Add Site</h2>
+                </div>
+                <div class="form-group">
+                    <label for="account">Account<span>*</span></label>
+                    <input type="text" [(ngModel)]="account" readonly name="account" id="account">
+                </div>
+                <div class="form-group">
+                    <label for="site_name">Site Name <span>*</span></label>
+                    <input type="text" [(ngModel)]="site_name" name="site_name" id="site_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category <span>*</span></label>
+                    <select name="category" id="category" [(ngModel)]="category" required>
+                        <option selected disabled value="">Choose Your Category</option>
+                        <option *ngFor="let option of category_list" [value]="option.value">{{option.label}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="site_url">Site URL <span>*</span></label>
+                    <input type="text" [(ngModel)]="site_url" name="site_url" id="site_url" required>
+                </div>
+
+                <div class="btn">
+                    <button class="send" type="submit"  >Save</button>
+                    <button class="cancel" (click)="onCancel()" >Cancel</button>
+                </div>
+            </form>
+        </dialog>
+    </div>
+</body>

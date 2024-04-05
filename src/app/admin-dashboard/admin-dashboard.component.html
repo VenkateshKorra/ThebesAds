@@ -1,0 +1,516 @@
+<body>
+    <div class="container">
+        <div class="heading">Admin Dashboard</div>
+        <div class="metrics">
+            <div class="daily-metrics">
+                <div class="daiy-heading-container">
+                    <div class="daily-metrics-heading">
+                        <p>Metrics</p>
+                        <div class="daily-select">
+                            <div class="publisher">
+                                <div class="publisherSelect">
+                                  <input type="search" placeholder="Publisher" readonly [(ngModel)]="publisherSelect" (click)="toggleDropdown('publisher')" >
+                                  <img src="assets/select-arrow.svg" alt="select arrow">
+                                </div>
+
+                                <div *ngIf="publisherDropdownVisible" class="dropdown">
+                                  <input type="text" id="search_adUnit" name="search_publisher" placeholder="Search..." (input)="publisherFilter($event)">
+                                  <p *ngFor="let value of publisherFilteredOptions" (click)="publisherSelectOption(value)">{{value}}</p>
+                                </div>
+                          </div>
+                          <!--  -->
+                            <div class="adUnit">
+                                <div class="adUnitSelect">
+                                  <input type="search" placeholder="Ad Unit" readonly [(ngModel)]="adUnitSelect" (click)="toggleDropdown('ad unit')" >
+                                  <img src="assets/select-arrow.svg" alt="select arrow">
+
+                                </div>
+                                <div *ngIf="adUnitDropdownVisible" class="dropdown">
+                                  <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..." (input)="adUnitFilter($event)">
+                                  <p *ngFor="let value of adUnitFilteredOptions" (click)="adUnitSelectOption(value)">{{value}}</p>
+                                </div>
+                          </div>
+                          <div class="site">
+                            <div class="siteSelect">
+                              <input type="search" placeholder="Site" readonly [(ngModel)]="siteSelect" (click)="toggleDropdown('site')" >
+                              <img src="assets/select-arrow.svg" alt="select arrow">
+
+                            </div>
+                            <div *ngIf="siteDropdownVisible" class="dropdown">
+                              <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..." (input)="siteFilter($event)">
+                              <p *ngFor="let value of siteFilteredOptions" (click)="siteSelectOption(value)">{{value}}</p>
+                            </div>
+                          </div>
+
+                          <div class="app">
+                            <div class="appSelect">
+                              <input type="search" placeholder="app" readonly [(ngModel)]="appSelect" (click)="toggleDropdown('app')" >
+                              <img src="assets/select-arrow.svg" alt="select arrow">
+
+                            </div>
+                            <div *ngIf="appDropdownVisible" class="dropdown">
+                              <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..." (input)="appFilter($event)">
+                              <p *ngFor="let value of appFilteredOptions" (click)="appSelectOption(value)">{{value}}</p>
+                            </div>
+                          </div>
+
+                          <div class="date-icon">
+                            <img src="assets/calendar-icon.svg" alt="calendar-icon">
+                            <select name="time period" [(ngModel)]="time_period" (ngModelChange)="onTimePeriodChange()"  >
+                                <option *ngFor="let option of time_period_options" [value]="option.value" >{{ option.label }}</option>
+                            </select>                                
+                        </div>
+                           
+                        </div>
+                    </div>
+                    <div class="black-line"></div>
+                </div>
+                <div class="block1">
+                    <div class="daily-metrics-1">
+                        <div class="row1">
+                            <div class="box1">
+                                <p>Impressions</p>
+                                {{impressions | number}}
+                            </div>
+                            <div class="box1">
+                                <p>Clicks</p>
+                                {{clicks | number}}
+                            </div>
+                            <div class="box1 end">
+                                <p>Revenue</p>
+                                {{revenue | currency: 'USD' }}
+                            </div>
+                        </div>
+                        <div class="row2">
+                            <div class="box1">
+                                <p>Fill Rate (%)</p>
+                                {{fill_rate/100 | percent: '.1-2' }}
+                            </div>
+                            <div class="box1">
+                                <p>CTR (%)</p>
+                                {{ctr /100 | percent: '.1-2'}}
+                            </div>
+                            <div class="box1 end">
+                                <p>CPM</p>
+                                {{cpm | currency: 'USD'}}
+                            </div>
+                        </div>
+
+                        <div class="row3">
+                            <div class="box1">
+                                <p>Ad Requests</p>
+                                {{ad_requests  | number}}
+                            </div>
+                            <div class="box1">
+                                <p>Ad Response</p>
+                                {{ad_response  | number}}
+                            </div>
+                            <div class="box1 end">
+                                <p>Error Rate</p>
+                                {{ error_rate/100 |  percent: '.1-2' }}
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row4 blue">
+                            <div class="box1">
+                                <p>New Publishers</p>
+                                {{new_publishers}}
+                            </div>
+                            <div class="box1">
+                                <p>New Sites</p>
+                                {{new_sites}}
+                            </div>
+                            <div class="box1 end">
+                                <p>New Apps</p>
+                                {{new_apps}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-metrics-2">
+                        <div class="daily-2-select">
+                            <div  style="text-align: start;">Overall Metrics</div>
+                            <div class="overall-select">
+                                <select name="overall_metrics" id="overall_metrics" [(ngModel)]="overall_metrics" >
+                                    <option *ngFor="let options of metrics_options" [value]="options.value" >{{options.label}}</option>
+                                 </select>
+                            </div>
+                            
+                        </div>
+                        <div class="image">
+                            <canvas #canvas1 id="canvas1"  ></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block2">
+                <div class="monthly-metrics">
+                    <div class="monthly-heading">
+                        <p>Device Metrics</p>
+                        <div class="black-line">
+                        </div>
+                    </div>
+                    
+                    <div class="monthly-select">
+                        <select name="device_metrics" id="device_metrics" [(ngModel)]="device_metrics" >
+                            <option *ngFor="let options of metrics_options" [value]="options.value" >{{options.label}}</option>
+                         </select>
+
+                    </div>
+                    <div class="image">
+                        <canvas #canvas2 id="canvas2"  ></canvas>
+                    </div>
+
+                </div>
+                <div class="country-metrics">
+                    <div class="country-heading">
+                        <p>Country Metrics</p>
+                        <div class="black-line">
+                        </div>
+                    </div>
+                    
+                    <div class="country-select">
+
+                        <select name="country_metrics" id="country_metrics" [(ngModel)]="country_metrics" >
+                            <option *ngFor="let options of metrics_options" [value]="options.value" >{{options.label}}</option>
+                         </select>
+                    </div>
+                    <div class="image">
+                        <canvas #canvas3 id="canvas3"  ></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--  -->
+        <div class="top_10_publishers">
+            <h1 class="publisher-heading">Top 10 Publishers</h1>
+            <div class="mat-elevation-z8" class="table">
+                <table mat-table [dataSource]="dataSource">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef>Sr No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="sites">
+                    <th mat-header-cell *matHeaderCellDef> Sites </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
+                  </ng-container>
+              
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="apps">
+                    <th mat-header-cell *matHeaderCellDef> Apps </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ad_units">
+                    <th mat-header-cell *matHeaderCellDef> Ad Units </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ad_units}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="revenue">
+                    <th mat-header-cell *matHeaderCellDef> Revenue </th>
+                    <td mat-cell *matCellDef="let element"> {{element.revenue}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="deduction">
+                    <th mat-header-cell *matHeaderCellDef> Deduction </th>
+                    <td mat-cell *matCellDef="let element"> {{element.deduction}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="publisher">
+                    <th mat-header-cell *matHeaderCellDef> Publisher </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="network">
+                    <th mat-header-cell *matHeaderCellDef> Network </th>
+                    <td mat-cell *matCellDef="let element"> {{element.network}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="impressions">
+                    <th mat-header-cell *matHeaderCellDef> Impressions </th>
+                    <td mat-cell *matCellDef="let element"> {{element.impressions}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="click">
+                    <th mat-header-cell *matHeaderCellDef> Clicks </th>
+                    <td mat-cell *matCellDef="let element"> {{element.click}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ecpm">
+                    <th mat-header-cell *matHeaderCellDef> ECPM </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ecpm}} </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+                </mat-paginator>
+
+        </div>
+
+        <!--  -->
+        <div class="top_10_sites">
+            <h1 class="site-heading">Top 10 Sites</h1>
+            <div class="mat-elevation-z8" class="table">
+                <table mat-table [dataSource]="dataSource">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef>Sr No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="sites">
+                    <th mat-header-cell *matHeaderCellDef> Sites </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
+                  </ng-container>
+              
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="apps">
+                    <th mat-header-cell *matHeaderCellDef> Apps </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ad_units">
+                    <th mat-header-cell *matHeaderCellDef> Ad Units </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ad_units}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="revenue">
+                    <th mat-header-cell *matHeaderCellDef> Revenue </th>
+                    <td mat-cell *matCellDef="let element"> {{element.revenue}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="deduction">
+                    <th mat-header-cell *matHeaderCellDef> Deduction </th>
+                    <td mat-cell *matCellDef="let element"> {{element.deduction}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="publisher">
+                    <th mat-header-cell *matHeaderCellDef> Publisher </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="network">
+                    <th mat-header-cell *matHeaderCellDef> Network </th>
+                    <td mat-cell *matCellDef="let element"> {{element.network}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="impressions">
+                    <th mat-header-cell *matHeaderCellDef> Impressions </th>
+                    <td mat-cell *matCellDef="let element"> {{element.impressions}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="click">
+                    <th mat-header-cell *matHeaderCellDef> Clicks </th>
+                    <td mat-cell *matCellDef="let element"> {{element.click}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ecpm">
+                    <th mat-header-cell *matHeaderCellDef> ECPM </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ecpm}} </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+                </mat-paginator>
+        </div>
+
+         <!--  -->
+         <div class="top_10_apps">
+            <h1 class="app-heading">Top 10 Apps</h1>
+            <div class="mat-elevation-z8" class="table">
+                <table mat-table [dataSource]="dataSource">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef>Sr No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="sites">
+                    <th mat-header-cell *matHeaderCellDef> Sites </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
+                  </ng-container>
+              
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="apps">
+                    <th mat-header-cell *matHeaderCellDef> Apps </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ad_units">
+                    <th mat-header-cell *matHeaderCellDef> Ad Units </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ad_units}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="revenue">
+                    <th mat-header-cell *matHeaderCellDef> Revenue </th>
+                    <td mat-cell *matCellDef="let element"> {{element.revenue}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="deduction">
+                    <th mat-header-cell *matHeaderCellDef> Deduction </th>
+                    <td mat-cell *matCellDef="let element"> {{element.deduction}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="publisher">
+                    <th mat-header-cell *matHeaderCellDef> Publisher </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="network">
+                    <th mat-header-cell *matHeaderCellDef> Network </th>
+                    <td mat-cell *matCellDef="let element"> {{element.network}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="impressions">
+                    <th mat-header-cell *matHeaderCellDef> Impressions </th>
+                    <td mat-cell *matCellDef="let element"> {{element.impressions}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="click">
+                    <th mat-header-cell *matHeaderCellDef> Clicks </th>
+                    <td mat-cell *matCellDef="let element"> {{element.click}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ecpm">
+                    <th mat-header-cell *matHeaderCellDef> ECPM </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ecpm}} </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+                </mat-paginator>
+         </div>
+
+          <!--  -->
+        <div class="top_10_adunits">
+            <h1 class="adunit-heading">Top 10 Ad Units</h1>
+            <div class="mat-elevation-z8" class="table">
+                <table mat-table [dataSource]="dataSource">
+              
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef>Sr No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                  </ng-container>
+              
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+              
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="sites">
+                    <th mat-header-cell *matHeaderCellDef> Sites </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
+                  </ng-container>
+              
+                  <!-- Symbol Column -->
+                  <ng-container matColumnDef="apps">
+                    <th mat-header-cell *matHeaderCellDef> Apps </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ad_units">
+                    <th mat-header-cell *matHeaderCellDef> Ad Units </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ad_units}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="revenue">
+                    <th mat-header-cell *matHeaderCellDef> Revenue </th>
+                    <td mat-cell *matCellDef="let element"> {{element.revenue}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="deduction">
+                    <th mat-header-cell *matHeaderCellDef> Deduction </th>
+                    <td mat-cell *matCellDef="let element"> {{element.deduction}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="publisher">
+                    <th mat-header-cell *matHeaderCellDef> Publisher </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="network">
+                    <th mat-header-cell *matHeaderCellDef> Network </th>
+                    <td mat-cell *matCellDef="let element"> {{element.network}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="impressions">
+                    <th mat-header-cell *matHeaderCellDef> Impressions </th>
+                    <td mat-cell *matCellDef="let element"> {{element.impressions}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="click">
+                    <th mat-header-cell *matHeaderCellDef> Clicks </th>
+                    <td mat-cell *matCellDef="let element"> {{element.click}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ecpm">
+                    <th mat-header-cell *matHeaderCellDef> ECPM </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ecpm}} </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+                </mat-paginator>
+        </div>
+
+    </div>
+</body>

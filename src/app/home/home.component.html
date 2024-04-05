@@ -1,0 +1,39 @@
+<body>
+    <div *ngIf="storage; else login">
+        <app-nav *ngIf="current_link !== '/sign-up' && current_link !== '/login' && current_link !=='/forgot-password' && !current_link.startsWith('/reset-password')"></app-nav>
+        <div class="divider" *ngIf="current_link !== '/sign-up' && current_link !== '/login' && current_link !=='/forgot-password' && !current_link.startsWith('/reset-password') ; else signUp">
+            <div class="menu">
+                <app-menu></app-menu>
+            </div>
+
+            <div class="content">
+                <!--<app-contacts></app-contacts>
+        <app-send-invite></app-send-invite>
+        <app-accounts></app-accounts>
+        <router-outlet></router-outlet>
+        <app-apps-app-ad-units-list></app-apps-app-ad-units-list>
+        <app-apps-app-mcm></app-apps-app-mcm>-->
+                <!--<app-change-password></app-change-password>-->
+                <!-- <app-profile></app-profile> -->
+                <!-- <app-payment-details></app-payment-details> -->
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
+
+
+                <!--<app-admin-accounts-list></app-admin-accounts-list>-->
+                <!--<app-account-details-apps></app-account-details-apps>-->
+
+            </div>
+        </div>
+
+        <ng-template #signUp>
+            <router-outlet></router-outlet>
+        </ng-template>
+
+        
+    </div>
+    <ng-template #login>
+        <router-outlet ></router-outlet>
+    </ng-template>
+</body>

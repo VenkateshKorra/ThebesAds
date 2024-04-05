@@ -1,0 +1,138 @@
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black color with 50% opacity */
+    z-index: 999;
+    /* Ensure it's behind the dialog */
+    display: none;
+
+}
+
+.background-overlay.show {
+    display: block;
+    /* Show the overlay when the dialog is open */
+}
+
+
+.heading h2{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 1.5em;
+    font-family: "Overpass Regular", sans-serif;
+}
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-20%, -65%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 422px;
+  /* height: auto; */
+  margin: auto;
+}
+
+
+form {
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2em;
+}
+
+label {
+    font-size: 12px;
+    font-family:"Overpass Light", sans-serif;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input, select {
+    width: 293px;
+    height: 32px;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    outline: none;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  .send{
+    background-color: #0856A2;
+    color: white;
+    width: 78px;
+    height: 32px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .cancel {
+    width: 78px;
+    height: 32px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #E5E5E5;
+  }
+  
+  .btn {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  span {
+    color: red;
+  }
+
+.rounded-checkbox {
+    accent-color: #0856A2;
+    width: 15px;
+    height: 15px;
+}
+.round1, .round2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin: 1em 0 1.5em 0 ;
+}
+
+.checkbox input {
+  margin-bottom: 5px;
+}
+
+.android, .ios, .others {
+  margin-right: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+}

@@ -1,0 +1,61 @@
+body {
+    width: 100%;
+    color: black;
+    height: auto;
+}
+.Logo-top {
+    width: 100%;
+    height: fit-content;
+    background: linear-gradient(to right, #0A4D9A, #2964AC, #3C72B7, #4378BC);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2em;
+    box-sizing: border-box;
+}
+
+.logo img {
+    width: 150px;
+    height: 50px;
+}
+
+.vertical-line {
+    border-left: 2px solid white;
+    height: 68.14px;
+}
+
+.Logo-top .icons, .left, .profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:2em;
+}
+.profile  img{
+    width: 26.59px;
+    height: 26.58px;
+}
+.profile {
+    margin-right: 1em;
+    color: white;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.dropdown {
+    position: absolute;
+    top:80%;
+    left:0;
+    width: fit-content;
+    display: flex;
+    z-index: 10;
+    flex-direction: column;
+}
+.dropdown button {
+    padding: 0.5em 2em;
+    background-color: white;
+    opacity: 0.8;
+    border: 1px solid gray;
+    width: 100%;
+}

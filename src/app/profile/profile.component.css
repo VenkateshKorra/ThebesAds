@@ -1,0 +1,115 @@
+.container {
+    margin: 1.5em 0 0 2em;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    width: 90%;
+    border: 1px solid #E5E5E5;
+    padding-bottom: 7em;
+    background-color: #FCFCFC;
+}
+span {
+    color:rgb(239, 6, 45);
+    margin-left: 5px;
+}
+h3 {
+    font-weight: 500;
+}
+form {
+    margin-top: 2em;
+}
+
+label {
+    font-size: 12px;
+}
+
+.profile {
+    font-size: 20px;
+    font-family:'Overpass', sans-serif;
+    margin-left: 1.5em;
+}
+.heading h2{
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+.col-1, .col-2 {
+    display: flex;
+    flex-direction: column;
+    width:48%;
+}
+input, select {
+    width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: 1.5em;
+    height: 2.8em;
+    padding: 0 0 0 1em;
+    border-radius: 5px;
+    border: 1px solid rgb(216, 209, 209);
+    box-sizing:border-box;
+    font-size: 12px;
+    outline: none;
+}
+
+
+.btn {
+    text-align: end;
+    padding-right: 1em;
+    
+}
+button {
+    width: 79px;
+    height: 32px;
+    padding: 5px 0;
+    color: white;
+    margin-top: 1em;
+    border-radius: 5px;
+    background-color: #0856A2;
+    border: none;
+    cursor: pointer;
+    font-family: "Hind", sans-serif;
+    font-size: 17px;
+    
+}
+
+
+.indicators {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+}
+
+.values {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+}
+
+.indicators input[type="text"] {
+    width: fit-content;
+    padding: 0 0 0 0.5em;
+    margin: 0;
+    margin-left: 15px;
+
+}
+
+.status p {
+    background-color: #78FFA0;
+    padding: 0.1em 1.5em;
+    border-radius: 15px;
+    font-size: 11px;
+    margin: 0;
+}
+
+#percent {
+    width: 48px;
+}

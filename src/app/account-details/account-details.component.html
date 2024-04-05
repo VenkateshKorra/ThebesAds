@@ -1,0 +1,14 @@
+<body>
+    <div class="heading">
+        <h3>Account</h3>
+        <p>Account details</p>
+    </div>
+    <form>
+        <label for="publisher">Publisher ID<span>*</span></label>
+        <input type="text" value="22679641846" id="publisher" name="publisher" disabled>
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" [(ngModel)]="website" >
+
+        <button (click)="onSubmit()">Save Changes</button>
+    </form>
+</body>

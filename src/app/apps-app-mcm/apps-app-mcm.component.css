@@ -1,0 +1,59 @@
+
+.container {
+    padding: 1em 1em 5em 1em;
+    border: 1px solid #E5E5E5;
+    background-color: #FCFCFC;;
+}
+
+.row1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.delegation {
+    display: flex;
+    flex-direction: row;
+    gap: 56px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Adjust the gap as needed */
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+.grid p {
+    font-size: 12px;
+    font-family: "Hind", sans-serif;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.row1 p {
+    font-size: 12px;
+    font-family: "Hind", sans-serif;
+    font-weight: 500;
+}
+
+.column1, .column2, .column3 {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 30px;
+}
+
+.value {
+    color: #0856A2;
+}
+
+button {
+    width: 125px;
+    height: 32px;
+    background-color: #0856A2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}

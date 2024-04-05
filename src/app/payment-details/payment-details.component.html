@@ -1,0 +1,118 @@
+<body>
+    <div class="profile">
+        <h3>Profile</h3>
+    </div>
+    <div class="container">
+        
+        <div class="indicators">
+            <div class="status">
+                <p>Active</p>
+            </div>
+            <div class="values">
+                <section>
+                    <label for="publisher">Publisher ID</label>
+                    <input type="text" readonly id="publisher" name="publisher" value="659629596269HVVH" >
+                </section>
+                <section>
+                    <label>Email</label>
+                    <input type="text" readonly id="email" name="email" value="user@gmail.com">
+                </section>
+                <section>
+                    <label for="percent" >Percent</label>
+                    <input type="text" readonly id="percent" name="percent" value="15%">
+                </section>
+                
+            </div>
+        </div>
+
+        <div class="heading">
+            <h2>Payment Information</h2>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <div class="col-1">
+                    <label for="pay_method">Payment Method<span>&nbsp;*</span> </label>
+                    <select id="pay_method" name="pay_method" required>
+                        <option value="bank transform"  selected>Bank Transfer</option>
+                        
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="pay_term">Payment Term<span>&nbsp;*</span></label>
+                    <select required id="pay_term" name="pay_term">
+                        <option selected value="30 days">30 days</option>
+                        <option value="60 days">60 days</option>
+                        <option value="1 year">1 year</option>
+                    </select>
+                    
+                </div>
+            </div>
+
+            <!-- Second Row -->
+            <div class="form-group">
+                <div class="col-1">
+                    <label for="bank_name">Bank Name</label>
+                    <input type="text" id="bank_name" name="bank_name" required >
+                </div>
+                <div class="col-2">
+                    <label for="swift_code">SWIFT Code</label>
+                    <input type="number" id="swift_code" name="swift_code" required >
+                    
+                </div>
+            </div>
+
+            <!-- Third Row -->
+            <div class="form-group">
+                <div class="col-1">
+                    <label for="bank_address">Bank Address</label>
+                    <input type="text" id="bank_address" name="bank_address" required >
+                </div>
+                <div class="col-2">
+                    <label for="bank_zipcode">Bank Zipcode</label>
+                    <input type="number" id="bank_zipcode" name="bank_zipcode" required >
+                </div>
+            </div>
+
+            <!-- Fourth Row -->
+            <div class="form-group">
+                <div class="col-1">
+                    <label for="branch_code">Branch Code</label>
+                    <input type="text" id="branch_code" name="branch_code" required >
+                </div>
+                <div class="col-2">
+                    <label for="branch_name">Branch Name</label>
+                    <input type="text" id="branch_name" name="branch_name" required >
+                </div>
+            </div>
+
+            <!-- Fifth Row -->
+            <div class="form-group">
+                <div class="col-1">
+                    <label for="acc_number">Account number</label>
+                    <input type="text" id="acc_number" name="acc_number" required >
+                </div>
+                <div class="col-2">
+                    <label for="acc_type">Account Type</label>
+                    <select id="acc_type" name="acc_type" required>
+                        <option value="savings account" selected>Savings account</option>
+                        <option value="current account">Current account</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sixth Row -->
+            <div class="form-group">
+                <div class="col-1">
+                    <label for="acc_holder_name">Account Holder Name</label>
+                    <input type="text" id="acc_holder_name" name="acc_holder_name" required >
+                </div>
+            </div>
+
+            <div class="btn">
+                <button>Save</button>
+            </div>
+
+        </form>
+    </div>
+</body>

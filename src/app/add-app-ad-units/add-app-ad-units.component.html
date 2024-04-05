@@ -1,0 +1,99 @@
+<body>
+    <div class="container">
+
+
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <div class="form-group">
+                <div class="Input">
+                    <label for="account">Account<span>*</span></label>
+                    <!-- <select id="account" name="account">
+                        <option disabled selected value="">App Name</option>
+
+                    </select> -->
+                    <input type="text" id="account" name=account readonly required [(ngModel)]="account">
+                </div>
+                <div class="Input">
+                    <label for="app_name">App Name<span>*</span></label>
+                    <input type="text" id="app_name" name="app_name" placeholder="Please Input here" required [(ngModel)]="app_name">
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="name">Name</label>
+                    <!-- <select id="name" name="name">
+                        <option disabled selected value="">Please Select</option>
+                    </select> -->
+                    <input type="text" id="name" name="name" [(ngModel)]="name" required >
+                </div>
+                <div class="Input">
+                    <label for="code">Code</label>
+                    <input type="number" id="code" name="code" [(ngModel)]="code" required>
+                </div>
+            </div>
+            <!---->
+            <div class="description">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Please select" required  [(ngModel)]="description">
+            </div>
+            <!---->
+
+            <div class="form-group togglebox">
+                <div class="Input">
+                    <label for="display">Display Ad Size</label>
+                    <select id="display" name=" display" class="display" required [(ngModel)]="display_ad_size" (change)="updateDimensions($event)">
+                        <option *ngFor="let option of sizes" [value]="option.name" >{{option.name}}</option>
+                    </select>
+                    <p class="VAST">Video or Audio (VAST) sizes</p>
+                </div>
+                <div class="box">
+                    <div class="toggle">
+                        <input type="checkbox" id="toggle" name="toggle"  [(ngModel)]="refresh_rate">
+                        <label for="toggle"></label>
+
+                    </div>
+                    <div class="para">
+                        <p>Refresh Rate</p>
+                        <p>(30sec)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="master_size">Master Size</label>
+                    <select id="master_size" name="master_size" required [(ngModel)]="master_size">
+                        <option *ngFor="let size of masterSizeOptions" [value]="size.name"  > {{size.name}} </option>
+                    </select>
+
+                </div>
+                <div class="Input">
+                    <label for="companion_size">Companion Size</label>
+                    <select id="companion_size" name="companion_size" required [(ngModel)]="companion_size">
+                        <option *ngFor="let size of companionSizeOptions" [value]="size.name"> {{size.name}} </option>
+                    </select>
+
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="placement">Placement</label>
+                    <select id="placement" name="placement" required [(ngModel)]="placement_option" >
+                        <option *ngFor="let size of placementOptions" [value]="size.name"> {{size.name}} </option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="btn">
+                <button class="save">Save</button>
+
+            </div>
+
+        </form>
+    </div>
+</body>

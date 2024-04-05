@@ -1,0 +1,126 @@
+<body>
+    <div class="container">
+        <div class="top-selection">
+            <div class="search">
+                <div class="find">
+                    <input type="text" matInput (keyup)="applyFilter($event)" #search placeholder="Search by keywords">
+                    <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+                </div>
+
+                <div class="select">
+                    <select (change)="applyFilterBySymbol(sort.value)" #sort>
+                        <option selected disabled value="">OS</option>
+                        <option *ngFor="let option of os_options" [value]="option.value"  >{{option.label}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="btn">
+                <button (click)="openAddSite()">Add App</button>
+            </div>
+
+        </div>
+        <div class="table">
+            <table mat-table [dataSource]="dataSource">
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="app_name">
+                    <th mat-header-cell *matHeaderCellDef> App Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.app_name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="app_id">
+                    <th mat-header-cell *matHeaderCellDef> App ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.app_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="publisher_id">
+                    <th mat-header-cell *matHeaderCellDef> Publisher ID</th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="os">
+                    <th mat-header-cell *matHeaderCellDef> OS </th>
+                    <td mat-cell *matCellDef="let element">
+                        <img *ngIf="element.os.includes('GOOGLE_PLAY')" src="assets/android.svg" alt="android Logo" class="img-icons">
+                        <img *ngIf="element.os.includes('APPLE_ITUNES')" src="assets/ios.svg" alt="ios Logo" class="img-icons">
+                        <!-- Add more conditions for different OS logos -->
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ad_units">
+                    <th mat-header-cell *matHeaderCellDef> Ad Units </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ad_units}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="categories">
+                    <th mat-header-cell *matHeaderCellDef> Categories </th>
+                    <td mat-cell *matCellDef="let element"> {{element.categories}} </td>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p  [ngStyle]="getStatusBackgroundColor(element.status)">
+                            {{element.status}}
+                        </p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mcm_status">
+                    <th mat-header-cell *matHeaderCellDef> MCM Status </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p [ngStyle]="getMcmStatusBackgroundColor(element.mcm_status)">
+                            {{element.mcm_status}}
+                        </p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="parentAdUnitId">
+                    <th mat-header-cell *matHeaderCellDef>ParentAdUnitID</th>
+                    <td mat-cell *matCellDef="let element"> {{element.parentAdUnitId}} </td>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action" class="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div >
+                            <button mat-button (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg"  alt="action button"></button>
+                        </div>
+                        
+                        <div class="button-group" *ngIf="element.showOptions">
+                            <button (click)="stopAds(element)">Stop Ads</button>
+                            <button (click)="generateReport(element)"  >Generate Report</button>
+                            <button (click)="downloadAds(element)">Download Ads.txt</button>
+                            
+                        </div>
+                    </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+        </mat-paginator>
+
+    </div>
+
+    <div *ngIf="add_app">
+        <app-add-app [isOpen]="add_app" [selectedName]="selectedName"  (dialogClosed)="onDialogClosed()"></app-add-app>
+    </div>
+
+</body>

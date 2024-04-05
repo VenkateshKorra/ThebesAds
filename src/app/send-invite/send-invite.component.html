@@ -1,0 +1,69 @@
+<body>
+    <!--<button (click)="display()">Click</button>-->
+    <!-- Background overlay -->
+    <div class="background-overlay" [ngClass]="{'show': isOpen}"></div>
+  
+    <!-- Dialog -->
+    <div class="background">
+      <dialog [open]="isOpen" *ngIf="isOpen"  class="modal">
+        <form (ngSubmit)="onSubmit()">
+          <div class="heading">
+            <h2>New Invite</h2>
+          </div>
+          <div class="Name">
+            <label for="name">Name <span>*</span></label><br>
+            <input type="text" id="name"  name="name" [(ngModel)]="formData.Name" required>
+          </div>
+          <div class="row1">
+            <div class="cell1">
+              <label for="country">Country</label><br>
+              <!-- <input type="text" id="country" name="country" [(ngModel)]="formData.Country" required> -->
+              <select if="country" name="country" [(ngModel)]="formData.Country" required >
+                <option disabled selected value="">Select your country</option>
+                        <option *ngFor="let option of countries_list" [value]="option.value" >{{option.value}}</option>
+              </select>
+            </div>
+            <div class="cell2">
+              <label for="margin">Margin <span>*</span></label><br>
+              <input type="number" id="margin" name="margin" [(ngModel)]="formData.Margin" required >
+            </div>
+          </div>
+  
+          
+            <div class="cell1">
+              <label for="phone">Phone <span>*</span></label><br>
+              <input type="text" id="phone" name="phone" [(ngModel)]="formData.Phone" maxlength="10" required>
+            </div>
+            <div class="cell2">
+              <label for="email">Email <span>*</span></label><br>
+              <input type="email" id="email" name="email" [(ngModel)]="formData.Email" required>
+            </div>
+          
+  
+          <p>Send MCM Invite on GAM Network code</p>
+          <div class="toggle">
+            <input type="checkbox" id="toggle" name="toggle" [(ngModel)]="formData.Mcm_invite">
+            <label for="toggle"></label>
+          </div>
+          
+          <br>
+          <input type="input" id="code" name="code" [(ngModel)]="formData.Code">
+          <div class="btn">
+            <button  class="send">
+              Send 
+              <svg xmlns="http://www.w3.org/2000/svg" width="14.409" height="10.121" viewBox="0 0 14.409 10.121">
+                <path id="Path_384" data-name="Path 384" d="M890.559,703.573h-8.08m-5.323-3.018h1.886m-1.132,3.018h1.132m-.755,3.018h.755m3.366-2.649-.672,2.233c-.255.845-.382,1.267-.274,1.52a.753.753,0,0,0,.518.436c.267.064.662-.134,1.451-.528l5.9-2.951c.7-.347,1.042-.521,1.154-.756a.756.756,0,0,0,0-.647c-.112-.235-.459-.409-1.154-.756l-5.909-2.954c-.787-.394-1.181-.591-1.448-.527a.756.756,0,0,0-.518.435c-.108.252.018.674.27,1.517l.682,2.284a1.468,1.468,0,0,1,.065.26.73.73,0,0,1,0,.175A1.585,1.585,0,0,1,882.408,703.942Z" transform="translate(-876.656 -698.511)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+              </svg>
+              
+            </button>
+            
+            <button (click)="onCancel()" class="cancel">Cancel</button>
+          </div>
+          
+        </form>
+      </dialog>
+    </div>
+  
+    
+  
+  </body>

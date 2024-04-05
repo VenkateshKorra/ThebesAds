@@ -1,0 +1,75 @@
+<body>
+    <!-- Background overlay -->
+    <div class="background-overlay" [ngClass]="{'show': isOpen}"></div>
+
+    <div class="background">
+        <dialog [open]="isOpen" *ngIf="isOpen" class="modal">
+            <form #form="ngForm" (ngSubmit)="onSave(form)">
+                <!-- <p>{{form.valid |json}}</p> -->
+                <div class="heading">
+                    <h2>Add App</h2>
+                </div>
+                <div class="form-group">
+                    <label for="account">Account<span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="account" name="account" id="account">
+                </div>
+                <div class="form-group">
+                    <label for="app_name">App Name <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="app_name" name="app_name" id="app_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category <span>&nbsp;*</span></label>
+                    <select name="category" id="category" [(ngModel)]="category" required>
+                        <option selected>Business</option>
+                        <option>E-commerce</option>
+                        <option>Travel Planners</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="android_checkbox">
+                    <label for="package_name">Package name <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="package_name" name="package_name"  id="package_name" required>
+                </div>
+
+                <div class="form-group" *ngIf="android_checkbox == false" >
+                    <label for="store_id">Store Id <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="store_id" name="store_id" id="store_id" required>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="app_name">App name <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="app_name" name="app_name" id="app_name" required>
+                </div> -->
+
+                <div class="form-group checkbox">
+                    <div class="android">
+                        <input type="radio" id="android" name="radio" class="rounded-checkbox" checked value="android"  (click)="androidCheckbox()" />
+                        <img src="assets/android.svg" alt="android image">
+                        <label for="android">Android</label>
+                    </div>
+                    <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"  (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="android image">
+                        <label for="ios">iOS</label>
+                    </div>
+                    <!-- <div class="others">
+                        <input type="radio" id="other" name="radio" class="rounded-checkbox" value="other"  (click)="otherOptionCheckbox()" />
+                        <label for="other">Others</label>
+                    </div> -->
+                    
+                    
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="app_url">Store Link URL <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="app_url" name="app_url" id="app_url" required>
+                </div>
+
+                <div class="btn">
+                    <button class="send" type="submit">Save</button>
+                    <button class="cancel" (click)="onCancel()">Cancel</button>
+                </div>
+            </form>
+        </dialog>
+    </div>
+</body>

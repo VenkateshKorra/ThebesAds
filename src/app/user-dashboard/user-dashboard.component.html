@@ -1,0 +1,143 @@
+<body>
+    <div class="container">
+        <div class="heading">User Dashboard</div>
+        <div class="metrics">
+            <div class="daily-metrics">
+                <div class="daiy-heading-container">
+                    <div class="daily-metrics-heading">
+                        <p>Metrics</p>
+                        <div class="daily-select">
+                            <div class="adUnit">
+                                <div class="adUnitSelect">
+                                  <input type="search" placeholder="Ad Unit" readonly [(ngModel)]="adUnitSelect" (click)="toggleDropdown('ad unit')" >
+                                  <img src="assets/select-arrow.svg" alt="select arrow">
+
+                                </div>
+                                <div *ngIf="adUnitDropdownVisible" class="dropdown">
+                                  <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..." (input)="adUnitFilter($event)">
+                                  <p *ngFor="let value of adUnitFilteredOptions" (click)="adUnitSelectOption(value)">{{value}}</p>
+                                </div>
+                          </div>
+                          <div class="site">
+                            <div class="siteSelect">
+                              <input type="search" placeholder="Site" readonly [(ngModel)]="siteSelect" (click)="toggleDropdown('site')" >
+                              <img src="assets/select-arrow.svg" alt="select arrow">
+
+                            </div>
+                            <div *ngIf="siteDropdownVisible" class="dropdown">
+                              <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..." (input)="siteFilter($event)">
+                              <p *ngFor="let value of siteFilteredOptions" (click)="siteSelectOption(value)">{{value}}</p>
+                            </div>
+                          </div>
+
+                          <div class="app">
+                            <div class="appSelect">
+                              <input type="search" placeholder="app" readonly [(ngModel)]="appSelect" (click)="toggleDropdown('app')" >
+                              <img src="assets/select-arrow.svg" alt="select arrow">
+
+                            </div>
+                            <div *ngIf="appDropdownVisible" class="dropdown">
+                              <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..." (input)="appFilter($event)">
+                              <p *ngFor="let value of appFilteredOptions" (click)="appSelectOption(value)">{{value}}</p>
+                            </div>
+                          </div>
+                            <div class="date-icon">
+                                <img src="assets/calendar-icon.svg" alt="calendar-icon">
+                                <select name="time period" [(ngModel)]="time_period" (ngModelChange)="onTimePeriodChange()"  >
+                                    <option *ngFor="let option of time_period_options" [value]="option.value" >{{ option.label }}</option>
+                                </select>       
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="black-line"></div>
+                </div>
+                <div class="block1">
+                    <div class="daily-metrics-1">
+                        <div class="row1">
+                            <div class="box1">
+                                <p>Impressions</p>
+                                {{impressions | number}}
+                            </div>
+                            <div class="box1">
+                                <p>Clicks</p>
+                                {{clicks | number}}
+                            </div>
+                            <div class="box1 end">
+                                <p>Revenue</p>
+                                {{revenue | currency: 'USD' }}
+                            </div>
+                        </div>
+                        <div class="row2">
+                            <div class="box1">
+                                <p>Fill Rate (%)</p>
+                                {{fill_rate/100 | percent: '.1-2' }}
+                            </div>
+                            <div class="box1">
+                                <p>CTR (%)</p>
+                                {{ctr /100 | percent: '.1-2'}}
+                            </div>
+                            <div class="box1 end">
+                                <p>CPM</p>
+                                {{cpm | currency: 'USD'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-metrics-2">
+                        <div class="daily-2-select">
+                            <div  style="text-align: start;">Overall Metrics</div>
+                            <div class="overall-select">
+                                <select name="overall_metrics" id="overall_metrics" [(ngModel)]="overall_metrics" >
+                                    <option *ngFor="let options of metrics_options" [value]="options.value" >{{options.label}}</option>
+                                 </select>
+                            </div>
+                            
+                        </div>
+                        <div class="image">
+                            <canvas #canvas1 id="canvas1"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="block2">
+                <div class="device-metrics">
+                    <div class="device-heading">
+                        <p>Device Metrics</p>
+                        <div class="black-line">
+                        </div>
+                    </div>
+
+                    <div class="device-select">
+                        <select name="device_metrics" id="device_metrics" [(ngModel)]="device_metrics" >
+                            <option *ngFor="let options of metrics_options" [value]="options.value" >{{options.label}}</option>
+                         </select>
+                    </div>
+                    <div class="image">
+                        <canvas #canvas2 id="canvas2" ></canvas>
+                    </div>
+
+                </div>
+                <div class="country-metrics">
+                    <div class="country-heading">
+                        <p>Country Metrics</p>
+                        <div class="black-line">
+                        </div>
+                    </div>
+
+                    <div class="country-select">
+                        <select name="country_metrics" id="country_metrics" [(ngModel)]="country_metrics" >
+                            <option *ngFor="let options of metrics_options" [value]="options.value" >{{options.label}}</option>
+                         </select>
+                    </div>
+                    <div class="image">
+                        <canvas #canvas3 id="canvas3"  ></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
