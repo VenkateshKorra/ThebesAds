@@ -1,0 +1,27 @@
+{
+  "routes": [
+    "/account-detail-admin",
+    "/account-details-apps",
+    "/account-sites",
+    "/add-app",
+    "/add-app-ad-units",
+    "/add-site",
+    "/add-site-1",
+    "/add-site-ad-units",
+    "/admin-accounts-list",
+    "/admin-dashboard",
+    "/apps-app-ad-units-list",
+    "/change-password",
+    "/contacts",
+    "/forgot-password",
+    "/home",
+    "/line-chart",
+    "/login",
+    "/profile",
+    "/send-invite",
+    "/sign-up",
+    "/site-ad-units",
+    "/user-dashboard",
+    "/user-details"
+  ]
+}
