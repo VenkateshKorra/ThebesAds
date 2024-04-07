@@ -44,6 +44,8 @@ import { AddAppComponent } from './add-app/add-app.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { ForgotYourPasswordComponent } from './forgot-your-password/forgot-your-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordModule } from './reset-password/reset-password.module';
+
 
 
 @NgModule({
@@ -93,7 +95,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     BrowserAnimationsModule, 
     MatIconModule, 
     HttpClientModule, 
-    MatTabsModule
+    MatTabsModule,
+    ResetPasswordModule
   ],
   providers: [
     provideClientHydration(),

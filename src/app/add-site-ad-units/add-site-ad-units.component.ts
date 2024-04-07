@@ -23,7 +23,7 @@ export class AddSiteAdUnitsComponent implements OnInit {
 
   @Output() adClosed: EventEmitter<any> = new EventEmitter();
 
-  account = "";
+  account: any;
   site_name = '';
   name = "";
   code = "";
@@ -41,10 +41,16 @@ export class AddSiteAdUnitsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.account = params['account'];
-      console.log(this.account);
-    })
+    // this.activatedRoute.queryParams.subscribe(params => {
+    //   this.account = params['account'];
+    //   console.log(this.account);
+    // })
+    if (this.userService.getType() == 'Admin') {
+      this.account = this.userService.getSetPublisherName();
+    }
+    else {
+      this.account = this.userService.getName();
+    }
     this.sizes = selectOptions;
     this.masterSizeOptions = masterSize;
     this.companionSizeOptions = comapnionSize;

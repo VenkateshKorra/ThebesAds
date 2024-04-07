@@ -75,40 +75,40 @@ export class ContactsComponent implements AfterViewInit, OnInit {
     }
   }
 
-  addUser() {
-    // Increment count for ID generation
-    this.count++;
+  // addUser() {
+  //   // Increment count for ID generation
+  //   this.count++;
 
-    // Create a new user object
-    const userData: UserData = {
+  //   // Create a new user object
+  //   const userData: UserData = {
      
-      name: 'venky',
-      email: 'venkatchowhaan@gmail.com',
-      phone: '+91 1234567890',
-      country: 'India',
-      status: 'Approval Required',
-      invite: 'Invite', 
-      invited: 'N',
-    };
+  //     name: 'venky',
+  //     email: 'venkatchowhaan@gmail.com',
+  //     phone: '+91 1234567890',
+  //     country: 'India',
+  //     status: 'Approval Required',
+  //     invite: 'Invite', 
+  //     invited: 'N',
+  //   };
 
-    this.userService.saveUser(userData).subscribe(
-      (response) => {
-        console.log('Saved New Contacts', response);
+  //   this.userService.saveUser(userData).subscribe(
+  //     (response) => {
+  //       console.log('Saved New Contacts', response);
 
-      }, 
-      (error) => {
-        console.log('Error in saving New Contact', error);
+  //     }, 
+  //     (error) => {
+  //       console.log('Error in saving New Contact', error);
         
-      }
-    )
+  //     }
+  //   )
     
 
-    // Push the new user to the data source
-    this.dataSource.data.push(userData);
+  //   // Push the new user to the data source
+  //   this.dataSource.data.push(userData);
 
-    // Update the change subscription
-    this.dataSource._updateChangeSubscription();
-  }
+  //   // Update the change subscription
+  //   this.dataSource._updateChangeSubscription();
+  // }
 
   show_contacts() {
     this.userService.getContacts().subscribe(

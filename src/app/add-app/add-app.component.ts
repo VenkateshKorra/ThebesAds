@@ -14,6 +14,7 @@ export class AddAppComponent implements OnInit {
   app_url = '';
   package_name = '';
   store_id="";
+  publisher_id : any;
 
   android_checkbox: boolean = true;
   ios_checkbox: boolean = false;
@@ -63,6 +64,13 @@ export class AddAppComponent implements OnInit {
 
   onSave(form: any) {
     if (form.valid) {
+      const id= this.userService.getPublisherId();
+      if(id!='Publisher ID') {
+        this.publisher_id = id;
+      }
+      else {
+        this.publisher_id = this.userService.getSetPublisherId();
+      }
       this.isOpen = false; // Close the dialog when saving
       // const apiData = {
       //   app_name: this.account,
@@ -74,7 +82,8 @@ export class AddAppComponent implements OnInit {
         const androidData = {
           app_name: this.app_name,
           app_store_id: this.package_name,
-          app_store: 'GOOGLE_PLAY'
+          app_store: 'GOOGLE_PLAY', 
+          publisher_id: this.publisher_id
         }
         this.callNewMobileApp(androidData);
       }
@@ -83,7 +92,8 @@ export class AddAppComponent implements OnInit {
         const iosData = {
           app_name: this.app_name, 
           app_store_id: this.store_id, 
-          app_store: 'APPLE_ITUNES'
+          app_store: 'APPLE_ITUNES',
+          publisher_id: this.publisher_id
 
         }
         this.callNewMobileApp(iosData);
@@ -118,39 +128,41 @@ export class AddAppComponent implements OnInit {
   }
 
   callNewMobileApp(Data: any) { // call nnewchild site 
+    console.log('The Data in callNewMobileApp is:  ', Data);
 
-    this.userService.newMobileApp(Data).subscribe(
-      (response) => {
-        console.log('Response from NewApp is', response);
-        if (response && response.length > 0) {
-          this.successApi = true;
-          console.log('this.successApi is: ', this.successApi);
-          alert(`App with ID: ${response[0].id} created successfully`);
-          const formData = {
-            account: this.account,
-            app_name: this.app_name,
-            url: this.app_url,
-            os: this.os, 
-            categories: this.category,
-            app_id: response[0].id,
-            status: 'Submitted for Approval',
-            mcm_status: response[0].mcm_status
-            // ad_units: ''
-          }
-          this.addAppData(formData);
-          this.dialogClosed.emit();
+    // this.userService.newMobileApp(Data).subscribe(
+    //   (response) => {
+    //     console.log('Response from NewApp is', response);
+    //     if (response && response.length > 0) {
+    //       this.successApi = true;
+    //       console.log('this.successApi is: ', this.successApi);
+    //       alert(`App with ID: ${response[0].id} created successfully`);
+    //       const formData = {
+    //         account: this.account,
+    //         app_name: this.app_name,
+    //         url: this.app_url,
+    //         os: this.os, 
+    //         categories: this.category,
+    //         app_id: response[0].id,
+    //         status: 'Submitted for Approval',
+    //         mcm_status: response[0].mcm_status, 
+    //         publisher_id: Data.publisher_id
+    //         // ad_units: ''
+    //       }
+    //       this.addAppData(formData);
+    //       this.dialogClosed.emit();
 
-        } else {
-          alert('No app data received.');
-          this.dialogClosed.emit();
-        }
-      },
-      (error) => {
-        console.log('Error in adding app', error);
-        alert('Error: ' + error.error.error);
-        this.dialogClosed.emit();
-      }
-    )
+    //     } else {
+    //       alert('No app data received.');
+    //       this.dialogClosed.emit();
+    //     }
+    //   },
+    //   (error) => {
+    //     console.log('Error in adding app', error);
+    //     alert('Error: ' + error.error.error);
+    //     this.dialogClosed.emit();
+    //   }
+    // )
   }
 
 

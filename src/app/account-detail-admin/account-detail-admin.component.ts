@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { countries } from '../sign-up-dropdown';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-account-detail-admin',
@@ -9,7 +10,7 @@ import { countries } from '../sign-up-dropdown';
 })
 export class AccountDetailAdminComponent implements OnInit {
   // country="India";
-   Name = '';
+   Name: any;
    Status='';
    Margin ='';
    Country='';
@@ -18,15 +19,18 @@ export class AccountDetailAdminComponent implements OnInit {
    countries_options:any;
 
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private userService: UsersService ) {}
 
   ngOnInit(): void {
-    this.countries_options = countries;
-      this.route.params.subscribe(params => {
-        const name = params['name'];
-        this.Name = name;
+    // this.countries_options = countries;
+    //   this.route.params.subscribe(params => {
+    //     const name = params['name'];
+        
 
-      })
+    //   })
+      this.Name = this.userService.getSetPublisherName();
+      console.log('User Name is: ', this.Name);
+      
   }
 
 }

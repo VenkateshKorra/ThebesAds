@@ -20,3 +20,10 @@ export const metricsOptions = [
     { id: 5, value: 'ctr', label: 'Ctr' },
     { id: 6, value: 'cpm', label: 'Cpm' },
 ]
+
+export const StatusOptions = [
+    { id: 1, value: 'Please Select' },
+    { id: 2, value: 'Invitation Sent' },
+    { id: 3, value: 'Active' },
+    { id: 4, value: 'Disabled' }
+];

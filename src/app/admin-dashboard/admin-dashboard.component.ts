@@ -95,7 +95,9 @@ export class AdminDashboardComponent implements OnInit {
   day = this.currentDate.getDate();
   date = `${this.year}-${this.month < 10 ? '0' + this.month : this.month}-${this.day < 10 ? '0' + this.day : this.day}`;
 
-  constructor(private userService: UsersService) { }
+  constructor(private userService: UsersService) {
+    
+   }
 
   //tells dropdown 
   publisherDropdownVisible: boolean = false;
@@ -117,6 +119,7 @@ export class AdminDashboardComponent implements OnInit {
   appFilteredOptions: string[] = [];
 
   ngOnInit(): void {   // initalize with the component
+
     this.time_period_options= timeOptions;
     this.metrics_options = metricsOptions;
     this.userName = typeof localStorage !== 'undefined' ? localStorage.getItem('userName') : null;
@@ -233,7 +236,6 @@ export class AdminDashboardComponent implements OnInit {
       this.appFilteredOptions = this.appDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
     }
   }
-
   publisherSelectOption(value: string) {  //assign adunit with the selected value
     this.publisherSelect = value;
     // console.log("Ad Unit Selected Option:", value);
@@ -341,23 +343,43 @@ export class AdminDashboardComponent implements OnInit {
             type: 'admin', 
             date: this.date
         };
+        console.log('Default load data to fetch table: ', Data);
         this.userService.get_daily_publisher(Data).subscribe(
             (response) => {
                 this.setMetrics(response);
                 console.log('Data got as response is: ', response);
-                
             },
             (error) => {
                 alert('Error getting data: '+ error.error.error);
             }
         );
-    } else if (this.publisherSelect =='' &&  this.adUnitSelect != '' && this.siteSelect == '' && this.appSelect == '') {
+    } else if (this.publisherSelect !='' &&  this.adUnitSelect == '' && this.siteSelect == '' && this.appSelect == '') {
+      const Data = {
+          ad_unit: this.publisherSelect,
+          time_period: this.time_period, 
+          type: 'admin',
+          date: this.date
+      };
+      console.log('Publisher Select Data is: ',Data);
+      
+      this.userService.get_daily_adunit(Data).subscribe(
+          (response) => {
+              this.setMetrics(response);
+              console.log('Data got as response is: ', response);
+          },
+          (error) => {
+            alert('Error getting data: '+ error.error.error);
+          }
+      );
+   } else if (this.publisherSelect =='' &&  this.adUnitSelect != '' && this.siteSelect == '' && this.appSelect == '') {
         const Data = {
             ad_unit: this.adUnitSelect,
             time_period: this.time_period, 
             type: 'admin',
             date: this.date
         };
+        console.log('AdUnit Select Data is: ', Data);
+        
         this.userService.get_daily_adunit(Data).subscribe(
             (response) => {
                 this.setMetrics(response);
@@ -374,6 +396,7 @@ export class AdminDashboardComponent implements OnInit {
             type: 'admin',
             date: this.date
         };
+        console.log('Site Select Data is: ', Data);
         this.userService.get_daily_site(Data).subscribe(
             (response) => {
                 this.setMetrics(response);
@@ -385,12 +408,13 @@ export class AdminDashboardComponent implements OnInit {
         );
     } else if (this.publisherSelect =='' &&  this.adUnitSelect == '' && this.siteSelect == '' && this.appSelect != '') {
       const Data = {
-          site: this.siteSelect,
+          site: this.appSelect,
           time_period: this.time_period, 
           type: 'admin',
           date: this.date
       };
-      this.userService.get_daily_site(Data).subscribe(
+      console.log('App Select Data is: ', Data);
+      this.userService.get_daily_app(Data).subscribe(
           (response) => {
               this.setMetrics(response);
               console.log('Data got as response is: ', response);
@@ -446,7 +470,6 @@ setDefaultMetrics() {
         this.publisherDropDown= this.adUnitDropDown;
         this.appDropDown = this.adUnitDropDown;
         this.siteDropDown = [...new Set(this.siteDropDown)];
-
       },
       (error) => {
         // console.log("Error getting ad Units and sites");

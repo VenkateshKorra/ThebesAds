@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { skip } from 'rxjs';
 
 @Component({
@@ -6,11 +6,12 @@ import { skip } from 'rxjs';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
 
 
   overView=[false, false, false];
   monetize=[false, false, false, false, false, false];
+  type='';
 
   firstItem:boolean=false;
   secondItem: boolean=false;
@@ -18,6 +19,18 @@ export class MenuComponent {
   item1: boolean =false;
   item2: boolean = false;
   isUp1: boolean=false;
+
+  ngOnInit(): void {
+    const userDataString = typeof localStorage !== 'undefined' ? localStorage.getItem('userData') : null;
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      this.type = userData['Type'];
+    }
+
+    // console.log(this.type);
+    
+    
+  }
 
   clicked1() {
     this.item1 = !this.item1;

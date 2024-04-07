@@ -37,7 +37,10 @@ export class LoginComponent {
             
             if(response.data.Type=='Admin' && response.data.status!=='Disabled') {
               localStorage.setItem('userData', JSON.stringify(response.data));
-              this.get_user_name(response.data.email_id, response.data.Type);
+              localStorage.setItem('userName', 'Admin');
+              localStorage.setItem('PublisherID','Publisher ID');
+              this.router.navigate(['/admin-dashboard']);
+              alert('Success: Logged in as Admin');
 
               // this.router.navigate(['/admin-dashboard']);
               // alert('Success: Logged in as ' + response.data.email_id);
@@ -52,8 +55,6 @@ export class LoginComponent {
             else {
               alert('Error logging in !!!');
             }
-            
-            
           } else {
             // Handle unexpected success response
             console.error('Unexpected success response:', response);
@@ -73,9 +74,7 @@ export class LoginComponent {
             alert("Technical error Occured !!!");
           }
         }
-      );
-      
-       
+      );  
     }
     else {
       alert("Please enter Id and password correctly");
@@ -87,37 +86,36 @@ export class LoginComponent {
     const Data = {
       email: email_id
     };
-  
     this.usersService.get_user_name(Data).subscribe(
       (response) => {
         console.log('Response Data: ', response.data); // Log the entire response object
         // Check if the 'Publisher Name' key exists and has a value
-        if (response.data && response.data['Publisher Name']) {
+        if (response.data && response.data['Publisher Name'] && response.data['Publisher ID']) {
           this.userName = response.data['Publisher Name'];
           console.log('UserName in login is', this.userName);
           localStorage.setItem('userName', this.userName);
-          if (type === 'Admin') {
-            this.router.navigate(['/admin-dashboard']);
-            alert('Success: Logged in as ' + this.userName);
-          } else if (type === 'Publisher') {
+          localStorage.setItem('PublisherID',response.data['Publisher ID']);
+          console.log('Publisher ID is : ',response.data['Publisher ID']);
+          
+          if (type === 'Publisher') {
             this.router.navigate(['/user-dashboard']);
             alert('Success: Logged in as ' + this.userName);
           }
         } else {
-          console.log('Publisher Name not found in response data');
+          console.log('Publisher Name or ID is not found in the database');
+          alert('Publisher Name or ID is not found in the database');
+          localStorage.clear();
           // Handle the case where the 'Publisher Name' key is not found
         }
       },
       (error) => {
         console.log('Error getting user name: ', error);
         localStorage.clear();
+        console.error("Can't Find user with the given credentials");
         alert("Can't Find user with the given credentials ");
-        // Handle error gracefully, e.g., display an error message
+        
       }
     );
   }
   
-
-
-
 }

@@ -14,6 +14,7 @@ export class AddSiteComponent implements OnInit {
   category='';
   site_url='';
   category_list: any;
+  publisher_id : any;
 
   @Input() isOpen: boolean = true;
 
@@ -24,8 +25,6 @@ export class AddSiteComponent implements OnInit {
 
   successApi= false;
   
-
-
   constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
@@ -39,17 +38,18 @@ export class AddSiteComponent implements OnInit {
 
   onSave(form: any) {
     if(form.valid) {
+      const id= this.userService.getPublisherId();
+      if(id!='Publisher ID') {
+        this.publisher_id = id;
+      }
+      else {
+        this.publisher_id = this.userService.getSetPublisherId();
+      }
     this.isOpen = false; // Close the dialog when saving
-    // const formData = {
-    //   account: this.account,
-    //   site_name: this.site_name, 
-    //   url: this.site_url, 
-    //   categories: this.category, 
-    //   // ad_units: ''
-    // }
     const apiData = {
       name: this.account, 
       url: this.site_url,
+      publisher_id: this.publisher_id
     }
      this.callNewChildApi(apiData);
      
@@ -82,7 +82,8 @@ export class AddSiteComponent implements OnInit {
   }
 
   callNewChildApi(Data: any) { // call newchild site 
-
+    console.log('The Data in callNewChildApi is:  ', Data);
+    
     this.userService.newChildSite(Data).subscribe(
       (response) => {
         console.log('Response from NewChild is', response);
@@ -97,12 +98,12 @@ export class AddSiteComponent implements OnInit {
             categories: this.category, 
             site_id: response[0].id, 
             status: 'Submitted for Approval', 
-            mcm_status: response[0].mcm_status
+            mcm_status: response[0].mcm_status, 
+            publisher_id: Data.publisher_id
             // ad_units: ''
           }
           this.addSiteData(formData);
           this.dialogClosed.emit();
-
         } else {
           alert('No site data received.');
           this.dialogClosed.emit();

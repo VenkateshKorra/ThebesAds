@@ -19,13 +19,19 @@ export class AppsAppAdUnitsListComponent implements AfterViewInit {
   account_name='';
   adFormat_options: any;
   os_options: any;
+  currentUrl = '';
+  publisherIdSent: any;
 
   displayedColumns: string[] = ['id', 'ad_unit_id', 'ad_unit_name','publisher_id', 'app_id', 'os',  'ad_format', 'size', 'parentAdUnitId', 'action'];
   dataSource = new MatTableDataSource<App_ad_units>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private userService: UsersService){}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private userService: UsersService){
+    this.router.events.subscribe(() => {
+      this.currentUrl = this.router.url;
+    });
+  }
 
   ngOnInit(): void {
     this.adFormat_options = adFormat;
@@ -148,7 +154,20 @@ openAppAdUnits() {
 
 
 fetchData() {
-  this.userService.get_app_ad_units().subscribe(
+  if (this.userService.getType() == 'Admin' && this.currentUrl == '') {
+    this.publisherIdSent = this.userService.getSetPublisherId();
+  }
+  else if (this.userService.getType() == 'Publisher') {
+    this.publisherIdSent = this.userService.getPublisherId();
+  }
+  const Data = {
+    type: this.userService.getType(),
+    publisher_id: this.publisherIdSent,
+    currentUrl: this.currentUrl
+  }
+  console.log('App ad Unit Data sent is: ', Data);
+  
+  this.userService.get_app_ad_units(Data).subscribe(
     (response: any[]) => {
       const mappedUsers: App_ad_units[] = response.map((user, index) => ({
         id: index +1 ,

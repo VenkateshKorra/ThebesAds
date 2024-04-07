@@ -4,6 +4,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UsersService } from '../users.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../sign-up-dropdown';
+import { StatusOptions } from '../admin-dashboard-dropdown';
 
 @Component({
   selector: 'app-admin-accounts-list',
@@ -16,6 +17,7 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
   selectedCountry = '';
   inviteSend = false;
   countries_list: any;
+  status_options: any;
   // actionButton=false;
 
   @ViewChild('status') status!: ElementRef;
@@ -29,6 +31,7 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
   constructor(private userService: UsersService, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
+    this.status_options=StatusOptions;
     this.countries_list = countries;
     // Fetch and display admin-accounts-list when component initializes
     if (isPlatformBrowser(this.platformId)) {
@@ -223,6 +226,10 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
       }
     )
     
+  }
+
+  setPublisherName(element: any) {
+    this.userService.setPublisherNameAndId(element.publisher_name, element.publisher_id);
   }
 
 

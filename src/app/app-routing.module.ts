@@ -30,6 +30,7 @@ import { AccountDetailsAppsComponent } from './account-details-apps/account-deta
 import { AppsAppAdUnitsListComponent } from './apps-app-ad-units-list/apps-app-ad-units-list.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
+
 const routes: Routes = [
   
   // {path: '', component: AppComponent, canActivate: [authenticationGuard]},
@@ -39,7 +40,7 @@ const routes: Routes = [
   { path: 'add-site', component: AddSiteComponent, canActivate: [authenticationGuard]}, 
   { path: 'add-app', component: AddAppComponent, canActivate: [authenticationGuard] },
   { path: 'admin-accounts-list', component: AdminAccountsListComponent, canActivate: [authenticationGuard] },
-  { path: 'accounts/:name', component: AccountsComponent, canActivate: [authenticationGuard]  },
+  { path: 'accounts', component: AccountsComponent, canActivate: [authenticationGuard]  },
   { path: 'login', component: LoginComponent },
   { path: 'account-details-apps', component: AccountDetailsAppsComponent, canActivate: [authenticationGuard]},
   // { path: ''},
@@ -64,7 +65,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotYourPasswordComponent},
   //{ path: 'users', component: UsersComponent },//
   { path: 'reset-password/:name', component: ResetPasswordComponent},
-  { path: '**', component: UsersComponent }
+  { path: '**', component: UsersComponent, canActivate: [authenticationGuard] }
 
 ];
 

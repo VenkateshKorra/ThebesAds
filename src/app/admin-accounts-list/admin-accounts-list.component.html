@@ -22,10 +22,7 @@
                 <div class="select">
                     <label for="status">Status</label>
                     <select (change)="applyFilterByStatus(status.value)" id="status" name="status" #status>
-                        <option selected value="" >Please Select</option>
-                        <option value="Invitation Sent">Invitation Sent</option>
-                        <option value="Active">Active</option>
-                        <option value="Disabled" >Disabled</option>
+                        <option *ngFor="let option of status_options" [value]="option.value">{{option.value}}</option>
                     </select>
                 </div>
 
@@ -65,7 +62,7 @@
                 <!-- Name Column -->
                 <ng-container matColumnDef="publisher_name">
                     <th mat-header-cell *matHeaderCellDef> Publisher Name </th>
-                    <td mat-cell *matCellDef="let element"> <a [routerLink]="['/accounts', element.publisher_name]">{{element.publisher_name}}</a> </td>
+                    <td mat-cell *matCellDef="let element"> <a routerLink="/accounts" (click)="setPublisherName(element)">{{element.publisher_name}}</a> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="network_id">

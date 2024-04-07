@@ -34,7 +34,7 @@ body {
   position: absolute;
   top: 50%;
   left: 0%;
-  transform: translate(-20%, -65%);
+  transform: translate(-20%, -48%);
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -52,6 +52,7 @@ form {
     display: flex;
     flex-direction: column;
     padding-bottom: 2em;
+    border-radius: 5px;
 }
 
 label {

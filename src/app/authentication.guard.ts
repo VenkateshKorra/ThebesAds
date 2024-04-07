@@ -14,10 +14,9 @@ export const authenticationGuard: CanActivateFn = (route, state) => {
       // If user is admin, allow access to all routes
       return true;
     }
-    
     if (user && user.Type === 'Publisher') {
       // If user is publisher, restrict access to specific routes
-      const allowedRoutesForPublisher = ['home', 'user-dashboard'];
+      const allowedRoutesForPublisher = ['home', 'user-dashboard', 'account-details-apps', 'account-sites', 'site-ad-units', 'apps-app-ad-units-list', '**'];
       const requestedRoute = state.url.substring(1); // Remove leading slash
       
       if (allowedRoutesForPublisher.includes(requestedRoute)) {

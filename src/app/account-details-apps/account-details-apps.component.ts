@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { UsersService } from '../users.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { platforms } from '../sign-up-dropdown';
 
 
@@ -15,27 +15,39 @@ import { platforms } from '../sign-up-dropdown';
 export class AccountDetailsAppsComponent implements AfterViewInit, OnInit {
 
 
-  selectedName="";
+  selectedName: any;
   selectedSymbol = '';
   add_app= false;
   os_options: any;
+  currentUrl = '';
+  publisherIdSent: any;
 
   displayedColumns: string[] = ['id', 'app_name', 'app_id', 'publisher_id', 'os', 'ad_units', 'categories',  'status', 'mcm_status','parentAdUnitId', 'action'];
   dataSource = new MatTableDataSource<AddApp>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UsersService, private route: ActivatedRoute) {}
+  constructor(private userService: UsersService,  private router: Router) {
+    this.router.events.subscribe(() => {
+      this.currentUrl = this.router.url;
+    });
+  }
 
   ngOnInit(): void {
     this.os_options=platforms;
     this.fetchData();
-    this.route.params.subscribe(params => {
-      const name = params['name'];
-      this.selectedName = name;
-      // Now you can use the `name` value in your component
+    // this.route.params.subscribe(params => {
+    //   const name = params['name'];
+    if(this.userService.getType()=='Admin') {
+      this.selectedName = this.userService.getSetPublisherName();
+    }
+    else {
+      this.selectedName = this.userService.getName();
+    }
+    console.log('Name is : ', this.selectedName);
+    //   // Now you can use the `name` value in your component
 
-    });
+    // });
   }
 
 
@@ -89,12 +101,24 @@ getMcmStatusBackgroundColor(mcm_status: string): any {
 } else if (mcm_status === 'Pending') {
     return { 'background-color': '#FFFF7898', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content'  };
 } else {
-    return { 'background-color': '#FFFF7898', 'padding': '2px 8px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content'  }; // Return default styles if status is neither Approved nor Pending
+    return { 'background-color': '#bde0fe', 'padding': '2px 8px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content'  }; // Return default styles if status is neither Approved nor Pending
 }
 }
 
 fetchData() {
-  this.userService.get_add_app().subscribe(
+  if(this.userService.getType()=='Admin' && this.currentUrl=='') {
+    this.publisherIdSent= this.userService.getSetPublisherId();
+  }
+  else if(this.userService.getType()=='Publisher') {
+    this.publisherIdSent= this.userService.getPublisherId();
+  }
+
+  const Data = {
+    type: this.userService.getType(),
+    publisher_id: this.publisherIdSent,
+    currentUrl: this.currentUrl
+  }
+  this.userService.get_add_app(Data).subscribe(
     (response: any[]) => {
       const mappedUsers: AddApp[] = response.map((user, index) => ({
         id: index +1 ,
