@@ -1,4 +1,5 @@
 <body>
+    <p-toast position="top-center"></p-toast>
     <div class="container">
         <div class="heading">
             <h3>Sign Up</h3>
@@ -8,19 +9,29 @@
             <div class="row1">
                 <div class="Input">
                     <label for="Name">* Your name / Company name</label>
-                    <input type="text" id="Name" name="Name" [(ngModel)]="Name" required />
+                    <input type="text" id="Name" name="Name"  (input)="checkNameTextLength()"  [(ngModel)]="Name" required />
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="nameTextLength">Name should not exceed 500 character length</p>
+                    </div>
+                    
                 </div>
 
                 <div class="Input">
                     <label for="email">* Email</label>
-                    <input type="email" id="email" name="email" [(ngModel)]="Email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                    <input type="email" id="email" name="email" (input)="checkEmailTextLength()" [(ngModel)]="Email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="emailTextLength">Email should not exceed 500 character length</p>
+                    </div>
                 </div>
             </div>
 
             <div class="row2">
                 <div class="Input">
                     <label for="phone">* Phone</label>
-                    <input type="text" id="phone" name="phone" maxlength="10"  [(ngModel)]="Phone" required />
+                    <input type="text" id="phone" name="phone" (input)="checkPhoneTextLength()"  [(ngModel)]="Phone" required />
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="phoneTextLength">Phone should not exceed 15 character length</p>
+                    </div>
                 </div>
 
                 <div class=" select1 Input">
@@ -51,7 +62,11 @@
                 <div class="row4">
                     <div class="Input">
                         <label for="app_url">* App / Game store URL</label>
-                        <input type="text" id="app_url" name="app_url" [(ngModel)]="app_url" required />
+                        <input type="text" id="app_url" name="app_url"  (input)="checkAppUrlTextLength()" [(ngModel)]="app_url" required />
+                        <div class="warning-div">
+                            <p class="warning-text" *ngIf="appUrlTextLength">App url should not exceed 2000 character length</p>
+                        </div>
+
                     </div>
 
                     <div class="Input">
@@ -85,7 +100,10 @@
                 <div class="row7">
                     <div class="Input">
                         <label for="web_url">* Site URL</label>
-                        <input type="text" id="web_url" name="web_url" [(ngModel)]="web_url" required />
+                        <input type="text" id="web_url" name="web_url"  (input)="checkWebUrlTextLength()" [(ngModel)]="web_url" required />
+                        <div class="warning-div">
+                            <p class="warning-text" *ngIf="webUrlTextLength">Site url should not exceed 2000 character length</p>
+                        </div>
                     </div>
 
                     <div class="Input">

@@ -1,4 +1,5 @@
 <body>
+    <p-toast position="top-center"></p-toast>
     <div class="container">
         <div class="heading">
             <h2>Accounts</h2>
@@ -22,6 +23,7 @@
                 <div class="select">
                     <label for="status">Status</label>
                     <select (change)="applyFilterByStatus(status.value)" id="status" name="status" #status>
+                        <option value="" selected disabled>Select Status</option>
                         <option *ngFor="let option of status_options" [value]="option.value">{{option.value}}</option>
                     </select>
                 </div>
@@ -46,33 +48,33 @@
 
         </div>
         <div class="table">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Position Column -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                <!-- <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Account ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <ng-container matColumnDef="publisher_id">
-                    <th mat-header-cell *matHeaderCellDef> Publisher ID </th>
+                    <th mat-header-cell *matHeaderCellDef >GAM Publisher ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="publisher_name">
-                    <th mat-header-cell *matHeaderCellDef> Publisher Name </th>
+                    <th mat-header-cell *matHeaderCellDef > Account Name </th>
                     <td mat-cell *matCellDef="let element"> <a routerLink="/accounts" (click)="setPublisherName(element)">{{element.publisher_name}}</a> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="network_id">
-                    <th mat-header-cell *matHeaderCellDef> Network ID </th>
+                    <th mat-header-cell *matHeaderCellDef > GAM Network ID </th>
                     <td mat-cell *matCellDef="let element">{{element.network_id}} </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let element" ><p
                         [ngStyle]="getStatusBackgroundColor(element.status)">
                         {{element.status}}
@@ -81,67 +83,67 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="mcm_status">
-                    <th mat-header-cell *matHeaderCellDef> MCM Status </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> 	GAM status </th>
                     <td mat-cell *matCellDef="let element"> {{element.mcm_status}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="country">
-                    <th mat-header-cell *matHeaderCellDef> Country </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
                     <td mat-cell *matCellDef="let element"> {{element.country}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="margin">
-                    <th mat-header-cell *matHeaderCellDef> Margin% </th>
+                    <th mat-header-cell *matHeaderCellDef  > Margin </th>
                     <td mat-cell *matCellDef="let element"> {{element.margin}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="sites">
-                    <th mat-header-cell *matHeaderCellDef> Sites </th>
+                    <th mat-header-cell *matHeaderCellDef > Sites </th>
                     <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="apps">
-                    <th mat-header-cell *matHeaderCellDef> Apps </th>
+                    <th mat-header-cell *matHeaderCellDef > Apps </th>
                     <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <th mat-header-cell *matHeaderCellDef > Email </th>
                     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="phone">
-                    <th mat-header-cell *matHeaderCellDef> Phone </th>
+                    <th mat-header-cell *matHeaderCellDef > Phone </th>
                     <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="gross">
-                    <th mat-header-cell *matHeaderCellDef> Gross/net </th>
+                    <th mat-header-cell *matHeaderCellDef  > Gross/Net </th>
                     <td mat-cell *matCellDef="let element"> {{element.gross}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="approved_on">
-                    <th mat-header-cell *matHeaderCellDef> Approved on </th>
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Approved on </th>
                     <td mat-cell *matCellDef="let element"> {{element.approved_on}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="created_on">
-                    <th mat-header-cell *matHeaderCellDef> Created on </th>
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Created on </th>
                     <td mat-cell *matCellDef="let element"> {{element.created_on}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="created_by">
-                    <th mat-header-cell *matHeaderCellDef> Created By </th>
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Created By </th>
                     <td mat-cell *matCellDef="let element"> {{element.created_by}} </td>
                 </ng-container>
 
                 <!-- Action button -->
 
                 <ng-container matColumnDef="action" class="action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <th mat-header-cell *matHeaderCellDef > Action </th>
                     <td mat-cell *matCellDef="let element">
                         <div >
-                            <button mat-button (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg"  alt="action button"></button>
+                            <button (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg" class="action-image"  alt="action button"></button>
                         </div>
                         
                         <div class="button-group" *ngIf="element.showOptions">
@@ -168,7 +170,7 @@
 
             
         </div>
-        <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons
+        <mat-paginator [pageSizeOptions]="[ 30, 50, 100]" showFirstLastButtons
                 aria-label="Select page of periodic elements">
             </mat-paginator>
     </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UsersService } from '../users.service';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-reset-password',
@@ -22,7 +23,7 @@ export class ResetPasswordComponent {
 
 
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UsersService, private route: Router) {}
+  constructor(private activatedRoute: ActivatedRoute, private userService: UsersService, private route: Router, private messageService: MessageService) {}
 
   ngOnInit(): void {
     // const userData = typeof localStorage !== 'undefined' ? localStorage.getItem('userData') : null;
@@ -43,6 +44,7 @@ export class ResetPasswordComponent {
       (error) => {
         console.log('Error from validate token is : ', error);     
         // alert('Link is not valid !!');
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Link is not valid', life: 5000  });
       }
       )
 }
@@ -63,13 +65,15 @@ export class ResetPasswordComponent {
         this.userService.resetPassword(passwordData).subscribe(
           (response) => {
             console.log('Password Changed successfully', response);
-            alert('Password Changed Successfully!!!');
+            // alert('Password Changed Successfully!!!');
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Password Changed Successfully!!!', life: 5000  });
             this.route.navigate(['/login']);
             
           }, 
           (error) => {
             console.log('Error in changing password', error);
-            alert('Error: '+error.error.error);
+            // alert('Error: '+error.error.error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
           }
         )
         // this.current_password = '';
@@ -77,12 +81,14 @@ export class ResetPasswordComponent {
         this.repeat_password = '';
         //this.two_factor = false;
       } else {
-        alert('current password and repeat password does not match')
+        // alert('current password and repeat password does not match')
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Current password and repeat password does not match', life: 5000  });
       }
       
     }
     else {
-      alert('Please fill all input fields');
+      // alert('Please fill all input fields');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill all input fields', life: 5000  });
     }
   }
 }

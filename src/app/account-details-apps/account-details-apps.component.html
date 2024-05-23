@@ -1,4 +1,5 @@
 <body>
+    <p-toast position="top-center"></p-toast>
     <div class="container">
         <div class="top-selection">
             <div class="search">
@@ -14,19 +15,22 @@
                     </select>
                 </div>
             </div>
-            <div class="btn">
+            <!-- <div class="clear">
+                <button (click)="clearSearch()">Clear search</button>
+            </div> -->
+            <div class="btn" *ngIf="typeOfUser !='Publisher' && typeOfUser != ''">
                 <button (click)="openAddSite()">Add App</button>
             </div>
 
         </div>
         <div class="table">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Position Column -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                <!-- <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> APP ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="app_name">
@@ -35,21 +39,26 @@
                 </ng-container>
 
                 <ng-container matColumnDef="app_id">
-                    <th mat-header-cell *matHeaderCellDef> App ID </th>
+                    <th mat-header-cell *matHeaderCellDef> GAM App ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.app_id}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="publisher_id">
-                    <th mat-header-cell *matHeaderCellDef> Publisher ID</th>
+                <!-- <ng-container matColumnDef="publisher_id">
+                    <th mat-header-cell *matHeaderCellDef> Account ID</th>
                     <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="account_name">
+                    <th mat-header-cell *matHeaderCellDef> Account Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.account_name}} </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="os">
-                    <th mat-header-cell *matHeaderCellDef> OS </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> OS </th>
                     <td mat-cell *matCellDef="let element">
-                        <img *ngIf="element.os.includes('GOOGLE_PLAY')" src="assets/android.svg" alt="android Logo" class="img-icons">
-                        <img *ngIf="element.os.includes('APPLE_ITUNES')" src="assets/ios.svg" alt="ios Logo" class="img-icons">
+                        <img *ngIf="element.os.includes('Android')" src="assets/android.svg" alt="android Logo" class="img-icons">
+                        <img *ngIf="element.os.includes('iOS')" src="assets/ios.svg" alt="ios Logo" class="img-icons">
                         <!-- Add more conditions for different OS logos -->
                     </td>
                 </ng-container>
@@ -60,14 +69,14 @@
                 </ng-container>
 
                 <ng-container matColumnDef="categories">
-                    <th mat-header-cell *matHeaderCellDef> Categories </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Categories </th>
                     <td mat-cell *matCellDef="let element"> {{element.categories}} </td>
                 </ng-container>
 
 
 
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
                         <p  [ngStyle]="getStatusBackgroundColor(element.status)">
                             {{element.status}}
@@ -76,7 +85,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="mcm_status">
-                    <th mat-header-cell *matHeaderCellDef> MCM Status </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> GAM Status </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
                         <p [ngStyle]="getMcmStatusBackgroundColor(element.mcm_status)">
                             {{element.mcm_status}}
@@ -84,17 +93,17 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="parentAdUnitId">
+                <!-- <ng-container matColumnDef="parentAdUnitId">
                     <th mat-header-cell *matHeaderCellDef>ParentAdUnitID</th>
                     <td mat-cell *matCellDef="let element"> {{element.parentAdUnitId}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- Action Column -->
                 <ng-container matColumnDef="action" class="action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element">
                         <div >
-                            <button mat-button (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg"  alt="action button"></button>
+                            <button  (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg" class="action-image"  alt="action button"></button>
                         </div>
                         
                         <div class="button-group" *ngIf="element.showOptions">
@@ -113,7 +122,7 @@
 
 
         </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" showFirstLastButtons
             aria-label="Select page of periodic elements">
         </mat-paginator>
 

@@ -14,9 +14,10 @@
                 <img src="assets/Profile-icon.svg"  alt="Profile Photo" class="profile-logo">
                 <p>{{userName}}</p>
                 <div *ngIf="clicked" class="dropdown">
-                    <button (click)="profile()"><a>Profile</a></button>
-                    <button (click)="change_password()"><a>Change Password</a></button>
-                    <button (click)="logOut()"><a>Logout</a></button>
+                    <button (click)="profile()"><a><img src="assets/user.svg" alt="profile image">Profile</a></button>
+                    <button (click)="change_password()"><a><img src="assets/padlock.svg" alt="profile image">Change Password</a></button>
+                    <button (click)="logOut()"><a><img src="assets/exit.svg" style="margin-left
+                    :3px; " alt="profile image">Logout</a></button>
                 </div>
 
             </div>

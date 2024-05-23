@@ -1,10 +1,16 @@
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+// import { AuthService } from './auth.service';
 
 export const authenticationGuard: CanActivateFn = (route, state) => {
   const _router = inject(Router);
+  // const authService = inject(AuthService);
   const userData = typeof localStorage !== 'undefined' ? localStorage.getItem('userData') : null;
+
+  // authService.resetState();
+
+  // authService.signalActivity();
 
   if (userData) {
     const user = JSON.parse(userData);
@@ -16,7 +22,7 @@ export const authenticationGuard: CanActivateFn = (route, state) => {
     }
     if (user && user.Type === 'Publisher') {
       // If user is publisher, restrict access to specific routes
-      const allowedRoutesForPublisher = ['home', 'user-dashboard', 'account-details-apps', 'account-sites', 'site-ad-units', 'apps-app-ad-units-list', '**'];
+      const allowedRoutesForPublisher = ['home', 'user-dashboard', 'account-details-apps', 'account-sites', 'site-ad-units', 'apps-app-ad-units-list', 'add-site-ad-units', 'add-app-ad-units', 'report-download','profile', 'payment', 'download-invoice', '**'];
       const requestedRoute = state.url.substring(1); // Remove leading slash
       
       if (allowedRoutesForPublisher.includes(requestedRoute)) {

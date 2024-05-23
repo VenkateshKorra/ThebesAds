@@ -48,6 +48,7 @@ body {
   }
   .table {
     border: 1.5px solid #E5E5E5;
+    overflow-x:  auto;
   }
   table {
       width: 90%;
@@ -64,6 +65,9 @@ body {
     
     td, th {
       width: auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       
     }
     td {

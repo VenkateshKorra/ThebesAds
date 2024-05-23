@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -45,6 +44,24 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { ForgotYourPasswordComponent } from './forgot-your-password/forgot-your-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResetPasswordModule } from './reset-password/reset-password.module';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ReportDownloadComponent } from './report-download/report-download.component';
+import { ThousandSuffixesPipe } from './pipe';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
+import { DownloadInvoiceComponent } from './download-invoice/download-invoice.component';
+import { AdminPaymentComponent } from './admin-payment/admin-payment.component';
+import { PaymentComponent } from './payment/payment.component';
+import { MessagesModule } from "primeng/messages"; 
+
+
+
+
 
 
 
@@ -81,7 +98,9 @@ import { ResetPasswordModule } from './reset-password/reset-password.module';
     AddAppComponent,
     LineChartComponent,
     ForgotYourPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ReportDownloadComponent, 
+    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,11 +115,21 @@ import { ResetPasswordModule } from './reset-password/reset-password.module';
     MatIconModule, 
     HttpClientModule, 
     MatTabsModule,
-    ResetPasswordModule
+    ResetPasswordModule, 
+    MatSelectModule, 
+    MatFormFieldModule,
+    MatTooltipModule,
+    MatButtonModule, 
+    NgSelectModule,
+    ToastModule, 
+    MessagesModule, 
+    
+
   ],
   providers: [
     provideClientHydration(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

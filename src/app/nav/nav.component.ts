@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { UsersService } from '../users.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
@@ -14,38 +15,17 @@ export class NavComponent {
   clicked=false;
   email=''
 
-  constructor(private router: Router, private userService: UsersService) {}
+  constructor(private router: Router, private userService: UsersService, @Inject(PLATFORM_ID) private platformId: Object) {}
   
 
   ngOnInit(): void {
-    // this.router.events.pipe(
-    //   filter(event => event instanceof NavigationEnd)
-    // ).subscribe(() => {
-    //   const currentUrl = this.router.url;
-    //   this.current_link = currentUrl;
-    //   //console.log(this.current_link);
-    // });
-
+    if (isPlatformBrowser(this.platformId)) {
+      document.addEventListener('click', this.onDocumentClick);
+  }
     const userData = typeof localStorage !== 'undefined' ? localStorage.getItem('userData') : null;
 
     if (userData) {
       this.userName =  localStorage.getItem('userName');
-      // console.log("Email sent to get name is: ",this.email);
-      // this.userService.get_user_name(emailSent).subscribe(
-      //   (response) => {
-      //     this.userName=response.data.Name;
-      //     localStorage.setItem('userName', this.userName);
-      //     console.log('Response of user name is: ', response);
-      //     console.log(this.userName);
-      //   }, 
-      //   (error) => {
-      //     console.log('Error getting user name', error);
-      //     alert("can't find the name");
-      //     localStorage.clear();
-      //     this.router.navigate(['/login']);
-          
-      //   }
-      // )
     }
 
   }
@@ -64,6 +44,26 @@ export class NavComponent {
 
   change_password() {
     this.router.navigate(['/change-password']);
+  }
+
+  ngOnDestroy(): void {
+    if (typeof document !== 'undefined') {
+        document.removeEventListener('click', this.onDocumentClick);
+    }
+}
+
+  onDocumentClick = (event: MouseEvent) => {
+    const dropdownElement = document.querySelector('.dropdown');
+    const profileElement = document.querySelector('.profile');
+
+    // Check if the click was inside the dropdown or the profile element
+    const isClickInsideDropdown = dropdownElement?.contains(event.target as Node);
+    const isClickInsideProfile = profileElement?.contains(event.target as Node);
+    
+    // If the click was outside both, hide the dropdown
+    if (!isClickInsideDropdown && !isClickInsideProfile) {
+      this.clicked = false;
+    }
   }
 
 }

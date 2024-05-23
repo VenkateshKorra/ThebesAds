@@ -7,6 +7,9 @@ body {
     font-weight: 400;
 
 }
+* {
+    box-sizing: content-box;
+}
 
 .container {
     background-color: #0856A2;
@@ -65,13 +68,23 @@ label {
     flex-direction: column;
     width: 40%;
 }
+.warning-text {
+    font-size: 0.7em;
+    padding-left: 0.5em;
+    color: rgb(247, 61, 24);
+    font-weight: 500;
+}
 
+.warning-div {
+    width: 100%;
+    padding: 0.5em;
+}
 .row1 input,
 .row2 input,
 .row4 input,
 .row7 input,
 .row8 input {
-    width: 20vw;
+    width: 22.8vw;
     height: 2.5em;
     padding: 0.6em 0.3em 0.6em 2em;
     border-radius: 25px;

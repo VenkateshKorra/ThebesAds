@@ -1,6 +1,7 @@
 <body>
     <div class="container">
-        <form>
+        <p-toast position="top-center"></p-toast>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div>
                 <h2>Edit Account</h2>
             </div>
@@ -14,9 +15,8 @@
                 <div class="Input">
                     <label for="status">Status &nbsp;<span>*</span></label>
                     <select id="status" name="status" [(ngModel)]="Status" >
-                        <option selected value="approval_required">Invitation Sent</option>
-                        <option value="active">Active</option>
-                        <option calue="disabled">Disabled</option>
+                        <option value="" selected disabled>Select Status</option>
+                    <option *ngFor="let option of statusOptions" [value]="option.value">{{option.value}}</option>
                     </select>
                 </div>
                 
@@ -57,14 +57,14 @@
             <div class="form-group">
                 <div class="Input">
                     <label for="payment_method">Payment Method &nbsp;<span>*</span></label>
-                    <select id="payment_method" name="payment_method">
+                    <select id="payment_method" name="payment_method" required [(ngModel)]="payment_method">
                         <option value="Bank_transfer" selected>Bank Transfer</option>
                     </select>
 
                 </div>
                 <div class="Input">
                     <label for="payment_term">Payment Term &nbsp;<span>*</span></label>
-                    <select id="payment_term" name="payment_term">
+                    <select id="payment_term" name="payment_term" required [(ngModel)]="payment_term" >
                         <option value="30_days" selected>30 days</option>
                         <option value="60_days">60 days</option>
                     </select>
@@ -75,11 +75,11 @@
             <div class="form-group">
                 <div class="Input">
                     <label for="bank_name">Bank name</label>
-                    <input type="text" name="bank_name" id="bank_name">
+                    <input type="text" name="bank_name" id="bank_name" required [(ngModel)]="bank_name">
                 </div>
                 <div class="Input">
                     <label for="swift_code">SWIFT Code</label>
-                    <input type="number" name="swift_code" id="swift_code">
+                    <input type="text" name="swift_code" id="swift_code" required [(ngModel)]="swift_code" >
                 </div>
             </div>
 
@@ -87,11 +87,11 @@
             <div class="form-group">
                 <div class="Input">
                     <label for="bank_address">Bank address</label>
-                    <input type="text" name="bank_address" id="bank_address">
+                    <input type="text" name="bank_address" id="bank_address" required [(ngModel)]="bank_address">
                 </div>
                 <div class="Input">
                     <label for="zipcode">Bank Zipcode</label>
-                    <input type="number" name="zipcode" id="zipcode">
+                    <input type="text" name="zipcode" id="zipcode" required [(ngModel)]="bank_zipcode" >
                 </div>
             </div>
 
@@ -99,11 +99,11 @@
             <div class="form-group">
                 <div class="Input">
                     <label for="bank_code">Bank Code</label>
-                    <input type="text" name="bank_code" id="bank_code">
+                    <input type="text" name="bank_code" id="bank_code" required [(ngModel)]="bank_code">
                 </div>
                 <div class="Input">
                     <label for="branch_name">Branch Name</label>
-                    <input type="text" name="branch_name" id="branch_name">
+                    <input type="text" name="branch_name" id="branch_name" required [(ngModel)]="branch_name">
                 </div>
             </div>
 
@@ -111,11 +111,11 @@
             <div class="form-group">
                 <div class="Input">
                     <label for="account_number">Account number</label>
-                    <input type="text" name="account_number" id="account_number">
+                    <input type="number" name="account_number" id="account_number"   required [(ngModel)]="account_number">
                 </div>
                 <div class="Input">
-                    <label for="account_number">Account Type</label>
-                    <select id="account_number" name="account_number">
+                    <label for="account_type">Account Type</label>
+                    <select id="account_type" name="account_type" required [(ngModel)]="account_type" >
                         <option value="savings" selected>Savings account</option>
                         <option value="current">Current account</option>
                     </select>
@@ -125,13 +125,13 @@
             <div class="form-group">
                 <div class="Input">
                     <label for="holder_name">Account Holder Name</label>
-                    <input type="text" id="holder_name" name="holder_name">
+                    <input type="text" id="holder_name" name="holder_name" required [(ngModel)]="account_holder_name">
                 </div>
             </div>
 
             <!---->
             <div class="btn">
-                <button class="save">Save</button>
+                <button class="save" [disabled]="!Active" [ngStyle]="{'background-color': Active ? '' : 'gray', 'cursor': Active ? 'pointer' : 'default'}">Save</button>
 
             </div>
 

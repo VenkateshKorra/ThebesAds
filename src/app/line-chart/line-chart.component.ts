@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { UsersService } from '../users.service';
 import { response } from 'express';
@@ -8,193 +8,41 @@ import { response } from 'express';
   templateUrl: './line-chart.component.html',
   styleUrl: './line-chart.component.css'
 })
-export class LineChartComponent implements AfterViewInit {
-  @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
+export class LineChartComponent implements OnInit {
 
-  @Input() options!: any;
+  selectedFile: File | null = null;
+  uploadMessage ='';
 
-  apiData:any[] =  [];
+  constructor(private uploadService: UsersService) { }
 
-  constructor(private userService: UsersService) {}
-
-  public chart: any;
-
-  ngAfterViewInit(): void {
-    if(this.options=='impressions') {
-      this.impressionChart();
-    }
-    else if(this.options =='bar') {
-      this.barChart();
-    }
-    else if(this.options=="barHorizontal") {
-      this.barHorizontalChart();
-    }
-    else {
-      this.createChart();
-    }
-    
+  ngOnInit(): void {
   }
 
-  createChart() {
-    const ctx = this.canvas.nativeElement.getContext('2d');
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.uploadMessage = '';
+  }
 
-    this.chart = new Chart(ctx!, {
-        type: 'line', //this denotes tha type of chart
-  
-        data: {// values on X-Axis
-          labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-                   '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-           datasets: [
-            {
-              label: "Sales",
-              data: ['467','576', '572', '79', '92',
-                   '574', '573', '576'],
-              backgroundColor: '#235fa9a2', 
-              fill: true,
-              tension: 0.3,
-              borderColor: '#707070',
-              borderWidth: 1
-            },
-            // {
-            //   label: "Profit",
-            //   data: ['542', '542', '536', '327', '17',
-            //          '0.00', '538', '541'],
-            //   backgroundColor: 'limegreen'
-            // }  
-
-            
-          ]
-        },
-        options: {
-          aspectRatio:2.5
-        }
-        
-      });
+  uploadInvoice() {
+    if (!this.selectedFile) {
+      this.uploadMessage = 'Please select a PDF file to upload.';
+      return;
     }
 
-    impressionChart() {
-      const ctx = this.canvas.nativeElement.getContext('2d');
-  
-      this.userService.get_daily_ad_unit_wise().subscribe(
-        (response) => {
-          console.log('Data received from daily_ad_unit');
-          this.apiData = response;
-  
-          const labels = this.apiData.map(entry => entry.Date);
-          const data = this.apiData.map(entry => entry.Total_impressions);
-  
-          this.chart = new Chart(ctx!, {
-            type: 'line', // this denotes the type of chart
-            data: {
-              // values on X-Axis
-              labels: labels,
-              datasets: [{
-                label: 'Impressions',
-                data: data,
-                backgroundColor: '#235fa9a2',
-                fill: true,
-                tension: 0.3,
-                borderColor: '#707070',
-                borderWidth: 1
-              }],
-            },
-            options: {
-              aspectRatio: 2.5
-            }
-          });
-        },
-        (error) => {
-          console.log('Error receiving data from daily_ad_unit');
+    this.uploadService.uploadInvoice(this.selectedFile).subscribe(
+      (response: any) => {
+        if (response.success) {
+          console.log('Invoice uploaded successfully!');
+          // ... handle successful upload
+        } else {
+          console.error('Upload failed:', response.message);
+          // ... handle upload error
         }
-      );
-    }
-
-
-    barChart() {
-      const ctx = this.canvas.nativeElement.getContext('2d');
-  
-      this.chart = new Chart(ctx!, {
-          type: 'bar', //this denotes tha type of chart
-    
-          data: {// values on X-Axis
-            labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-                     '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-             datasets: [
-              {
-                label: "Sales",
-                data: ['467','576', '572', '79', '92',
-                     '574', '573', '576'],
-                backgroundColor: '#0856A2', 
-                // fill: true,
-                // tension: 0.3,
-                borderColor: '#707070',
-                borderWidth: 1,
-                barThickness: 25, 
-                
-              },
-              // {
-              //   label: "Profit",
-              //   data: ['542', '542', '536', '327', '17',
-              //          '0.00', '538', '541'],
-              //   backgroundColor: 'limegreen'
-              // }  
-  
-              
-            ]
-          },
-          options: {
-            aspectRatio:2.5
-          }
-          
-        });
+      },
+      (error) => {
+        console.error('Error uploading file:', error.message);
       }
-
-
-      barHorizontalChart() {
-        const ctx = this.canvas.nativeElement.getContext('2d');
-    
-        this.chart = new Chart(ctx!, {
-            type: 'bar', //this denotes tha type of chart
-      
-            data: {// values on X-Axis
-              labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-                       '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-               datasets: [
-                {
-                  label: "Sales",
-                  data: ['467','576', '572', '79', '92',
-                       '574', '573', '576'],
-                  backgroundColor: '#0B4E9A', 
-                  // fill: true,
-                  // tension: 0.3,
-                  borderColor: '#707070',
-                  borderWidth: 1, 
-                  barThickness: 5, 
-                  
-                },
-                // {
-                //   label: "Profit",
-                //   data: ['542', '542', '536', '327', '17',
-                //          '0.00', '538', '541'],
-                //   backgroundColor: 'limegreen'
-                // }  
-    
-                
-              ]
-            },
-            options: {
-              aspectRatio:2.5,
-              indexAxis: 'y', 
-             
-          
-            }
-            
-          });
-        }
-  
-
-
-
-
+    );
+  }
 
 }

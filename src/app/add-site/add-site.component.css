@@ -34,7 +34,7 @@ body {
   position: absolute;
   top: 50%;
   left: 0%;
-  transform: translate(-20%, -50%);
+  transform: translate(-5%, -50%);
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -104,3 +104,33 @@ input, select {
   span {
     color: red;
   }
+  .tooltip {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5em;
+  }
+
+  .tooltip p {
+    margin: 0;
+    padding: 0;
+    margin-top: -3px;
+    margin-left: 5px;
+    color: #0856A2;
+    font-size: 12px;
+    border: 1px solid #0856A2;
+    border-radius: 100%;
+    padding: 0 0.2em;
+  }
+
+  .warning-text {
+    font-size: 0.7em;
+    padding-left: 0.5em;
+    color: rgb(247, 61, 24);
+    font-weight: 500;
+  }
+  
+  .warning-div {
+    width: 100%;
+    padding: 0.5em;
+  }
+  

@@ -1,5 +1,8 @@
-<body>
-    <div class="image">
-      <canvas #canvas id="canvas" ></canvas>
-      </div>
-</body>
+<div>
+  <input type="file" accept=".pdf" (change)="onFileSelected($event)">
+  <button (click)="uploadInvoice()">Upload Invoice</button>
+</div>
+
+<div *ngIf="uploadMessage">
+  {{ uploadMessage }}
+</div>

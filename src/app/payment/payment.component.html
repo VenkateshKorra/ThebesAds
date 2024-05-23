@@ -1,0 +1,281 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <!-- Header Section -->
+    <div class="container">
+        <div class="header">
+            <div class="left-section">
+                <div class="back-button">
+                    <a href="#" class="arrow">&#8249;</a>
+                </div>
+                <h1>Payments</h1>
+            </div>
+
+        </div>
+
+        <!-- Content Section -->
+        <div class="content">
+            <!-- ATM Card Section -->
+            <div class="atm-card-section">
+                <div class="atm-card">
+                    <div class="card-header">Primary</div>
+                    <div class="card-body">
+                        <div class="card-text">Wire transfer</div>
+                        <div class="card-number">
+                            <p>0588 5848 4484 8484</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="bank-details-section">
+                <div class="bank-details-header">
+                    <div>
+                        <h3 class="bank-details-title">Bank Account Details</h3>
+                    </div>
+
+                    <div>
+                        <button class="edit-button" (click)="toggleEdit()"><i class="fas fa-edit"></i> Edit</button>
+                    </div>
+                </div>
+                <form id="bank-details-form" #form="ngForm" (ngSubmit)="onSubmit(form)">
+                    <div class="bank-details">
+                        <!-- Use *ngIf to toggle between text and input fields -->
+                        <div>
+                            <p>Payment Method:
+                                <span *ngIf="!isEditMode">{{payment_method}}</span>
+                                <input name="payment_method" required *ngIf="isEditMode" [(ngModel)]="payment_method"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Payment Term:
+                                <span *ngIf="!isEditMode">{{payment_term}}</span>
+                                <input name="payment_term" required *ngIf="isEditMode" [(ngModel)]="payment_term"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Bank Name:
+                                <span *ngIf="!isEditMode">{{bank_name}}</span>
+                                <input name="bank_name" required *ngIf="isEditMode" [(ngModel)]="bank_name"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Bank Address:
+                                <span *ngIf="!isEditMode">{{bank_address}}</span>
+                                <input name="bank_address" required *ngIf="isEditMode" [(ngModel)]="bank_address"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Bank Zip Code:
+                                <span *ngIf="!isEditMode">{{bank_zipcode}}</span>
+                                <input name="bank_zipcode" required *ngIf="isEditMode" [(ngModel)]="bank_zipcode"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Branch Code:
+                                <span *ngIf="!isEditMode">{{bank_code}}</span>
+                                <input name="bank_code" required *ngIf="isEditMode" [(ngModel)]="bank_code"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Branch Name:
+                                <span *ngIf="!isEditMode">{{branch_name}}</span>
+                                <input name="branch_name" required *ngIf="isEditMode" [(ngModel)]="branch_name"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Account Number:
+                                <span *ngIf="!isEditMode">{{account_number}}</span>
+                                <input name="account_number" required *ngIf="isEditMode" [(ngModel)]="account_number"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Account Type:
+                                <span *ngIf="!isEditMode">{{account_type}}</span>
+                                <input name="account_type" required *ngIf="isEditMode" [(ngModel)]="account_type"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>Account Holder Name:
+                                <span *ngIf="!isEditMode">{{account_holder_name}}</span>
+                                <input name="account_holder_name" required *ngIf="isEditMode"
+                                    [(ngModel)]="account_holder_name" type="text" />
+                            </p>
+                        </div>
+                        <div>
+                            <p>SWIFT Code:
+                                <span *ngIf="!isEditMode">{{swift_code}}</span>
+                                <input name="swift_code" required *ngIf="isEditMode" [(ngModel)]="swift_code"
+                                    type="text" />
+                            </p>
+                        </div>
+                        <div *ngIf="isEditMode">
+                            <button type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="table">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Position Column -->
+                <!-- <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Site ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container> -->
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="month">
+                    <th mat-header-cell *matHeaderCellDef> Month </th>
+                    <td mat-cell *matCellDef="let element"> {{element.month}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="publisher_id">
+                    <th mat-header-cell *matHeaderCellDef> Publisher Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="publisher_id">
+                            <th mat-header-cell *matHeaderCellDef> Account ID </th>
+                            <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
+                        </ng-container> -->
+
+                <ng-container matColumnDef="publisher_name">
+                    <th mat-header-cell *matHeaderCellDef> Publisher Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher_name}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="publisher_networkcode">
+                    <th mat-header-cell *matHeaderCellDef> Publisher Networkcode </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher_networkcode}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total_payment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Payment </th>
+                    <td mat-cell *matCellDef="let element"> {{element.total_payment | currency: 'USD' : 'symbol' :
+                        '1.1-2'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="parent_payment">
+                    <th mat-header-cell *matHeaderCellDef> Parent Payment </th>
+                    <td mat-cell *matCellDef="let element"> {{element.parent_payment | currency: 'USD' : 'symbol' :
+                        '1.1-2'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="child_payment">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Child Payment </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>
+                            {{element.child_payment | currency: 'USD' : 'symbol' : '1.1-2'}}
+                        </p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="deduction">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Deductions </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.deduction | currency: 'USD' : 'symbol' : '1.1-2'}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ad_serving_cost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Serving Cost </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.ad_serving_cost | currency: 'USD' : 'symbol' : '1.1-2'}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delegation_type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delegation Type </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.delegation_type}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="invoice_generation_data">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Generation Date </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.invoice_generation_data}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="invoice_upload_data">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Upload Date </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.invoice_upload_data}}</p>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="payment_data">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Date </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.payment_data}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="payment_mode">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Made </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.payment_mode}}</p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="download">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Download Invoice </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <p>{{element.download}}</p>
+                        <button id="download" (click)="downloadPDF(element)">
+                            <img src="assets\download-icon.svg" alt="Download voice" width="20" height="20">
+                        </button>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="upload">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Upload Invoice </th>
+                    <td mat-cell *matCellDef="let element" style="text-align: center;">
+                        <div class="file-actions">
+                            <button id="upload" [disabled]="element.filePath !='NA' "
+                                [ngClass]="{'disable':element.filePath !='NA'}" (click)="uploadButtonClicked(element)">
+
+                                <img src="assets/upload(1).png" alt="upload invoice" width="20px" height="20px">
+                            </button>
+
+                            <!-- Download link - Displayed only if file is uploaded -->
+                            <a *ngIf="element.filePath !== 'NA' && element.filePath" class="anchor file-link"
+                                [href]="getDownloadLink(element.filePath)" download>
+                                {{ element.fileName }}
+                            </a>
+
+
+                            <!-- Delete button - Displayed only if file is uploaded -->
+                            <button *ngIf="element.filePath !== 'NA' && element.filePath" class="delete-btn"
+                                [disabled]="element.payment_made" [ngClass]="{'disable': element.payment_made}"
+                                (click)="deleteInvoice(element)" aria-label="Delete file">
+                                <img src="assets/bin.png" alt="Delete" style="height: 15px; width: 15px;">
+                            </button>
+
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+
+</body>

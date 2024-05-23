@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UsersService } from '../users.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../sign-up-dropdown';
 import { StatusOptions } from '../admin-dashboard-dropdown';
+import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-accounts-list',
@@ -23,12 +26,13 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
   @ViewChild('status') status!: ElementRef;
   @ViewChild('country') country!: ElementRef;
 
-  displayedColumns: string[] = ['id', 'publisher_id','publisher_name', 'network_id', 'status', 'mcm_status', 'country', 'margin', 'sites', 'apps','email', 'phone', 'gross', 'approved_on', 'created_on', 'created_by', 'action'];
+  displayedColumns: string[] = [ 'publisher_id','publisher_name', 'network_id', 'status', 'mcm_status', 'country', 'margin', 'sites', 'apps','email', 'phone', 'gross', 'approved_on', 'created_on', 'created_by', 'action'];
   dataSource = new MatTableDataSource<Accounts>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userService: UsersService, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private userService: UsersService, @Inject(PLATFORM_ID) private platformId: Object, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.status_options=StatusOptions;
@@ -41,6 +45,7 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   clearSearch() {
     // Clear the input field
@@ -163,22 +168,64 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
     this.inviteSend = true;
   }
 
+
+  @HostListener('document:click', ['$event'])
+  onGlobalClick(event: MouseEvent): void {
+    const clickedElement = event.target as HTMLElement;
+    // console.log('Clicked element is: ', clickedElement);
+    this.dataSource.data.forEach((element: Accounts) => {
+        // Check if the clicked element is outside the action button or dropdown for the current element
+        if (!this.isActionButtonOrDropdown(clickedElement, element)) {
+            // Hide the dropdown by setting showOptions to false
+            element.showOptions = false;
+        }
+    });
+    // Perform change detection if necessary
+    this.dataSource.data = [...this.dataSource.data];
+}
+
+isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolean {
+  // Define an array of selectors to check against
+  const selectors = ['.image-button', '.action-image'];
+
+  // Traverse up the DOM tree from the clicked element
+  let currentElement: HTMLElement | null = clickedElement;
+
+  while (currentElement !== null) {
+      // Check if the current element matches any of the selectors
+      for (const selector of selectors) {
+          if (currentElement.matches(selector)) {
+              return true;
+          }
+      }
+      // Move up to the parent element
+      currentElement = currentElement.parentElement;
+  }
+  return false;
+}
+
   performAction(element: Accounts) {
     //console.log("Button value is ", element);
     //alert('Action button is clicked');
+    this.dataSource.data.forEach((item: any) => {
+      if(item !== element) {
+        item.showOptions = false;
+      }
+    })
     element.showOptions = !element.showOptions;
+    console.log(element.showOptions);
   }
 
   fetchData() {
     this.userService.get_admin_account_list().subscribe(
       (response: any[]) => {
         const mappedUsers: Accounts[] = response.map(user => ({
-          id: user.id,
-          publisher_id: user['Publisher ID'],
-          publisher_name: user['Publisher Name'],
-          network_id: user['Network ID'],
+          id: user.Account_Id,
+          publisher_id: user['GAM_Publisher ID'],
+          publisher_name: user['Account_Name'],
+          network_id: user['GAM_Network ID'],
           status: user.Status,
-          mcm_status: user.MCM_status,
+          mcm_status: user.GAM_status,
           country: user.Country,
           phone: user.Phone,
           email: user.Email,
@@ -186,9 +233,9 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
           sites: user.Sites,
           apps: user.Apps, 
           gross: user['Gross/Net'],
-          approved_on: user['Approved on'],
-          created_on: user['Created on'],
-          created_by: user['Created By'],
+          approved_on: user['Approved_On'],
+          created_on: user['Created_On'],
+          created_by: user['Created_By'],
           showOptions: false,
           
         }));
@@ -196,15 +243,16 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
         if (this.dataSource.paginator) {
           this.dataSource.paginator.firstPage();
         }
-        
         //console.log('users data', this.dataSource.data);
-        console.log('Response data', response);
+        // console.log('Response data', response);
       },
       (error) => {
         console.log('Error Fetching users:', error);
       }
     );
   }
+
+
 
   checkStatus(element: any) {
     console.log('CheckStatus: ', element.email,'id: ', element.id);
@@ -219,7 +267,8 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
         console.log('Response from gam APi for status is: ', response);
         //console.log(response.status);
         const mcm = response.status;
-        this.updateAdminAccountListMcmStatus(mcm, rowId);
+        const networkId  = response.networkID;
+        this.updateAdminAccountListMcmStatus(mcm, rowId, networkId);
       }, 
       (error)=> {
         console.log('Error fetching data: ', error); 
@@ -229,7 +278,14 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
   }
 
   setPublisherName(element: any) {
-    this.userService.setPublisherNameAndId(element.publisher_name, element.publisher_id);
+    const dataString = JSON.stringify(element);
+    this.setUserDetails(dataString);
+    // this.router.navigate(['/accounts', { data: dataString }]);
+    this.userService.setPublisherNameAndId(element.publisher_name, element.id);
+  }
+
+  setUserDetails(element:any) {
+    this.userService.setUserDetails(element);
   }
 
 
@@ -243,13 +299,16 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
       (response) => {
         console.log('ResendInvite: ', response);
         
-        alert('Resend Invite sent successfully!!!');
+        // alert('Resend Invite sent successfully!!!');
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Resend Invite sent Successfully', life: 5000  });
         this.fetchData();
         
       }, 
       (error) => {
         console.log('Error is sending resend invite:', error);
-        alert('Error in resending invite!!!');
+        // alert('Error in resending invite!!!');
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in sending Resend Invite', life: 5000  });
+
         
       }
     )
@@ -263,7 +322,8 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
     // const rowId= element.id;
     this.userService.revoke_invite(statusOfMcm).subscribe(
       (response) => {
-        alert('Revoke invite sent!!!');
+        // alert('Revoke invite sent!!!');
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Revoke Invite Sent!!', life: 5000  });
         this.fetchData();
         // const mcm = response.status;
         // this.updateAdminAccountListStatus(mcm, rowId);
@@ -271,7 +331,8 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
       }, 
       (error) => {
         console.log('Error fetching data: ', error); 
-        alert('Error sending revoke invite:');
+        // alert('Error sending revoke invite:');
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error sending Revoke Invite', life: 5000  });
       }
     )
 
@@ -292,37 +353,46 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
       (response) => {
         console.log('Disabled successfully!!!', response);
         if(response.message=="Status updated successfully") {
-          alert('Disabled successfully!!!');
+          // alert('Disabled successfully!!!');
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Disabled Successfully', life: 5000  });
           this.updateDisableStatus(statusUpdate.status, statusUpdate.id);
         }
         if(response.message== "No rows updated") {
-          alert("No records found with this email,  disable is unsuccessfully!!");
+          // alert("No records found with this email,  disable is unsuccessfully!!");
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No records found !!!', life: 5000  });
+
         } 
       }, 
       (error) => {
         console.log('Error disabling ', error);
-        alert('Error disabling option!!');
+        // alert('Error disabling option!!');
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Disabling!!', life: 5000  });
+
         
       }
     )
     
   }
 
-  updateAdminAccountListMcmStatus(status: any, idNo: any) {
+  updateAdminAccountListMcmStatus(status: any, idNo: any, networkId: any) {
 
     const status_string=  status.toLowerCase().replace(/^\w/, (c:string) => c.toUpperCase());
     const Data = {
       MCM_status: status_string,
-      id: idNo
+      id: idNo, 
+      networkID: networkId
     }
     this.userService.mcm_status_update(Data).subscribe(
       (response) => {
         console.log('Response from admin_account_list table', response);
         this.fetchData();
-        alert('Status updated!!!');
+        // alert('MCM Status updated!!!');
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'MCM Status updated!!', life: 5000  });
       },
       (error) => {
         console.log('Error in updating mcm_status in table', error);
+        // alert('Error: ' + error.error.error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in Updating MCM Status!!!', life: 5000  });
         
       }
     )
@@ -330,8 +400,6 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
 
   updateDisableStatus(status: any, idNo: any) {
     const status_string=  status.toLowerCase().replace(/^\w/, (c:string) => c.toUpperCase());
-    
-    
     const Data = {
       Status: status_string,
       id: idNo
@@ -341,11 +409,15 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
       (response) => {
         console.log('Response from admin_account_list table', response);
         this.fetchData();
-        alert('Status updated!!!');
+        // alert('Disable Status updated!!!');
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Disable Status Updated', life: 5000  });
 
       }, 
       (error) => {
         console.log('Error in updating disable status in table', error);
+        // alert('Error: ' + error.error.error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in updating disable status !!!', life: 5000  });
+
       }
     )
 

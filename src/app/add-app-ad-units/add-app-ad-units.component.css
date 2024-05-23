@@ -133,6 +133,11 @@ label {
     margin: 0;
   }
 
+  .btn {
+    margin-top: 3em;
+    text-align: center;
+  }
+
   .save{
     background-color: #0856A2;
     color: white;
@@ -142,4 +147,61 @@ label {
     border: none;
     cursor: pointer;
     margin-top: 1.5em;
+  }
+
+  .example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.3em;
+  }
+
+  .radio {
+    display: flex;
+    flex-direction: row;
+    margin:  1em 0 2em 0;
+    justify-content: center;
+    gap: 20px;
+  }
+  .radio label {
+    font-size: 1.5em;
+  }
+  
+  .radio  input[type="radio"] {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px; /* Adjust the margin as needed */
+    width:1.5em;
+    height: auto;
+    margin: 0;
+  
+  }
+  
+  .radio > label {
+    display: inline-block;
+    font-family: "Overpass Light", sans-serif !important;
+    vertical-align: middle;
+    font-size: 1em;
+  }
+  
+  ng-select {
+    margin-bottom: 1em;
+    line-height: 25px;
+    font-size: 0.8em;
+    /* width: 475px; */
+    height: 32px !important;
+    box-sizing: border-box;
+    color: white;
+    background-color: white;
+    /* text-align: center; */
+  }
+
+  .warning-text {
+    font-size: 0.7em;
+    padding-left: 0.5em;
+    color: rgb(247, 61, 24);
+    font-weight: 500;
+  }
+  
+  .warning-div {
+    width: 100%;
+    padding: 0.5em;
   }

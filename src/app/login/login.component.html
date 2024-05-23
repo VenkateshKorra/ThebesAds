@@ -1,8 +1,11 @@
 <body>
+    <p-toast position="top-center"></p-toast>
     <div class="main">
+        
 
     
     <div class="container">
+        
         <form (ngSubmit)="onSubmit()">
             <h3>Login</h3>
             <input type="email" id="email" name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" placeholder="Email address" [(ngModel)]='emailAddress' required >

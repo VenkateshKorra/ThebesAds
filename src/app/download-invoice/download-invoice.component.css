@@ -1,0 +1,94 @@
+body {
+    width: 100%;
+    margin: 0;
+    font-family: 'Overpass', sans-serif;
+}
+.container {
+    /* width: 100%; */
+    padding: 6em;
+    width: 80%;
+    /* border: 1px solid black; */
+}
+
+.heading {
+    display: flex;
+    flex-direction: row;
+    gap: 60%;
+    margin-left: 0.5em;
+
+}
+
+.info p {
+   font-weight: 600;
+   margin-left: 0.5em;
+}
+
+.info span {
+    font-weight: 300;
+    font-size: 0.9em;
+}
+
+.text-wrap {
+    max-width: 300px;
+    text-overflow: wrap;
+}
+
+.table-data {
+    width: 100%;
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
+
+.user-data-table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    
+}
+.user-data-table td, th {
+    border: 1px solid black;
+    
+}
+.user-data-table th {
+    padding: 0.3em 0;
+}
+
+
+/* .user-data-table th {
+    text-align: start;
+    padding-left: 0.5em;
+} */
+
+.user-data-table td {
+    text-align: center;
+}
+
+.user-account-data {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.user-account-data td, th {
+    border: 1px solid black;
+}
+
+.user-account-data td {
+    text-align: start;
+}
+
+.account-data {
+    margin-bottom: 3em;
+}
+
+.column-1 {
+    width: 25%;
+    font-weight: 600;
+    padding-left: 0.5em;
+}
+.column-2 {
+    padding-left: 0.5em;
+}
+
+.footer {
+    margin-left: 0.5em;
+}

@@ -1,4 +1,5 @@
 <body>
+    <p-toast position="top-center"></p-toast>
     <div class="container" >
         <div class="top-selection">
             <div class="search">
@@ -9,11 +10,10 @@
                         <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
                     </div>
                 </div>
-
-
                 <div class="select">
                     <label for="size">Size</label>
                     <select (change)="applyFilterBySymbol(sort.value)" id="size" #sort>
+                        <option selected disabled value="">Choose a size</option>
                         <option *ngFor="let option of sizes" [value]="option.name">{{option.name}} </option>
                     </select>
                 </div>
@@ -24,17 +24,17 @@
 
         </div>
         <div class="table">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource" matSort>
 
                 <!-- Position Column -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef> ID </th>
+                <!-- <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Unit ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="ad_unit_id">
-                    <th mat-header-cell *matHeaderCellDef> Ad Unit ID </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> GAM Ad Unit ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.ad_unit_id}} </td>
                 </ng-container>
 
@@ -45,14 +45,14 @@
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="publisher_id">
-                    <th mat-header-cell *matHeaderCellDef> Publisher ID </th>
-                    <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
+                <ng-container matColumnDef="account_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Account Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.account_name}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="site_id">
-                    <th mat-header-cell *matHeaderCellDef> Site ID </th>
-                    <td mat-cell *matCellDef="let element"> {{element.site_id}} </td>
+                <ng-container matColumnDef="site_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Site Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.site_name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="gam_ad_unit_path">
@@ -66,26 +66,26 @@
                 </ng-container>
 
                 <ng-container matColumnDef="ad_format">
-                    <th mat-header-cell *matHeaderCellDef> Ad Format</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Format</th>
                     <td mat-cell *matCellDef="let element"> {{element.ad_format}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="parentAdUnitId">
+                <!-- <ng-container matColumnDef="parentAdUnitId">
                     <th mat-header-cell *matHeaderCellDef> ParentAdUnitID</th>
                     <td mat-cell *matCellDef="let element"> {{element.parentAdUnitId}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- Action Column -->
                 <ng-container matColumnDef="action" class="action">
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element">
                         <div >
-                            <button mat-button (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg"  alt="action button"></button>
+                            <button  (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg" class="action-image"  alt="action button"></button>
                         </div>
                         
                         <div class="button-group" *ngIf="element.showOptions">
                             <button (click)="generateReport(element)"  >Generate Report</button>
-                            <button (click)="generateGptTag(element)">Download Ads.txt</button>
+                            <button (click)="downloadAds(element)">Download Tag</button>
                             
                         </div>
                     </td>
@@ -100,7 +100,7 @@
 
             
         </div>
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" showFirstLastButtons
                 aria-label="Select page of periodic elements">
             </mat-paginator>
     </div>

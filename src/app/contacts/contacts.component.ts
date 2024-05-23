@@ -4,6 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsersService } from '../users.service';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';  
 
 export interface UserData {
   id?: string;
@@ -14,6 +18,15 @@ export interface UserData {
   status: string;
   invite: string;
   invited: string;
+  created_on: string;
+  invited_on: string;
+  created_by: string;
+  app_mediation_platform: string;
+  est_daily_user: string;
+  product_type: string;
+  url: string;
+  web_monthly_page_view: string;
+  top_country: string;
 }
 
 @Component({
@@ -27,7 +40,7 @@ export class ContactsComponent implements AfterViewInit, OnInit {
   inviteSend=false;
   click=false;
   count = 1;
-  displayedColumns: string[] = ['id', 'name', 'email', 'phone', 'country', 'status', 'invited', 'invite'];
+  displayedColumns: string[] = [ 'name', 'email', 'phone', 'country', 'status', 'invited', 'invite', 'created_on', 'invited_on', 'created_by'];
   dataSource: MatTableDataSource<UserData>;
 
   updateChanged = {}
@@ -45,7 +58,7 @@ export class ContactsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userService: UsersService,  @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(private userService: UsersService,  @Inject(PLATFORM_ID) private platformId: Object, private router: Router, private messageService: MessageService, public dialog: MatDialog) {
     // Initialize MatTableDataSource with an empty array
     this.dataSource = new MatTableDataSource<UserData>([]);
     
@@ -75,59 +88,38 @@ export class ContactsComponent implements AfterViewInit, OnInit {
     }
   }
 
-  // addUser() {
-  //   // Increment count for ID generation
-  //   this.count++;
-
-  //   // Create a new user object
-  //   const userData: UserData = {
-     
-  //     name: 'venky',
-  //     email: 'venkatchowhaan@gmail.com',
-  //     phone: '+91 1234567890',
-  //     country: 'India',
-  //     status: 'Approval Required',
-  //     invite: 'Invite', 
-  //     invited: 'N',
-  //   };
-
-  //   this.userService.saveUser(userData).subscribe(
-  //     (response) => {
-  //       console.log('Saved New Contacts', response);
-
-  //     }, 
-  //     (error) => {
-  //       console.log('Error in saving New Contact', error);
-        
-  //     }
-  //   )
-    
-
-  //   // Push the new user to the data source
-  //   this.dataSource.data.push(userData);
-
-  //   // Update the change subscription
-  //   this.dataSource._updateChangeSubscription();
-  // }
+  addUser()  {
+    console.log('Add User Clicked');
+    this.router.navigate(['/sign-up']);
+  }
 
   show_contacts() {
     this.userService.getContacts().subscribe(
       (response: any[]) => {
         const mappedUsers: UserData[] = response.map(user => ({
-          id: user.id,
+          id: user.Id,
           name: user.Name,
           email: user.Email_Id,
           phone: user.Phone_No,
           country: user.Country,
-          status: user.status, // Assuming there's a property named "Status" in the fetched data
-          invited: user.invited,
-          invite: 'Invite' // Assuming there's a property named "Invite" in the fetched data
+          status: user.Status, // Assuming there's a property named "Status" in the fetched data
+          invited: user.Invited,
+          invited_on: user.Invited_On,
+          created_on: user.Created_On,
+          created_by: user.Created_By,
+          invite: 'Invite', // Assuming there's a property named "Invite" in the fetched data
+          app_mediation_platform: user.App_Mediation_Platform,
+          est_daily_user: user.Est_Daily_User,
+          product_type: user.Product_Type,
+          url: user.URL,
+          web_monthly_page_view: user.Web_Monthly_Page_View,
+          top_country: user.Top_Country
         }));
   
         this.dataSource.data = mappedUsers;
         //console.log('users data', this.dataSource.data);
         //console.log('Response data', response);
-        console.log('Got response successfully', response);
+        // console.log('Got response successfully', response);
         
       },
       (error) => {
@@ -142,7 +134,7 @@ export class ContactsComponent implements AfterViewInit, OnInit {
     this.click= true;
     const updateData= {
       id: row.id,
-      invited: 'Y',
+      invited: 'Yes',
       status: 'Invitation Sent',
     }
     this.updateChanged=updateData;
@@ -156,13 +148,22 @@ export class ContactsComponent implements AfterViewInit, OnInit {
     //console.log('Invite is closed', this.click);
     //console.log("event is ", event);
     console.log('The res is: ', event);
-    
     // Check if the first element of the array is 'submit'
-    
     if (event==='ok') {
       this.onUpdate(this.updateChanged);
     }
     
+  }
+
+  openDialog(element: any) {
+    const dialogRef = this.dialog.open(ContactDialogComponent, {
+      width: '70%',
+      data: element, // Pass row data to the dialog
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   onUpdate(updateData: any) {
@@ -170,18 +171,22 @@ export class ContactsComponent implements AfterViewInit, OnInit {
     this.userService.updateContacts(updateData).subscribe(
       (response) => {
         console.log("Successfully updated", response);
-        alert("Invited column updated!!");
-  
+        // alert("Invited column updated!!");
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Contacts updated', life: 5000  });
+
+        this.show_contacts();
         // Update the dataSource to reflect the changes
-        const updatedUserIndex = this.dataSource.data.findIndex(user => user.id === updateData.id);
-        if (updatedUserIndex !== -1) {
-          this.dataSource.data[updatedUserIndex].status = 'Invitation Sent';
-          this.dataSource.data[updatedUserIndex].invited = 'Y';
-          this.dataSource._updateChangeSubscription();
-        }
+        // const updatedUserIndex = this.dataSource.data.findIndex(user => user.id === updateData.id);
+        // if (updatedUserIndex !== -1) {
+        //   this.dataSource.data[updatedUserIndex].status = 'Invitation Sent';
+        //   this.dataSource.data[updatedUserIndex].invited = 'Y';
+        //   this.dataSource._updateChangeSubscription();
+        // }
       },
       (error) => {
         console.log("Error in Saving", error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
+
       }
     );
   }

@@ -262,13 +262,64 @@ export const adFormat = [
 ]
 
 export const platforms = [
-    { id: 1, value: 'GOOGLE_PLAY', label: 'Android' },
-    { id: 2, value: 'APPLE_ITUNES', label: 'iOS' },
-    { id: 3, value: 'GOOGLE_PLAY, APPLE_ITUNES', label: 'Android, iOS' },
-    { id: 4, value: 'APPLE_ITUNES, GOOGLE_PLAY', label: 'iOS, Android' }
+    { id: 1, value: 'Android', label: 'Android' },
+    { id: 2, value: 'iOS', label: 'iOS' },
+    { id: 3, value: '', label: 'All' },
+    // { id: 4, value: 'iOS, Android', label: 'iOS, Android' }
 ];
 
 export const AddSitesCategory = [
     { id: 1, label: "E-commerce", value: "E-commerce" },
     { id: 2, label: "Travel Planners", value: "Travel Planners" }
 ];
+
+export const AddAppsCategory = [
+    { id: 1, label: "Art and Design", value: "Art and Design" },
+    { id: 2, label: "Auto and Vehicles", value: "Auto and Vehicles" },
+    { id: 3, label: "Beauty", value: "Beauty" },
+    { id: 4, label: "Books and Reference", value: "Books and Reference" },
+    { id: 5, label: "Business", value: "Business" },
+    { id: 6, label: "Comics", value: "Comics" },
+    { id: 7, label: "Communications", value: "Communications" },
+    { id: 8, label: "Dating", value: "Dating" },
+    { id: 9, label: "Education", value: "Education" },
+    { id: 10, label: "Entertainment", value: "Entertainment" },
+    { id: 11, label: "Events", value: "Events" },
+    { id: 12, label: "Finance", value: "Finance" },
+    { id: 13, label: "Food and Drink", value: "Food and Drink" },
+    { id: 14, label: "Games", value: "Games" },
+    { id: 15, label: "Health and Fitness", value: "Health and Fitness" },
+    { id: 16, label: "House and Home", value: "House and Home" },
+    { id: 17, label: "Libraries and Demo", value: "Libraries and Demo" },
+    { id: 18, label: "Lifestyle", value: "Lifestyle" },
+    { id: 19, label: "Maps and Navigation", value: "Maps and Navigation" },
+    { id: 20, label: "Medical", value: "Medical" },
+    { id: 21, label: "Music and Audio", value: "Music and Audio" },
+    { id: 22, label: "News and Magazines", value: "News and Magazines" },
+    { id: 23, label: "Parenting", value: "Parenting" },
+    { id: 24, label: "Personalization", value: "Personalization" },
+    { id: 25, label: "Photography", value: "Photography" },
+    { id: 26, label: "Productivity", value: "Productivity" },
+    { id: 27, label: "Shopping", value: "Shopping" },
+    { id: 28, label: "Social", value: "Social" },
+    { id: 29, label: "Sports", value: "Sports" },
+    { id: 30, label: "Tools", value: "Tools" },
+    { id: 31, label: "Travel and Local", value: "Travel and Local" },
+    { id: 32, label: "Utility", value: "Utility" },
+    { id: 33, label: "Video Players and Editors", value: "Video Players and Editors" },
+    { id: 34, label: "Weather", value: "Weather" }
+];
+
+export const OtherPlatforms = [
+    { id: 1, label: "Roku", value: "ROKU" },
+    { id: 2, label: "Amazon Fire TV", value: "AMAZON_FIRETV" },
+    { id: 3, label: "PlayStation", value: "PLAYSTATION" },
+    { id: 4, label: "Xbox", value: "XBOX" },
+    { id: 5, label: "Samsung TV", value: "SAMSUNG_TV" },
+    { id: 6, label: "LG TV", value: "LG_TV" }
+]
+
+export const userTypedropdown = [
+    { id: 1, label: 'Admin', value:'Admin'},
+    { id: 2, label: 'Publisher', value: 'Publisher'}
+]

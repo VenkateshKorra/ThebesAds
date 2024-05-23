@@ -1,4 +1,5 @@
 <body>
+  <p-toast position="top-center"></p-toast>
     <!--<button (click)="display()">Click</button>-->
     <!-- Background overlay -->
     <div class="background-overlay" [ngClass]="{'show': isOpen}"></div>
@@ -12,7 +13,11 @@
           </div>
           <div class="Name">
             <label for="name">Name <span>*</span></label><br>
-            <input type="text" id="name"  name="name" [(ngModel)]="formData.Name" required>
+            <input type="text" id="name"  name="name"  (input)="checkNameTextLength()" [(ngModel)]="formData.Name" required>
+            <div *ngIf="nameTextLength" class="warning">
+              <p class="warning-text">Name should not exceed 500 character length</p>
+              
+            </div>
           </div>
           <div class="row1">
             <div class="cell1">
@@ -32,11 +37,19 @@
           
             <div class="cell1">
               <label for="phone">Phone <span>*</span></label><br>
-              <input type="text" id="phone" name="phone" [(ngModel)]="formData.Phone" maxlength="10" required>
+              <input type="text" id="phone" name="phone" [(ngModel)]="formData.Phone" (input)="checkPhoneTextLength()"   required>
+              <div *ngIf="phoneTextLength" class="warning">
+                <p class="warning-text">Phone text should not exceed 20 character length</p>
+                
+              </div>
             </div>
             <div class="cell2">
               <label for="email">Email <span>*</span></label><br>
-              <input type="email" id="email" name="email" [(ngModel)]="formData.Email" required>
+              <input type="email" id="email" name="email"   (input)="checkEmailTextLength()" [(ngModel)]="formData.Email" required>
+              <div *ngIf="emailTextLength" class="warning">
+                <p class="warning-text">Email should not exceed 100 character length</p>
+                
+              </div>
             </div>
           
   

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { skip } from 'rxjs';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,6 +20,8 @@ export class MenuComponent implements OnInit {
   item1: boolean =false;
   item2: boolean = false;
   isUp1: boolean=false;
+
+  constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
     const userDataString = typeof localStorage !== 'undefined' ? localStorage.getItem('userData') : null;
@@ -58,5 +61,9 @@ export class MenuComponent implements OnInit {
     }
 
   }
+
+  // getUserRoute(): string {
+  //   return this.userService.getType()=='Admin'? '/admin-payment': '/payment';
+  // }
 
 }

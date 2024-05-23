@@ -29,6 +29,10 @@ import { ForgotYourPasswordComponent } from './forgot-your-password/forgot-your-
 import { AccountDetailsAppsComponent } from './account-details-apps/account-details-apps.component';
 import { AppsAppAdUnitsListComponent } from './apps-app-ad-units-list/apps-app-ad-units-list.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ReportDownloadComponent } from './report-download/report-download.component';
+import { DownloadInvoiceComponent } from './download-invoice/download-invoice.component';
+import { AdminPaymentComponent } from './admin-payment/admin-payment.component';
+import { PaymentComponent } from './payment/payment.component';
 
 
 const routes: Routes = [
@@ -62,9 +66,14 @@ const routes: Routes = [
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [authenticationGuard] },
   { path:  'user-details', component: UserDetailsComponent, canActivate: [authenticationGuard]},
   { path: 'line-chart', component: LineChartComponent, canActivate: [authenticationGuard] },
+  { path: 'report-download', component: ReportDownloadComponent, canActivate: [authenticationGuard]},
   { path: 'forgot-password', component: ForgotYourPasswordComponent},
   //{ path: 'users', component: UsersComponent },//
   { path: 'reset-password/:name', component: ResetPasswordComponent},
+  { path: 'download-invoice', component: DownloadInvoiceComponent, canActivate: [authenticationGuard]},
+  // { path: 'admin-payment', component: AdminPaymentComponent, canActivate: [authenticationGuard]  },
+  { path: 'admin-payment', component: AdminPaymentComponent, canActivate: [authenticationGuard]},
+  { path: 'payment', component: PaymentComponent, canActivate: [authenticationGuard]},
   { path: '**', component: UsersComponent, canActivate: [authenticationGuard] }
 
 ];

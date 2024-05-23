@@ -1,29 +1,29 @@
 export const timeOptions = [
-    { id: 1, value: 'today', label: 'Today' },
-    { id: 2, value: 'yesterday', label: 'Yesterday' },
-    { id: 3,value: 'wtd', label: 'WTD' },
-    { id: 4,value: 'last week', label: 'Last Week' },
-    { id: 5,value: 'last 7 days', label: 'Last 7 days' },
-    { id: 6,value: 'monthly', label: 'MTD' },
-    { id: 7,value: 'last month', label: 'Last Month' },
-    { id: 8,value: 'last 3 month', label: 'Last 3 Month' },
-    { id: 9,value: 'last 6 month', label: 'Last 6 Month' },
-    { id: 10,value: 'yearly', label: 'YTD' }
+    { id: 1, value: 'Today', label: 'Today' },
+    { id: 2, value: 'Yesterday', label: 'Yesterday' },
+    { id: 3,value: 'week_to_date', label: 'WTD' },
+    { id: 4,value: 'Last_week', label: 'Last Week' },
+    { id: 5,value: 'last_7_days', label: 'Last 7 days' },
+    { id: 6,value: 'month_to_date', label: 'MTD' },
+    { id: 7,value: 'last_month', label: 'Last Month' },
+    { id: 8,value: 'Last_3_Month', label: 'Last 3 Month' },
+    { id: 9,value: 'Last_6_Month', label: 'Last 6 Month' },
+    { id: 10,value: 'year_To_date', label: 'YTD' }
 ];
 
 
 export const metricsOptions = [
-    { id: 1, value:'impressions', label: 'Impressions' },
-    { id: 2, value: 'revenue', label: 'Revenue' },
-    { id: 3, value: 'clicks', label: 'Clicks' },
-    { id: 4, value: 'fill rate', label: 'Fill Rate' },
-    { id: 5, value: 'ctr', label: 'Ctr' },
-    { id: 6, value: 'cpm', label: 'Cpm' },
+    { id: 1, value:'Total_Revenue', label: 'Total_Revenue' },
+    { id: 2, value: 'Total_Impressions', label: 'Total_Impressions' },
+    { id: 3, value: 'Total_Clicks', label: 'Total_Clicks' },
+    { id: 4, value: 'Fill_rate', label: 'Fill_rate' },
+    { id: 5, value: 'CTR', label: 'CTR' },
+    { id: 6, value: 'CPM', label: 'CPM' },
+    { id: 7, value: 'Error_Percentage', label: 'Error_Percentage'}
 ]
 
 export const StatusOptions = [
-    { id: 1, value: 'Please Select' },
-    { id: 2, value: 'Invitation Sent' },
-    { id: 3, value: 'Active' },
-    { id: 4, value: 'Disabled' }
+    { id: 1, value: 'Invitation Sent' },
+    { id: 2, value: 'Active' },
+    { id: 3, value: 'Disabled' }
 ];

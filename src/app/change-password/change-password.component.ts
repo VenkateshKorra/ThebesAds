@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { error } from 'console';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-change-password',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
 export class ChangePasswordComponent implements OnInit {
 
   email='';
+  publisher_id: any;
+  percent: any;
   showPassword1: boolean = true;
   showPassword2: boolean = true;
   showPassword3: boolean = true;
@@ -22,16 +25,26 @@ export class ChangePasswordComponent implements OnInit {
   //two_factor = false;
 
 
-  constructor(private userService: UsersService, private route: Router) {}
+  constructor(private userService: UsersService, private route: Router, private messageService: MessageService) {}
 
   ngOnInit(): void {
-    const userData = typeof localStorage !== 'undefined' ? localStorage.getItem('userData') : null;
-
-    if (userData) {
-      const user = JSON.parse(userData);
-      this.status=user.status;
-      this.email = user.email_id;
-  }
+    const userData = typeof localStorage !=undefined ? localStorage.getItem('userData'): null;
+    const userName = typeof localStorage !=undefined ? localStorage.getItem('userName'): null;
+    const publisherId = typeof localStorage != undefined ? localStorage.getItem('PublisherID'): null;
+    const userAllData = typeof localStorage != undefined ? localStorage.getItem('UserInfo'): null;
+    if(userData && userName) {
+      const user =JSON.parse(userData);
+      this.email= user.Email_Id;
+      // this.name=userName;
+      this.status=user.Status;
+      this.publisher_id = publisherId;
+      // console.log('name and mail is', this.email, this.name);
+      
+    }
+    if(this.userService.getType() !='Admin' && userAllData) {
+      const userInfo = JSON.parse(userAllData);
+      this.percent = userInfo.Margin;
+    }
 }
   
   onSubmit(form: NgForm) {
@@ -49,13 +62,19 @@ export class ChangePasswordComponent implements OnInit {
         this.userService.changePassword(passwordData).subscribe(
           (response) => {
             console.log('Password Changed successfully', response);
-            alert('Password Changed Successfully!!!');
-            this.route.navigate(['/login']);
+            // alert('Password Changed Successfully!!!');
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Password Changed Successfully', life: 5000  });
             localStorage.clear();
+            setTimeout(()=> {
+              this.route.navigate(['/login']);
+            }, 1000);
+            
+            
           }, 
           (error) => {
             console.log('Error in changing error', error);
-            alert('Error: '+error.error.error);
+            // alert('Error: '+error.error.error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in changing password', life: 5000  });
           }
         )
         this.current_password = '';
@@ -63,12 +82,14 @@ export class ChangePasswordComponent implements OnInit {
         this.repeat_password = '';
         //this.two_factor = false;
       } else {
-        alert('current password and repeat password does not match')
+        // alert('current password and repeat password does not match')
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'current password and repeat password does not match', life: 5000  });
       }
       
     }
     else {
-      alert('Please fill all input fields');
+      // alert('Please fill all input fields');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill all input fields', life: 5000  });
     }
   }
 }
