@@ -26,7 +26,7 @@ export class ActivityTrackerService {
   }
 
   public startWatching(timeout: number) {
-    console.log('Watching Started');
+    // console.log('Watching Started');
     
     if (isPlatformBrowser(this.platformId)) {
       this.ngZone.runOutsideAngular(() => {

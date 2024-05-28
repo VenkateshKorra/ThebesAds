@@ -155,7 +155,25 @@ export class AdminAccountsListComponent implements AfterViewInit, OnInit {
       return { 'background-color': '#FF7B7B80', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content' };
     }
     else {
-      return {}; // Return default styles if status is neither Approved nor Pending
+      return {'background-color': '#F9947F ', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content'}; // Return default styles if status is neither Approved nor Pending
+    }
+  }
+
+  getmcmStatusBackgroundColor(status: string): any {
+    // console.log('Backgroung color change is called');
+    
+    if (status === 'Invited') {
+      return { 'background-color': '#FFCE7880', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content' };
+    } else if (status === 'Approved') {
+      return { 'background-color': '#78FFA098', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content' };
+    } else if (status === 'Ready') {
+      return { 'background-color': '#FF7B7B80', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content' };
+    }
+    else if (status === 'Not ready') {
+      return { 'background-color': '#F9B27D', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content' };
+    }
+    else {
+      return {'background-color': '#F9837D', 'padding': '2px 20px', 'border-radius': '10px', 'color': '#5F616E', 'width': 'fit-content'}; // Return default styles if status is neither Approved nor Pending
     }
   }
 
@@ -248,6 +266,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       },
       (error) => {
         console.log('Error Fetching users:', error);
+        //this.userService.logoutUser(error.error.error);
       }
     );
   }
@@ -272,6 +291,8 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error)=> {
         console.log('Error fetching data: ', error); 
+        //this.userService.logoutUser(error.error.error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in fetching status', life: 5000  });
       }
     )
     
@@ -306,6 +327,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error is sending resend invite:', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error in resending invite!!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in sending Resend Invite', life: 5000  });
 
@@ -331,6 +353,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error fetching data: ', error); 
+        //this.userService.logoutUser(error.error.error);
         // alert('Error sending revoke invite:');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error sending Revoke Invite', life: 5000  });
       }
@@ -365,6 +388,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error disabling ', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error disabling option!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Disabling!!', life: 5000  });
 
@@ -391,6 +415,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       },
       (error) => {
         console.log('Error in updating mcm_status in table', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in Updating MCM Status!!!', life: 5000  });
         
@@ -415,6 +440,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error in updating disable status in table', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in updating disable status !!!', life: 5000  });
 

@@ -234,6 +234,7 @@ fetchData() {
     },
     (error) => {
       console.log('Error Fetching users:', error);
+      //this.userService.logoutUser(error.error.error);
       // alert('Error Fetching app table!!');
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Fetching app table!!', life: 5000  });
     }
@@ -267,6 +268,7 @@ stopAds(element: any) {
     }, 
     (error) => {
       console.log('Error in deactivating app', error);
+      //this.userService.logoutUser(error.error.error);
       // alert('Error: '+ error.error.error);
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
     }
@@ -285,6 +287,7 @@ disableStatus(app_id: any) {
     }, 
     (error) => {
       console.log('Error disabling app', error);
+      //this.userService.logoutUser(error.error.error);
       // alert('Error: '+ error.error.error);
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
       
@@ -310,6 +313,7 @@ downloadAds(element: any) {
       this.generateFile(response['GAM_Network ID']);
     }, 
     (error) => {
+      //this.userService.logoutUser(error.error.error);
       // alert('Error !!'+error.error.error);
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
     }

@@ -31,12 +31,13 @@ export class ProfileComponent implements OnInit{
   const userName = typeof localStorage !=undefined ? localStorage.getItem('userName'): null;
   const publisherId = typeof localStorage != undefined ? localStorage.getItem('PublisherID'): null;
   const userAllData = typeof localStorage != undefined ? localStorage.getItem('UserInfo'): null;
-  if(userData && userName) {
+  if(userData && userName && userAllData) {
     const user =JSON.parse(userData);
+    const userInfoData = JSON.parse(userAllData);
     this.email= user.Email_Id;
     this.name=userName;
     this.status=user.Status;
-    this.publisher_id = publisherId;
+    this.publisher_id = userInfoData['GAM_Publisher ID'];
     // console.log('name and mail is', this.email, this.name);
   }
   if(this.userService.getType()!='Admin' && userAllData) {

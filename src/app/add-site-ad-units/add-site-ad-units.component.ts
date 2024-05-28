@@ -325,6 +325,7 @@ export class AddSiteAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error Fetching users:', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error Fetching Site table!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error  fetching site names!!!', life: 5000 });
       }
@@ -349,6 +350,7 @@ export class AddSiteAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         // alert('Error: '+ error.error.error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
     )
@@ -379,6 +381,7 @@ export class AddSiteAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error: ', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error in creating Ad Unit');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in creating Ad Unit !!!', life: 5000 });
       }
@@ -407,6 +410,7 @@ export class AddSiteAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error occured in creating Ad Unit', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error occured while creating Ad Unit !!'+ error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
 
@@ -430,8 +434,8 @@ export class AddSiteAdUnitsComponent implements OnInit, AfterViewInit {
           account: payload.account,
           site_name: this.site_name,
           ad_unit_name: this.name,
-          //code:this.code,
-          description: this.description,
+          code:this.code,
+          // description: this.description,
           parentAdUnitId: response.ParentAdUnitId,
           width: this.width_received,
           height: this.height_received,
@@ -451,6 +455,7 @@ export class AddSiteAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error in receiving site Parent Ad Unit Id', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error : '+ error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }

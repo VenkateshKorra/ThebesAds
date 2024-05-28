@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -18,10 +19,23 @@ export class UsersService {
   
   setPublisherName ='';
   setPublisherId = '';
+  tokenValue='';
+
+  private jsonUrl = 'assets/country_states.json';
 
 
 
-  constructor(private http: HttpClient, private messageService: MessageService) {}
+  constructor(private http: HttpClient, private messageService: MessageService, private route: Router) {}
+
+  public logoutUser(token: string) {
+    if(token== 'Invalid token') {
+      console.log('Inside logout user service');
+      
+      this.route.navigate(['/login']);
+      localStorage.clear();
+    }
+    
+  }
 
   connect(url: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -37,6 +51,11 @@ export class UsersService {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error connecting to websocket'+ error, life: 5000  });
       };
     });
+  }
+
+  getToken() {
+    this.tokenValue= localStorage.getItem('token') || '';
+    return  this.tokenValue
   }
 
   sendRequest(request: any): Observable<any> {
@@ -143,366 +162,921 @@ export class UsersService {
     return this.publisherID ? this.publisherID : null;
   }
 
-  saveUser(Data: any): Observable<any> { //Sign up page data and used in contact to add new contacts and save it in user table in Database.
-    // console.log(Data);
-    //return this.http.post('https://tidy-warm-asp.ngrok-free.app/thebes_ads_save_user.php', Data);
-    return this.http.post('https://pubhub.tech/api/thebes_ads_save_contacts.php', Data);
+  saveUser(Data: any): Observable<any> { //Sign up page data and used in contact to add new contacts and save it in user table this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/thebes_ads_save_contacts.php', Data, options);
   }
 
-  updateContacts(Data: any): Observable<any> { // Update invited status in the contacts table in UI which retrives data from user table in Database.
-    return this.http.post('https://pubhub.tech/api/thebes_ads_contacts_update.php', Data);
+  updateContacts(Data: any): Observable<any> { // Update invited status in the contacts table in UI which retrives data from this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/thebes_ads_contacts_update.php', Data, options);
   }
 
 
   getContacts(): Observable<any> { //Contact page data retrival from user table
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json', // Adjust content type as needed
-    //   'ngrok-skip-browser-warning': 'true'
-    //   Add any other headers you need
-    // });
-
-    // Include headers in the options object
-    // const options = { headers: headers };
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    
     //return this.http.get('https://tidy-warm-asp.ngrok-free.app/thebes_ads_get_contacts.php', options);
-    return this.http.get('https://pubhub.tech/api/thebes_ads_get_contacts.php');
+    return this.http.get('http://localhost/apps/thebes_ads_get_contacts.php', options);
   }
 
   createCompanies(Data: any): Observable<any> { //Send Invite from Account List to create companies
     // console.log('The send Invite in users service: ', Data);
-    //return this.http.post('https://tidy-warm-asp.ngrok-free.app/thebes_ads_save_invite.php', Data);
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/CreateCompanies.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/CreateCompanies.php', Data, options);
   }
 
   getInvite(): Observable<any> { //Get Invite data for Admin account list
+    this.getToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json', // Adjust content type as needed
-      'ngrok-skip-browser-warning': 'true'
-      // Add any other headers you need
+      'Authorization': `Bearer ${this.tokenValue}`
     });
-
-    // Include headers in the options object
     const options = { headers: headers };
-    //return this.http.get('https://tidy-warm-asp.ngrok-free.app/thebes_ads_get_invite.php', options);
-    return this.http.get('https://pubhub.tech/api/thebes_ads_get_invite.php');
+    // console.log('options is: ', options, this.tokenValue);
+   
+    return this.http.get('http://localhost/apps/thebes_ads_get_invite.php', options);
   }
 
   save_user_details(Data: any): Observable<any> { //Saves login data and verifies.
-
-    return this.http.post<any>('https://pubhub.tech/api/thebes_ads_login_user_detail_save.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post<any>('http://localhost/apps/thebes_ads_login_user_detail_save.php', Data, options);
   }
 
   get_user_login_details(): Observable<any> { //get data from user_details to verify login, but it's not currently been used.
-    return this.http.get('https://pubhub.tech/api/thebes_ads_login_user_detail_get.php')
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.get('http://localhost/apps/thebes_ads_login_user_detail_get.php', options)
   }
 
   save_admin_account_list(Data: any): Observable<any> { //Saves data to admin_accounts_list table from send_invite component.
-    return this.http.post<any>('https://pubhub.tech/api/thebes_ads_save_admin_accounts_list.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post<any>('http://localhost/apps/thebes_ads_save_admin_accounts_list.php', Data, options);
   }
 
   get_admin_account_list(): Observable<any> { //get data from admin_accounts_list table.
-    return this.http.get('https://pubhub.tech/api/thebes_ads_get_admin_accounts_list.php');
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.get('http://localhost/apps/thebes_ads_get_admin_accounts_list.php', options);
   }
 
   getNetworkId(Data: any): Observable <any> {
-    return this.http.post('https://pubhub.tech/api/getNetworkId.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getNetworkId.php', Data, options);
   }
 
   checkStatusOfMcm(Data: any): Observable<any> { //check mcm status
     // console.log('Data send to Gam Api for status is: ', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
 
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/GetChildPublisher.php', Data);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/GetChildPublisher.php', Data, options);
   }
 
   mcm_status_update(Data: any): Observable<any> { //updates mcm status in admin-account-list table
     // console.log('Data sent to admin_account table is: ', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
 
-    return this.http.post('https://pubhub.tech/api/admin_mcm_update.php', Data);
+    return this.http.post('http://localhost/apps/admin_mcm_update.php', Data, options);
   }
 
   revoke_invite(Data: any): Observable<any> { //revoke invite api in admin-account-list
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/Revoke_Invite.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/Revoke_Invite.php', Data, options);
   }
 
   resendInvite(Data: any): Observable<any> { //resend Invite api in admin-account-list
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/ReInviteUser.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/ReInviteUser.php', Data, options);
   }
 
   createUser(Data: any) { //create user password for login
     // console.log('sent mail for creation is: ', Data);
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/createUser.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/createUser.php', Data, options);
   }
 
   disableOption(Data: any): Observable<any> { //Disable user from login to the site. 
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/DisableOption.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/DisableOption.php', Data, options);
   }
 
   updateStatusofDisable(Data: any): Observable<any> { //update disable status in user_detail table.
     // console.log("Data send for Disable status is: ",Data);
-    return this.http.post('https://pubhub.tech/api/admin_account_disable_status_update.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/admin_account_disable_status_update.php', Data, options);
   }
 
   newChildSite(Data: any): Observable<any> { //creat a new site for the user, using GAM.
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/NewChildSite.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/NewChildSite.php', Data, options);
   }
 
   addSite(Data: any): Observable<any> { //Add new site created to the sites table.
-    return this.http.post('https://pubhub.tech/api/add_site.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/add_site.php', Data, options);
   }
 
   get_add_site(Data: any): Observable<any> { // fetch sites table data for site component.
-    return this.http.post('https://pubhub.tech/api/get_add_site.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_add_site.php', Data, options);
   }
   get_user_name(Data: any): Observable<any> { //get user Name to show at usere profile name.
-    return this.http.post('https://pubhub.tech/api/get_user_name.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_user_name.php', Data, options);
   }
 
   deactivateSite(Data: any): Observable<any> { //Deactivate  site in GAM.
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/DeActivatesite.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/DeActivatesite.php', Data, options);
   }
 
   get_add_app(Data: any): Observable<any> { //fetch data from database for app table.
-    return this.http.post('https://pubhub.tech/api/get_add_app.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_add_app.php', Data, options);
   }
 
   newMobileApp(Data: any): Observable<any> { // create new app 
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/NewMobileApplications.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/NewMobileApplications.php', Data, options);
   }
   addApp(Data: any): Observable<any> { //Add new app created to the apps table.
-    return this.http.post('https://pubhub.tech/api/add_app.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/add_app.php', Data, options);
   }
 
   deactivateApp(Data: any): Observable<any> { //Deactivate app in GAM.
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/deactivateApp.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/deactivateApp.php', Data, options);
   }
 
   disableAppStatus(Data: any): Observable<any> {  //disable app status in app table
-    return this.http.post('https://pubhub.tech/api/app_status_update.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/app_status_update.php', Data, options);
   }
 
   sendSiteAdUnitRequest(Data: any): Observable<any> {  //send create site Ad Unit request
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
     // console.log('Data sent is :', Data);
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/CreateSiteAdUnit.php', Data);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/CreateSiteAdunit.php', Data, options);
   }
 
   addSiteAdUnit(Data: any): Observable<any> { //add data to site ad unit table
-    return this.http.post('https://pubhub.tech/api/add_site_ad_units.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/add_site_ad_units.php', Data, options);
   }
 
   get_site_ad_units(Data: any): Observable<any> { //get data from site ad unit
-    return this.http.post('https://pubhub.tech/api/get_site_ad_units.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_site_ad_units.php', Data, options);
   }
 
   get_site_parentAdUnitId(Data: any): Observable<any> { // get parent ad unit from site table
-    return this.http.post('https://pubhub.tech/api/get_site_parent_id.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_site_parent_id.php', Data, options);
   }
 
   get_app_ad_units(Data: any): Observable<any> {  // get app ad units table data to UI
-    return this.http.post('https://pubhub.tech/api/get_app_ad_units.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_app_ad_units.php', Data, options);
   }
 
   sendAppAdUnitRequest(Data: any): Observable<any> {  // send app ad unit request
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
     // console.log('Data sent is :', Data);
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/CreateAppAdunit.php', Data);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/CreateAppAdunit.php', Data, options);
   }
 
   get_app_parentAdUnitId(Data: any): Observable<any> { // get parent ad unit from app table
-    return this.http.post('https://pubhub.tech/api/get_app_parent_id.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_app_parent_id.php', Data, options);
   }
 
   getSiteNameAndAccountId(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getSiteNameAndAccountId.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getSiteNameAndAccountId.php', Data, options);
   }
 
   getAppNameAndAccountId(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getAppNameAndAccountId.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getAppNameAndAccountId.php', Data, options);
   }
 
   addAppAdUnit(Data: any): Observable<any> { //add data to app ad unit table
-    return this.http.post('https://pubhub.tech/api/add_app_ad_units.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/add_app_ad_units.php', Data, options);
   }
 
   getAdminDashboardDailyData(): Observable<any> { // get data from daily_ad_unti table
-    return this.http.get('https://pubhub.tech/api/get_admin_dashboard_daily_data.php');
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.get('http://localhost/apps/get_admin_dashboard_daily_data.php', options);
   }
 
   get_daily_ad_unit_wise(): Observable<any> {  //get data from daily_ad_unit_wise
-    return this.http.get('https://pubhub.tech/api/get_daily_ad_unit_wise.php');
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.get('http://localhost/apps/get_daily_ad_unit_wise.php', options);
   }
 
   get_adUnits_in_user_dashboard(Data: any): Observable<any> {  // get site adUnits table data 
-    return this.http.post('https://pubhub.tech/api/get_adUnits_for_user_dashboard.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_adUnits_for_user_dashboard.php', Data, options);
   }
   sendResetPassword(Data: any): Observable<any> {  //Send password reset mail to user
     // console.log('Data send for reset password is: ', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
 
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/SendResetPassword.php', Data);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/SendResetPassword.php', Data, options);
   }
 
   validate_reset_token(Data: any): Observable<any> {  //Send password reset mail to user
     // console.log('Data send for validate reset password is: ', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
 
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/ValidateResetToken.php', Data);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/ValidateResetToken.php', Data, options);
   }
 
   resetPassword(Data: any): Observable<any> {
     // console.log('Sent Data is: ', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
 
-    return this.http.post('https://pubhub.tech/api/reset_password.php', Data);
+    return this.http.post('http://localhost/apps/reset_password.php', Data, options);
   }
 
   changePassword(Data: any): Observable<any> {  //Reseting the password 
-    return this.http.post('https://pubhub.tech/api/changePassword.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/changePassword.php', Data, options);
   }
   // ---------- //
 
   get_daily_publisher(Data: any): Observable<any> {  //get daily publisher
     // console.log('Data send in daily_publisher is: ', Data);
-    return this.http.post('https://pubhub.tech/api/get_daily_publisher.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_publisher.php', Data, options);
   }
 
   get_daily_adunit(Data: any): Observable<any> { //get_daily_adUnit
-    return this.http.post('https://pubhub.tech/api/get_daily_adunit.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_adunit.php', Data, options);
   }
 
   get_daily_site(Data: any): Observable<any> { //get_daily_adUnit
-    return this.http.post('https://pubhub.tech/api/get_daily_site.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_site.php', Data, options);
   }
 
   get_daily_app(Data: any): Observable<any> { //get_daily_adUnit
-    return this.http.post('https://pubhub.tech/api/get_daily_site.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_site.php', Data, options);
   }
 
   // --------------> //
   get_publisher_revenue(Data: any): Observable<any> {   //get daily publisher revenue
-    return this.http.post('https://pubhub.tech/api/get_publisher_revenue.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_publisher_revenue.php', Data, options);
   }
 
   get_publisher_device(Data: any): Observable<any> {  // get daily publisher device
-    return this.http.post('https://pubhub.tech/api/get_publisher_device.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_publisher_device.php', Data, options);
   }
 
   get_publisher_country(Data: any): Observable<any> {   // get daily publisher country
-    return this.http.post('https://pubhub.tech/api/get_publisher_country.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_publisher_country.php', Data, options);
   }
 
   get_daily_publisher_revenue(Data: any): Observable<any> {   //get daily publisher revenue
     // console.log('Data send in daily_publisher_revenue is: ', Data);
-    return this.http.post('https://pubhub.tech/api/get_daily_publisher_revenue.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_publisher_revenue.php', Data, options);
   }
 
   get_daily_publisher_device(Data: any): Observable<any> {  // get daily publisher device
     // console.log('Data send in daily_publisher_device is: ', Data);
-    return this.http.post('https://pubhub.tech/api/get_daily_publisher_device.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_publisher_device.php', Data, options);
   }
 
   get_daily_publisher_country(Data: any): Observable<any> {   // get daily publisher country
     // console.log('Data send in daily_publisher_country is: ', Data);
-    return this.http.post('https://pubhub.tech/api/get_daily_publisher_country.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily_publisher_country.php', Data, options);
   }
   // ----------->> //
   get_adUnit_revenue(Data: any): Observable<any> {  // get adunit revenue
     // console.log('Data send in daily_adunit_revenue is: ', Data);
-    return this.http.post('https://pubhub.tech/api/get_adUnit_revenue.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_adUnit_revenue.php', Data, options);
   }
   get_adUnit_device(Data: any): Observable<any> {   // get adunit device
-    return this.http.post('https://pubhub.tech/api/get_adUnit_device.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_adUnit_device.php', Data, options);
   }
   get_adUnit_country(Data: any): Observable<any> {   // get adunit country
-    return this.http.post('https://pubhub.tech/api/get_adUnit_country.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_adUnit_country.php', Data, options);
   }
   //----------->>//
   get_site_revenue(Data: any): Observable<any> {   //get site revenue
     // console.log('Data send in daily_site_revenue is: ', Data);
-    return this.http.post('https://pubhub.tech/api/get_site_revenue.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_site_revenue.php', Data, options);
   }
   get_site_device(Data: any): Observable<any> { // get site device
-    return this.http.post('https://pubhub.tech/api/get_site_device.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_site_device.php', Data, options);
   }
   get_site_country(Data: any): Observable<any> {  //get site country
-    return this.http.post('https://pubhub.tech/api/get_site_country.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_site_country.php', Data, options);
   }
   getAccountNames(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getAccountNames.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getAccountNames.php', Data, options);
   }
   getSiteDropdown(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getSiteDropdown.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getSiteDropdown.php', Data, options);
   }
 
   getAppDropdown(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getAppDropdown.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getAppDropdown.php', Data, options);
   }
 
   getPublisherDropdown(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getPublisherDropdown.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getPublisherDropdown.php', Data, options);
   }
 
   get_daily(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/get_daily.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_daily.php', Data, options);
   }
   get_publisher(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/Publisher.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/Publisher.php', Data, options);
   }
 
   get_Admin(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/Admin.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/Admin.php', Data, options);
   }
 
   getSiteTagDetails(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/GetSiteTagDetails.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/GetSiteTagDetails.php', Data, options);
   }
 
   getAppTagDetails(Data: any): Observable<any> {
     console.log('Data in App Tag', Data);
-    return this.http.post('https://pubhub.tech/api/GetAppTagDetails.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/GetAppTagDetails.php', Data, options);
   }
 
   savePaymentInfo(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/save_payment_info.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/save_payment_info.php', Data, options);
   }
 
   getPaymentInfo(Data: any): Observable<any>{
-    return this.http.post('https://pubhub.tech/api/get_payment_info.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_payment_info.php', Data, options);
   } 
 
   uploadInvoice(Data: any) {
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
     const formData = new FormData();
     formData.append('invoice_file', Data.selectedFile);
     formData.append('publisher_id', Data.publisher_id);
     formData.append('month', Data.month.toString());
-    return this.http.post('https://pubhub.tech/api/upload_invoice.php', formData);
+    return this.http.post('http://localhost/apps/upload_invoice.php', formData, options);
 }
 
   getUserPaymentData(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/get_payment.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/get_payment.php', Data, options);
   }
 
   adminpayment(Data: any): Observable <any> {
-    return this.http.post('https://pubhub.tech/api/admin_payment.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/admin_payment.php', Data, options);
   }
 
   deleteInvoice(filePath: any): Observable<any> {
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
     // const payload = { filepath: filePath }; // Construct the payload object with 'filepath' key
-    return this.http.post('https://pubhub.tech/api/delete_invoice.php', filePath);
+    return this.http.post('http://localhost/apps/delete_invoice.php', filePath, options);
   }
 
   updatePaymentInfo(data: any): Observable<any> {
-    return this.http.post<any>('https://pubhub.tech/api/update_payment_info.php',data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post<any>('http://localhost/apps/update_payment_info.php',data, options);
   }
 
   getPollingRequest(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/getPollingRequest.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/getPollingRequest.php', Data, options);
   } 
 
   requestLatestData(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/ThebisAdsApp/RabbitMQ_new_request.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/ThebisAdsApp/RabbitMQ_new_request.php', Data, options);
   }
 
   addUserCredentials(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/addUserCredentials.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/addUserCredentials.php', Data, options);
   }
 
   userCredentialsEdit(Data: any): Observable<any> {
-    return this.http.post('https://pubhub.tech/api/editUserCredentials.php', Data);
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    return this.http.post('http://localhost/apps/editUserCredentials.php', Data, options);
   }
+
+  getCountries(): Observable<string[]> {
+    return this.http.get<any[]>(this.jsonUrl).pipe(
+      map(countries => countries.map(country => country.name))
+    );
+  }
+
+  getStatesByCountryName(countryName: string): Observable<string[]> {
+    return this.http.get<any[]>(this.jsonUrl).pipe(
+      map(countries => {
+        const country = countries.find(c => c.name === countryName);
+        return country ? country.states.map((state: any) => state.name) : [];
+      })
+    );
+  }
+
+
 
 }

@@ -30,11 +30,15 @@ export class LoginComponent {
       }
       this.usersService.save_user_details(formData).subscribe(
         (response) => {
+          if(response.token) {
+            localStorage.setItem('token', response.token);
+          }
           // Success response
           if (response.message === "Login successful" && response.data) {
             // Handle success response
             // console.log('Success:', response.data);
             //console.log('Response type: ', response.data.Type);
+
             
             if(response.data.Type=='Admin' && response.data.Status!=='Disabled') {
               localStorage.setItem('userData', JSON.stringify(response.data));
@@ -78,6 +82,7 @@ export class LoginComponent {
         },
         (error) => {
           console.error('Error:', error);
+          
           if (error.error === "Invalid credentials") {
             // Handle invalid credentials error
             console.log('Failure: Invalid credentials');

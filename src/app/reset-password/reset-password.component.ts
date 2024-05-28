@@ -42,7 +42,8 @@ export class ResetPasswordComponent {
         this.valid=true;
       }, 
       (error) => {
-        console.log('Error from validate token is : ', error);     
+        console.log('Error from validate token is : ', error);   
+        //this.userService.logoutUser(error.error.error);  
         // alert('Link is not valid !!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Link is not valid', life: 5000  });
       }
@@ -72,6 +73,7 @@ export class ResetPasswordComponent {
           }, 
           (error) => {
             console.log('Error in changing password', error);
+            //this.userService.logoutUser(error.error.error);
             // alert('Error: '+error.error.error);
             this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
           }

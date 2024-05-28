@@ -57,18 +57,18 @@
                 </ng-container> -->
 
                 <ng-container matColumnDef="publisher_id">
-                    <th mat-header-cell *matHeaderCellDef >GAM Publisher ID </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header >GAM Publisher ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="publisher_name">
-                    <th mat-header-cell *matHeaderCellDef > Account Name </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Account Name </th>
                     <td mat-cell *matCellDef="let element"> <a routerLink="/accounts" (click)="setPublisherName(element)">{{element.publisher_name}}</a> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="network_id">
-                    <th mat-header-cell *matHeaderCellDef > GAM Network ID </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > GAM Network ID </th>
                     <td mat-cell *matCellDef="let element">{{element.network_id}} </td>
                 </ng-container>
 
@@ -84,7 +84,10 @@
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="mcm_status">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> 	GAM status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.mcm_status}} </td>
+                    <td mat-cell *matCellDef="let element"> <p
+                        [ngStyle]="getmcmStatusBackgroundColor(element.mcm_status)">
+                        {{element.mcm_status}}
+                </p> </td>
                 </ng-container>
 
                 <ng-container matColumnDef="country">
@@ -93,32 +96,32 @@
                 </ng-container>
 
                 <ng-container matColumnDef="margin">
-                    <th mat-header-cell *matHeaderCellDef  > Margin </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Margin </th>
                     <td mat-cell *matCellDef="let element"> {{element.margin}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="sites">
-                    <th mat-header-cell *matHeaderCellDef > Sites </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sites </th>
                     <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="apps">
-                    <th mat-header-cell *matHeaderCellDef > Apps </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Apps </th>
                     <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef > Email </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
                     <td mat-cell *matCellDef="let element"> {{element.email}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="phone">
-                    <th mat-header-cell *matHeaderCellDef > Phone </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
                     <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="gross">
-                    <th mat-header-cell *matHeaderCellDef  > Gross/Net </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Gross/Net </th>
                     <td mat-cell *matCellDef="let element"> {{element.gross}} </td>
                 </ng-container>
 

@@ -98,6 +98,7 @@ export class PaymentComponent {
     },
     (error)=>{
       this.isEditMode= false;
+      //this.userService.logoutUser(error.error.error);
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured' + error, life: 5000 });
     }
    )
@@ -155,6 +156,7 @@ export class PaymentComponent {
       },
       error: (error) => {
         console.error('Failed to fetch payment data', error);
+        //this.userService.logoutUser(error.error.error);
         // alert("Error fetching payment data");
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000  });
       }
@@ -183,6 +185,7 @@ export class PaymentComponent {
       },
       (error) => {
         console.error('Error deleting file', error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete file', life: 5000 });
       }
     );
@@ -218,6 +221,7 @@ export class PaymentComponent {
       },
       (error) => {
         console.log('Error in getting account details: ', error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in getting account details' + error.error, life: 5000 });
       }
     )
@@ -246,6 +250,7 @@ export class PaymentComponent {
       },
       (error) => {
         console.error('Error uploading file:', error.message);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error uploading file' + error.error, life: 5000 });
       }
     );

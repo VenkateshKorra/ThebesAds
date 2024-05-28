@@ -92,13 +92,6 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // console.log('word: ', this.numberToWord);
-    // console.log('fetcehdAccount',this.fetchedAccountInfo);
-    //   console.log('fetchedpayment', this.fetchedPaymentData);
-    //   console.log('Container is: ', this.container);
-    //   console.log('UserData' , this.userPaymentData);
-    //   console.log('bank _no', this.bank_account_no);
-
     if (this.fetchedPaymentData && this.fetchedAccountInfo && this.userPaymentData) {
       this.generatePDF();
     } else {
@@ -117,7 +110,7 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit {
         this.bank_account_no = response.Account_Number;
         this.account_holder_name = response.Account_Holder_Name;
         this.ifsc_code = response.Bank_Code;
-        this.pan = '';
+        this.pan = response.Pan_Number;
         this.branch_address = response.Bank_address;
         this.swift_code = response.SWIFT_Code;
         this.fetchedAccountInfo = true;
@@ -127,6 +120,7 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('error', error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000 });
       }
     )
@@ -158,6 +152,7 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('error', error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000 });
       }
     )

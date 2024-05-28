@@ -141,6 +141,7 @@ export class AccountSitesComponent implements AfterViewInit, OnInit {
       },
       (error) => {
         console.log('Error Fetching site table:', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error Fetching site table!!');
        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Fetching site table!!', life: 5000  });
 
@@ -254,6 +255,7 @@ getMcmStatusBackgroundColor(mcm_status: string): any {
       },
       (error) => {
         console.log('Error in deactivating site', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
         
@@ -279,6 +281,7 @@ getMcmStatusBackgroundColor(mcm_status: string): any {
         this.generateFile(response['GAM_Network ID']);
       }, 
       (error) => {
+        //this.userService.logoutUser(error.error.error);
         // alert('Error !!'+error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
         

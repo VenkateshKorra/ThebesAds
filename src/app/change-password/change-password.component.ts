@@ -73,6 +73,7 @@ export class ChangePasswordComponent implements OnInit {
           }, 
           (error) => {
             console.log('Error in changing error', error);
+            //this.userService.logoutUser(error.error.error);
             // alert('Error: '+error.error.error);
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in changing password', life: 5000  });
           }

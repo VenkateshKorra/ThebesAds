@@ -547,6 +547,7 @@ export class AdminDashboardComponent implements OnInit {
       (error) => {
         // console.log('Error in getting data: ', error);
         // alert('Error: '+ error.error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error , life: 5000  });
 
         
@@ -626,6 +627,7 @@ export class AdminDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting ad Units and sites");
         // alert('Error: ' + error.error.error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error , life: 5000  });
       }
     )
@@ -1048,6 +1050,7 @@ export class AdminDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting  sites names", error);
         // alert('Error: ' + error.error.error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error , life: 5000  });
       }
     )
@@ -1075,6 +1078,7 @@ export class AdminDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting App names", error);
         // alert('Error: ' + error.error.error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error , life: 5000  });
       }
     )
@@ -1100,6 +1104,7 @@ export class AdminDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting Publisher names", error);
         // alert('Error: ' + error.error.error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error , life: 5000  });
       }
     )

@@ -120,6 +120,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
       },
       (error) => {
         console.log("Error in retrieving Data!!!", error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error !!!', life: 5000  });
         
       }
@@ -147,6 +148,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
       }, 
       (error) => {
         console.log('Error enabling ', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error Enabling option!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Enabling option!!!', life: 5000  });
         
@@ -176,6 +178,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
       }, 
       (error) => {
         console.log('Error disabling ', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error disabling option!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Disabling option !!!', life: 5000  });
         
@@ -250,6 +253,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
         }, 
         (error) => {
           console.log('Error: ', error);
+          //this.userService.logoutUser(error.error.error);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error adding user !!!', life: 5000  });
         }
       )
@@ -287,6 +291,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
         }, 
         (error) => {
           console.log('Error: ', error);
+          //this.userService.logoutUser(error.error.error);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in saving changes'+ error, life: 5000 });
         }
       )

@@ -244,6 +244,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: App_ad_units): bo
       },
       (error) => {
         console.log('Error Fetching users:', error);
+        //this.userService.logoutUser(error.error.error);
         // alert('Error Fetching site table!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error fetching ad Units !!!', life: 5000  });
       }
@@ -272,6 +273,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: App_ad_units): bo
         this.generateFile(response.data, response.sizes);
       }, 
       (error) => {
+        //this.userService.logoutUser(error.error.error);
         // alert('Error !!'+error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Downloading !!!', life: 5000  });
       }

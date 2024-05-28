@@ -57,7 +57,9 @@ import { ContactDialogComponent } from './contact-dialog/contact-dialog.componen
 import { DownloadInvoiceComponent } from './download-invoice/download-invoice.component';
 import { AdminPaymentComponent } from './admin-payment/admin-payment.component';
 import { PaymentComponent } from './payment/payment.component';
-import { MessagesModule } from "primeng/messages"; 
+import { MessagesModule } from "primeng/messages";
+import { AddressTabComponent } from './address-tab/address-tab.component'; 
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -100,7 +102,7 @@ import { MessagesModule } from "primeng/messages";
     ForgotYourPasswordComponent,
     ResetPasswordComponent,
     ReportDownloadComponent, 
-    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent,
+    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,6 +125,7 @@ import { MessagesModule } from "primeng/messages";
     NgSelectModule,
     ToastModule, 
     MessagesModule, 
+    ReactiveFormsModule
     
 
   ],

@@ -35,6 +35,7 @@ export class AccountDetailAdminComponent implements OnInit {
    account_number  = '';
    account_type ='';
    account_holder_name ='';
+   pan_no ='';
 
    Active = true;
 
@@ -83,6 +84,7 @@ export class AccountDetailAdminComponent implements OnInit {
         
       }, 
       (error) =>{
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in getting payment details', life: 5000  });
       }
     )
@@ -106,7 +108,8 @@ export class AccountDetailAdminComponent implements OnInit {
         branch_name: this.branch_name,
         account_number: this.account_number,
         account_type: this.account_type,
-        account_holder_name: this.account_holder_name
+        account_holder_name: this.account_holder_name,
+        pan_no: this.pan_no
       }
 
       this.userService.savePaymentInfo(Data).subscribe(
@@ -118,6 +121,7 @@ export class AccountDetailAdminComponent implements OnInit {
         }, 
         (error) => {
           this.Active = true;
+          //this.userService.logoutUser(error.error.error);
           this.setDefault();
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in saving Payment Info', life: 5000  });
         }

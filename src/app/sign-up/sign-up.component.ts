@@ -172,6 +172,7 @@ export class SignUpComponent implements OnInit {
             (error) => {
               console.log('Error Saving user App data: ', error);
               this.res = 'no';
+              //this.userService.logoutUser(error.error.error);
               console.log('Res value is: ', this.res);
               this.submitted = false;
 
@@ -212,6 +213,7 @@ export class SignUpComponent implements OnInit {
             (error) => {
               console.log('Error Saving user Web data: ', error);
               this.res = 'no';
+              //this.userService.logoutUser(error.error.error);
               console.log('Res value is: ', this.res);
               this.submitted = false;
 

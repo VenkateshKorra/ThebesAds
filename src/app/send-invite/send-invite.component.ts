@@ -149,7 +149,8 @@ export class SendInviteComponent implements OnInit, AfterViewInit {
           (error) => {
             console.log('Error occured in create companies : ', error);
             this.res = 'no';
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured!!!' + error.error, life: 5000 });
+            //this.usersService.logoutUser(error.error.error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured!!! ' + error.error.error, life: 5000 });
             this.inviteClosed.emit('no');
             // alert('Technical error occured while sendig Invite!!!');
 
@@ -198,6 +199,7 @@ export class SendInviteComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error from admin_account_list: ', error);
+        //this.usersService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Occured!!!' + error.error.error, life: 5000 });
 
       }
@@ -229,6 +231,7 @@ export class SendInviteComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error creating login', error);
+        //this.usersService.logoutUser(error.error.error);
         // alert('Error occured while creating user login');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Occured!!!' + error.error, life: 5000 });
       }

@@ -124,6 +124,8 @@ export class ContactsComponent implements AfterViewInit, OnInit {
       },
       (error) => {
         console.log('Error Fetching users:', error);
+        //this.userService.logoutUser(error.error.error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
       }
     );
   }
@@ -134,7 +136,7 @@ export class ContactsComponent implements AfterViewInit, OnInit {
     this.click= true;
     const updateData= {
       id: row.id,
-      invited: 'Yes',
+      invited: 'Y',
       status: 'Invitation Sent',
     }
     this.updateChanged=updateData;
@@ -185,6 +187,7 @@ export class ContactsComponent implements AfterViewInit, OnInit {
       },
       (error) => {
         console.log("Error in Saving", error);
+        //this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
 
       }

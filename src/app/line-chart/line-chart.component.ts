@@ -41,6 +41,7 @@ export class LineChartComponent implements OnInit {
       },
       (error) => {
         console.error('Error uploading file:', error.message);
+        //this.uploadService.logoutUser(error.error.error);
       }
     );
   }

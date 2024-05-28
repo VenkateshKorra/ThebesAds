@@ -1,0 +1,60 @@
+<div class="container">
+    <form [formGroup]="reactForm">
+      <div formArrayName="formArray">
+        <div *ngFor="let address of formArray.controls; let i = index" [formGroupName]="i">
+          <div class="form">
+            <h2>User Address {{ i + 1 }}</h2>
+            <p>Remove Address <span (click)="removeItem(i)" style="color: red; cursor:pointer;">X</span> </p>
+            <div>
+                <div class="checkbox">
+                    <label>Make Default: </label>
+                    <input type="checkbox" name="checkbox" formControlName="checkbox"> 
+                </div>
+                
+              <div class="form-group">
+                <div class="Input-field">
+                  <label>Address Line 1</label>
+                  <input type="text" formControlName="address_line_1"  placeholder="Enter Address" >
+                </div>
+                <div class="Input-field">
+                  <label>Address Line 2</label>
+                  <input type="text" formControlName="address_line_2" placeholder="Enter Address">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="Input-field">
+                  <label>Country</label>
+                  <select (change)="onCountryChange($event)" formControlName="country" >
+                    <option selected disabled value="">Select your Country</option>
+                    <option *ngFor="let option of countryDropdown" [value]="option">{{option}}</option>
+                  </select>
+                </div>
+                <div class="Input-field">
+                  <label>State</label>
+                  <select formControlName="state" >
+                    <option selected disabled value="">Select State</option>
+                    <option *ngFor="let state of stateDropdown">{{state}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="Input-field">
+                  <label>City</label>
+                  <input type="text" formControlName="city" name="city">
+                </div>
+                <div class="Input-field">
+                  <label>Zip/Postal Code</label>
+                  <input type="number" formControlName="zipcode" name="zipcode">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="button-group">
+        <button (click)="onSubmit()">Save</button>
+        <button (click)="addNewAddress()">Add Address</button>
+    </div>
+  </div>
+  
