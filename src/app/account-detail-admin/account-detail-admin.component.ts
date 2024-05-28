@@ -84,7 +84,7 @@ export class AccountDetailAdminComponent implements OnInit {
         
       }, 
       (error) =>{
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in getting payment details', life: 5000  });
       }
     )
@@ -121,7 +121,7 @@ export class AccountDetailAdminComponent implements OnInit {
         }, 
         (error) => {
           this.Active = true;
-          //this.userService.logoutUser(error.error.error);
+          this.userService.logoutUser(error.error.error);
           this.setDefault();
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in saving Payment Info', life: 5000  });
         }

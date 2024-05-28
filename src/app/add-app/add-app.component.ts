@@ -247,7 +247,7 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log("Error in saving app in add_app", error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error in creating App');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in creating App', life: 5000  });
         this.dialogClosed.emit();
@@ -273,7 +273,7 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       }, 
       (error) => {
         // alert('Error: '+ error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
       }
     )
@@ -314,7 +314,7 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error in adding app', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
         this.dialogClosed.emit();

@@ -120,7 +120,7 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('error', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000 });
       }
     )
@@ -152,7 +152,7 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('error', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000 });
       }
     )

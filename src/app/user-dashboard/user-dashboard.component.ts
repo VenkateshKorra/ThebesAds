@@ -480,7 +480,7 @@ export class UserDashboardComponent implements OnInit {
         // console.log('Error in getting data: ', error);
         // alert('Error: '+ error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'error.error', life: 5000 });
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.setDefaultMetrics();
         this.responseData = ''; // Storing 'response' data
         this.overallMetricsData = ''; // Storing 'overallMetrics' data
@@ -576,7 +576,7 @@ export class UserDashboardComponent implements OnInit {
       },
       (error) => {
         console.log('Error in getting Latest Data Details', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000 });
       }
     )
@@ -600,7 +600,7 @@ export class UserDashboardComponent implements OnInit {
       },
       (error) => {
         console.log('Error got: ', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured: '+error.error, life: 5000 });
       }
     )
@@ -657,7 +657,7 @@ export class UserDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting ad Units and sites");
         // alert('Error: ' + error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
     )
@@ -1093,7 +1093,7 @@ export class UserDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting  sites names", error);
         // alert('Error: ' + error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
     )
@@ -1121,7 +1121,7 @@ export class UserDashboardComponent implements OnInit {
       (error) => {
         // console.log("Error getting App names", error);
         // alert('Error: ' + error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
     )

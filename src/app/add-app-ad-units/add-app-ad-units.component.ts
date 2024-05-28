@@ -362,7 +362,7 @@ export class AddAppAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error Fetching users:', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error Fetching app table!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Fetching app table!!', life: 5000 });
       }
@@ -387,7 +387,7 @@ export class AddAppAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         // alert('Error: '+ error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
     )
@@ -419,7 +419,7 @@ export class AddAppAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error: ', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error in creating Ad Unit');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in creating Ad Unit!!', life: 5000 });
 
@@ -447,7 +447,7 @@ export class AddAppAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error occured in creating Ad Unit', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error occured while creating Ad Unit !!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
@@ -492,7 +492,7 @@ export class AddAppAdUnitsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error in receiving site Parent Ad Unit Id', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
 

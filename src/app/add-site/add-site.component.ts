@@ -126,7 +126,7 @@ export class AddSiteComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         // alert('Error: '+ error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
       }
     )
@@ -197,7 +197,7 @@ export class AddSiteComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log("Error in saving site in add_site", error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error in creating Site');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in creating Site' + error.error.error, life: 5000 });
         this.dialogClosed.emit();
@@ -238,7 +238,7 @@ export class AddSiteComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error in adding site', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in creating Site' + error.error.error, life: 5000 });
         this.dialogClosed.emit();

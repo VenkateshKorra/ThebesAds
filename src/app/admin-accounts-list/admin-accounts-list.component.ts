@@ -266,7 +266,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       },
       (error) => {
         console.log('Error Fetching users:', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
       }
     );
   }
@@ -291,7 +291,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error)=> {
         console.log('Error fetching data: ', error); 
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in fetching status', life: 5000  });
       }
     )
@@ -327,7 +327,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error is sending resend invite:', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error in resending invite!!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in sending Resend Invite', life: 5000  });
 
@@ -353,7 +353,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error fetching data: ', error); 
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error sending revoke invite:');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error sending Revoke Invite', life: 5000  });
       }
@@ -388,7 +388,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error disabling ', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error disabling option!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Disabling!!', life: 5000  });
 
@@ -415,7 +415,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       },
       (error) => {
         console.log('Error in updating mcm_status in table', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in Updating MCM Status!!!', life: 5000  });
         
@@ -440,7 +440,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Accounts): boolea
       }, 
       (error) => {
         console.log('Error in updating disable status in table', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in updating disable status !!!', life: 5000  });
 

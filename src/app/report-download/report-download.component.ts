@@ -171,7 +171,7 @@ export class ReportDownloadComponent {
         (error) => {
           // console.log('Error in getting data: ', error);
           // alert('Error: '+error.error.error);
-          //this.userService.logoutUser(error.error.error);
+          this.userService.logoutUser(error.error.error);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000  });
   
           this.setDefaultMetrics();
@@ -202,7 +202,7 @@ export class ReportDownloadComponent {
         (error) => {
           // console.log('Error in getting data: ', error);
           // alert('Error: '+error.error.error);
-          //this.userService.logoutUser(error.error.error);
+          this.userService.logoutUser(error.error.error);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000  });
   
           this.setDefaultMetrics();

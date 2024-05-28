@@ -178,7 +178,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Site_Ad_Units): b
       },
       (error) => {
         console.log('Error Fetching site ad units table:', error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         // alert('Error Fetching site AD Unit table!!');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error Fetching site AD Unit table!!', life: 5000  });
       }
@@ -208,7 +208,7 @@ isActionButtonOrDropdown(clickedElement: HTMLElement, element: Site_Ad_Units): b
       }, 
       (error) => {
         // alert('Error !!'+error.error.error);
-        //this.userService.logoutUser(error.error.error);
+        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in downloading', life: 5000  });
       }
     )

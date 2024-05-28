@@ -28,7 +28,7 @@ export class ForgotYourPasswordComponent {
         },
         (error)=> {
           console.log('Error in sending mail for reset!!!');
-          //this.userService.logoutUser(error.error.error);
+          this.userService.logoutUser(error.error.error);
           // alert('Error: '+ error.error.error);
           this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
         }

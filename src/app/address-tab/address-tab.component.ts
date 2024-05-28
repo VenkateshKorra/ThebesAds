@@ -32,7 +32,7 @@ export class AddressTabComponent implements OnInit {
         this.countryDropdown = countries;
       },
       (error) => {
-        //this.stateService.logoutUser(error.error.error);
+        this.stateService.logoutUser(error.error.error);
         console.error('Error fetching countries:', error);
       }
     );
