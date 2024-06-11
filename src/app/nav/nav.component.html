@@ -1,0 +1,27 @@
+<body>
+    <div class="Logo-top" *ngIf="current_link !== '/sign-up' && current_link !== '/login'" >
+        <div class="logo">
+            <img src="assets/Logo.svg" alt="Logo">
+        </div>
+
+        <div class="icons">
+            <div class="left">
+                <img src="assets/chat-icon.svg" alt="chat-icon">
+                <img src="assets/Mail-icon.svg" alt="Mail-icon">
+            </div>
+            <div class="vertical-line"></div>
+            <div class="profile" (click)="profileClicked()">
+                <img src="assets/Profile-icon.svg"  alt="Profile Photo" class="profile-logo">
+                <p>{{userName}}</p>
+                <div *ngIf="clicked" class="dropdown">
+                    <button (click)="profile()"><a><img src="assets/user.svg" alt="profile image">Profile</a></button>
+                    <button (click)="change_password()"><a><img src="assets/padlock.svg" alt="profile image">Change Password</a></button>
+                    <button (click)="logOut()"><a><img src="assets/exit.svg" style="margin-left
+                    :3px; " alt="profile image">Logout</a></button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>

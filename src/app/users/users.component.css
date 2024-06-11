@@ -1,0 +1,13 @@
+.container {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.heading h3 {
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 5em;
+}
+

@@ -1,0 +1,140 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <div class="container">
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <div class="form-group">
+                <div class="Input" *ngIf="typeOfUser === 'Admin'; else elseblock">
+                    <label for="account">Account<span>*</span></label>
+                    <select id="account" name="account" [(ngModel)]="account_selected" required  (change)="SelectedAccount()" >
+                        <option disabled selected value="">Account Name</option>
+                        <option *ngFor="let option of accountDataArray" [ngValue]="option" >{{option.account_id_name}}</option>
+                    </select>
+                    <!-- <input type="text" id="account" name=account readonly required [(ngModel)]="account"> -->
+                </div>
+                
+                <ng-template #elseblock>
+                    <div class="Input" >
+                        <label for="account">Account<span>*</span></label>
+                        <input type="text" id="account" name=account readonly required [(ngModel)]="account_selected">
+                    </div>
+                </ng-template>
+
+                
+                <div class="Input">
+                    <label for="app_name">App Name<span>*</span></label>
+                    <!-- <input type="text" id="app_name" name="app_name" placeholder="Please Input here" required [(ngModel)]="app_name"> -->
+                    <select id="app_name" name="app_name" [(ngModel)]="publisherFromDropdown" required>
+                        <option value="" selected disabled>Select App name</option>
+                        <option *ngFor="let option of app_name_dropdown" [ngValue]="option">{{option.app_id_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="name">Name<span>*</span></label>
+                    <!-- <select id="name" name="name">
+                        <option disabled selected value="">Please Select</option>
+                    </select> -->
+                    <input type="text" id="name"  (input)="checkAdUnitNameTextLength()" name="name" [(ngModel)]="name" required>
+                    <div *ngIf="adUnitNameTextLength" class="warning">
+                        <p class="warning-text">Ad Unit Name should not exceed 500 character length</p>
+                        
+                      </div>
+
+                </div>
+                <div class="Input">
+                    <label for="code">Code<span>*</span></label>
+                    <input type="text" id="code"  (input)="checkCodeTextLength()" name="code" [(ngModel)]="code" required>
+                    <div *ngIf="codeTextLength" class="warning">
+                        <p class="warning-text">Code text should not exceed 500 character length</p>
+                        
+                      </div>
+                </div>
+            </div>
+            <!---->
+            <!-- <div class="description">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" placeholder="Please select" required
+                    [(ngModel)]="description">
+            </div> -->
+            <!---->
+
+            <div class="radio">
+                <input type="radio" id="display" name="options" value="display" [(ngModel)]="selectedOption"
+                    (click)="optionSelected($event)">
+                <label for="display">Display</label>
+                <input type="radio" disabled id="video" name="options" value="video" [(ngModel)]="selectedOption"
+                    (click)="optionSelected($event)">
+                <label for="video">Video</label>
+            </div>
+
+
+            <div class="form-group togglebox" *ngIf="displayRadio">
+                <div class="Input">
+                    <label for="display">Display Ad Size<span>*</span></label>
+                    <!-- <select id="display" name=" display" class="display" required [(ngModel)]="display_ad_size" (change)="updateDimensions($event)">
+                        <option value="" selected disabled>Select Display Size</option>
+                        <option *ngFor="let option of sizes" [value]="option.name" >{{option.name}}</option>
+                    </select> -->
+
+                    <ng-select [items]="sizes" bindLabel="name" bindValue="value" required name="display"
+                        [(ngModel)]="display_ad_size" placeholder="Select Display sizes" [multiple]="true"
+                        (change)="updateDimensions()">
+                    </ng-select>
+
+                    <!-- <p class="VAST">Video or Audio (VAST) sizes</p> -->
+                </div>
+                <div class="box">
+                    <div class="toggle">
+                        <input type="checkbox" id="toggle" name="toggle" [(ngModel)]="refresh_rate">
+                        <label for="toggle"></label>
+
+                    </div>
+                    <div class="para">
+                        <p>Refresh Rate</p>
+                        <p>(30sec)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group" *ngIf="videoRadio">
+                <div class="Input">
+                    <label for="master_size">Master Size<span>*</span></label>
+                    <select id="master_size" name="master_size" required [(ngModel)]="master_size">
+                        <option value="" selected disabled>Select Master Size</option>
+                        <option *ngFor="let size of masterSizeOptions" [value]="size.name"> {{size.name}} </option>
+                    </select>
+
+                </div>
+                <div class="Input">
+                    <label for="companion_size">Companion Size<span>*</span></label>
+                    <select id="companion_size" name="companion_size" required [(ngModel)]="companion_size">
+                        <option value="" selected disabled>Select Companion Size</option>
+                        <option *ngFor="let size of companionSizeOptions" [value]="size.name"> {{size.name}} </option>
+                    </select>
+
+                </div>
+            </div>
+
+            <!---->
+            <!-- <div class="form-group">
+                <div class="Input">
+                    <label for="placement">Placement</label>
+                    <select id="placement" name="placement" required [(ngModel)]="placement_option" >
+                        <option *ngFor="let size of placementOptions" [value]="size.name"> {{size.name}} </option>
+                    </select>
+
+                </div>
+            </div> -->
+
+            <div class="btn">
+                <button class="save">Save</button>
+
+            </div>
+
+        </form>
+    </div>
+</body>

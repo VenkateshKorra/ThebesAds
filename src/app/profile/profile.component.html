@@ -1,0 +1,91 @@
+<body>
+    <div class="profile">
+        <h3>Profile</h3>
+    </div>
+    <div class="container">
+        
+        <div class="indicators">
+            <div class="status">
+                <p>{{status}}</p>
+            </div>
+            <div class="values">
+                <section>
+                    <!-- <label for="publisher">Publisher ID</label> -->
+                    <!-- <input type="text" readonly id="publisher" name="publisher" value="659629596269HVVH" > -->
+                    <p>GAM ID: &nbsp;</p>
+                    <p>{{publisher_id}}</p>
+                </section>
+                <section>
+                    <!-- <label>Email</label> -->
+                    <!-- <input type="text" readonly id="email" name="email" value={{email}}> -->
+                    <p>Email: &nbsp;</p>
+                    <p>{{email}}</p>
+                </section>
+                <section>
+                    <!-- <label for="percent" >Percent</label> -->
+                    <!-- <input type="text" readonly id="percent" name="percent" value="15%"> -->
+                    <p>Percent:&nbsp; </p>
+                    <p>{{percent/100 | percent: '1.0-2'}}</p>
+                </section>
+                
+            </div>
+        </div>
+
+        <div class="heading">
+            <h2>Edit Details</h2>
+        </div>
+    <form>
+        <div class="form-group">
+            <div class="col-1">
+                <label for="name">Name<span>&nbsp;*</span> </label>
+                <input type="text" name="name" id="name" value={{name}} placeholder="Account name" required>
+            </div>
+            <div class="col-2">
+                <label for="phone">Phone<span>&nbsp;*</span></label>
+                <input type="text" name="phone" id="phone" [(ngModel)]="Phone" placeholder="Phone Number" required>
+                <!-- <select required id="phone" name="phone">
+                    <option selected value="approval required">Approval Required</option>
+                    <option value="approved">Approved</option>
+                    <option value="declined">Declined</option>
+                </select> -->
+                
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-1">
+                <label for="company_name">Company Name</label>
+                <input type="text" name="company_name" id="company_name" placeholder="Company Name" required>
+            </div>
+            <div class="col-2">
+                <label for="address">Address <span>&nbsp;*</span></label>
+                <input type="text" id="address" name="address" [(ngModel)]="address" placholder="Address" required>
+                <!-- <select required id="address" name="address">
+                    <option value="" selected disabled>Company Address Goes here</option>
+                    <option  value="USA">USA</option>
+                    <option value="india">INDIA</option>
+                </select> -->
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-1">
+                <label for="country">Country</label>
+                <!-- <input type="text" name="country" id="country" placeholder="+91 9123455678"> -->
+                <select id="country" name="country" [(ngModel)]="country" required>
+                    <option selected disabled value="">Select Country</option>
+                    <option *ngFor="let option of country_list"  [value]="option.value" >{{option.value}}</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <label for="tax_info">Tax Info<span>&nbsp;*</span></label>
+                <input type="text" name="tax_info" id="tax_info" [(ngModel)]="tax_info" required>
+            </div>
+        </div>
+
+        <div class="btn">
+            <button>Save</button>
+        </div>
+        
+        
+    </form>
+</div>
+</body>

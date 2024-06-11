@@ -1,0 +1,173 @@
+<body>
+  <p-toast position="top-center"></p-toast>
+  <div class="container">
+    <div class="heading">
+      <h2>User Details</h2>
+      <button (click)="createUser()">Create New User</button>
+    </div>
+
+    <div class="top-search">
+      <div class="search-icon">
+        <input type="text" matInput (keyup)="applyFilter($event)" id="search" name="search"
+          placeholder="Search by keywords" #search>
+        <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+      </div>
+    </div>
+
+    <div class="table">
+
+      <div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container>
+
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+          </ng-container>
+
+          <!-- Fruit Column -->
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+          </ng-container>
+
+          <!-- Fruit Column -->
+          <ng-container matColumnDef="password">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Password </th>
+            <td mat-cell *matCellDef="let row"> {{row.password}} </td>
+          </ng-container>
+
+          <!-- Fruit Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+          </ng-container>
+
+          <!-- Fruit Column -->
+          <ng-container matColumnDef="attempts">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Failed_login_attempts</th>
+            <td mat-cell *matCellDef="let row"> {{row.attempts}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action" class="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="action-button">
+                <button mat-button (click)="performAction(element)" class="image-button"><img
+                    src="assets/action-button.svg" class="action-image" alt="action button"></button>
+              </div>
+
+              <div class="button-group" *ngIf="element.showOptions">
+                <button (click)="enable(element)">Enable</button>
+                <button (click)="disable(element)">Disable</button>
+                <button [disabled]="element.type=='Admin'" [ngClass]="{'disable-btn': element.type=='Admin'}" (click)="editUser(element)">Edit User</button>
+              </div>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter</td>
+          </tr>
+        </table>
+
+
+      </div>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons
+      aria-label="Select page of users"></mat-paginator>
+
+  </div>
+
+  <div *ngIf="click" class="add-user">
+    <div class="background-layer" [ngClass]="{'show': click }"></div>
+    <dialog [open]="click">
+      <h1>Create New User</h1>
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-grp">
+          <label for="user_name">User Name <span>*</span></label>
+          <input type="text" id="user_name" [(ngModel)]="userName" name="user_name" required>
+        </div>
+        <div class="form-grp">
+          <label for="email">Email <span>*</span></label>
+          <input type="email" id="email" name="email" [(ngModel)]="userEmail"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter valid email address."
+            required>
+        </div>
+        <div class="form-grp">
+          <label for="select-type">Type <span>*</span></label>
+          <!-- <input type="text" id="type" name="type" required> -->
+          <select id="select-type" name="select-type" [(ngModel)]="userType" required>
+            <option selected disabled value="">Select user Type</option>
+            <option *ngFor="let option of userTypeOptions" [value]="option.value">{{option.label}}</option>
+          </select>
+        </div>
+
+        <div class="form-grp">
+          <label for="password">Password <span>*</span></label>
+          <input type="text" id="password" [(ngModel)]="userPassword" name="password" required>
+        </div>
+        <div class=submit-btn>
+          <button>Submit</button>
+          <button (click)="onCancelAdd()" >Cancel</button>
+        </div>
+
+
+      </form>
+    </dialog>
+  </div>
+
+
+  <!--  -->
+
+  <div *ngIf="editClicked" class="edit-user">
+    <div class="background-layer" [ngClass]="{'show': editClicked }"></div>
+    <dialog [open]="editClicked">
+      <h1>Edit User Details</h1>
+      <form #form1="ngForm" (ngSubmit)="onSubmitEdit(form1)">
+        <div class="form-grp">
+          <label for="edit_user_name">User Name <span>*</span></label>
+          <input type="text" id="edit_user_name" [(ngModel)]="edit_userName" name="edit_user_name" required>
+        </div>
+        <div class="form-grp">
+          <label for="edit_email">Email <span>*</span></label>
+          <input type="edit_email" id="edit_email" name="edit_email" [(ngModel)]="edit_userEmail"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter valid email address."
+            required>
+        </div>
+        <div class="form-grp">
+          <label for="edit_select-type">Type <span>*</span></label>
+          <!-- <input type="text" id="type" name="type" required> -->
+          <select id="edit_select-type" name="edit_select-type" [(ngModel)]="edit_userType" required>
+            <option selected disabled value="">Select user Type</option>
+            <option *ngFor="let option of userTypeOptions" [value]="option.value">{{option.label}}</option>
+          </select>
+        </div>
+
+        <div class="form-grp">
+          <label for="edit_password">Password <span>*</span></label>
+          <input type="text" id="edit_password" [(ngModel)]="edit_userPassword" name="edit_password" required>
+        </div>
+        <div class=submit-btn>
+          <button>Submit</button>
+          <button (click)="onCancelEdit()" >Cancel</button>
+        </div>
+
+
+      </form>
+    </dialog>
+  </div>
+
+
+</body>

@@ -1,0 +1,128 @@
+<body>
+  <p-toast position="top-center"></p-toast>
+  <div class="container">
+    <div class="heading">
+      <h2>Contacts</h2>
+      <button (click)="addUser()">Add Contact</button>
+      <!-- <button >Add Contact</button> -->
+    </div>
+
+    <div class="top-search">
+      <div class="search-icon">
+        <input type="text" matInput (keyup)="applyFilter($event)" id="search" name="search"
+          placeholder="Search by keywords" #search>
+        <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+      </div>
+    </div>
+
+    <div class="table">
+      <div>
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- ID Column -->
+          <!-- <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          </ng-container> -->
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row" style="color: #0856A2;cursor: pointer;" (click)="openDialog(row)"> {{row.name}} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+          </ng-container>
+
+          <!-- Phone Number Column -->
+          <ng-container matColumnDef="phone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone Number </th>
+            <td mat-cell *matCellDef="let row"> {{row.phone}} </td>
+          </ng-container>
+
+          <!-- Country Column -->
+          <ng-container matColumnDef="country">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+            <td mat-cell *matCellDef="let row"> {{row.country}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+          </ng-container>
+
+          <!-- Invited Column -->
+          <ng-container matColumnDef="invited">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Invited </th>
+            <td mat-cell *matCellDef="let row"> {{row.invited === 'Y' ? 'Yes' : (row.invited === 'N' ? 'No' : '')}} </td>
+          </ng-container>
+
+          <!-- Add Reject Button in Table -->
+          <ng-container matColumnDef="reject">
+            <th mat-header-cell *matHeaderCellDef> Reject </th>
+            <td mat-cell *matCellDef="let row">
+              <div class="reject-container">
+                <button (click)="openDialog(row)" 
+                  class="reject-button" 
+                  [style.opacity]="(row.status === 'Rejected' || row.invited === 'Y') ? 0.5 : 1"
+                  [disabled]="row.status === 'Rejected' || row.invited === 'Y'">
+                  Reject
+                </button>
+                <img src="assets/icons8-cancel.svg" alt="Reject Icon" 
+                  class="reject-icon"
+                  [style.opacity]="(row.status === 'Rejected' || row.invited === 'Y') ? 0.5 : 1">
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Send Invite Column -->
+          <ng-container matColumnDef="invite">
+            <th mat-header-cell *matHeaderCellDef> Send Invite </th>
+            <td mat-cell *matCellDef="let row">
+              <a href="javascript:void(0)"
+                (click)="row.invited !== 'Y' && row.status !== 'Rejected' && clicked(row)"
+                [ngClass]="{ 'disabled-link': row.invited === 'Y' || row.status === 'Rejected' }" 
+                style="text-decoration: none; color: #0856A2;">
+                {{row.invite}}
+                <img src="assets/Invite-arrow.svg" alt="Invite-arrow" style="margin-left:5px;">
+              </a>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="created_on">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+            <td mat-cell *matCellDef="let row"> {{row.created_on}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="invited_on">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Invited On </th>
+            <td mat-cell *matCellDef="let row"> {{row.invited_on}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="created_by">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
+            <td mat-cell *matCellDef="let row"> {{row.created_by}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons aria-label="Select page of users"></mat-paginator>
+  </div>
+
+  <!--  -->
+  <div *ngIf="click">
+    <app-send-invite [isOpen]="click" [selectedRowData]="selectedRowData"
+      (inviteClosed)="onInviteClosed($event)"></app-send-invite>
+  </div>
+</body>

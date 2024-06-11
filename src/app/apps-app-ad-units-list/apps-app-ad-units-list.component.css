@@ -1,0 +1,183 @@
+body {
+    width: 100%;
+    margin: auto;
+    font-family: "Overpass", sans-serif;
+    border-top: 1px solid #E7EBFF;
+    height: auto;
+  }
+  
+  h2 {
+    font-size: 100;
+  }
+  
+  table {
+    width: 100%;
+    height: auto;
+    
+  }
+  
+  thead {
+    border: 1px solid #E7EBFF;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+    /*background-color: rgba(128, 128, 128, 0.169);*/
+  }
+
+  label {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 7px;
+    color: #707070;
+
+  }
+  
+  th {
+    background-color: #FFFFFF;
+    font-size: 12px;
+  }
+  
+  td,
+  th {
+    width: auto;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+  }
+  
+  td {
+    border: none;
+  }
+  
+  .btn button {
+    padding: 0.7em;
+    width: 10em;
+    height: 3em;
+    background-color: #0856A2;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .table {
+    border: 1px solid #E5E5E5;
+    overflow-x: auto;
+  }
+  
+  
+  .heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+    margin-top: 5em;
+    width: 98%;
+  
+  }
+  
+  .search-box {
+    position: relative;
+  }
+  
+  .search-box img {
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 12.95px;
+    height: 12.95px;
+  }
+  
+  .top-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1.2em 1.2em 1.2em 1.2em;
+    align-items: center;
+    border: 1px solid #E7EBFF;
+  }
+  
+  .search {
+    display: flex;
+    flex-direction: row;
+    gap: 22px;
+  
+  }
+  .select {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .top-selection input,
+  select {
+    width: 266px;
+    height: 32px;
+    padding: 0.5em;
+    box-sizing: border-box;
+    border: 1px solid #E7EBFF;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .top-selection input {
+    padding-left: 30px;
+    border: 1px solid #E5E5E5;
+  }
+  
+  .img-icons {
+    padding-right: 8px;
+  }
+  
+  .img-icons:hover {
+    cursor: pointer;
+  }
+  
+
+
+  .image-button {
+    width:fit-content;
+    height: auto;
+    padding: 0.5em 1em;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  
+  .image-button:hover {
+    background-color: rgb(243, 239, 239);
+  }
+  
+  .action {
+    position: relative;
+  }
+  
+  .button-group {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 0.2em;
+    z-index: 10;
+    right: 5%;
+    border: 1px solid #707070;
+    border-radius: 10px;
+    background-color: white;
+  }
+  
+  .button-group button {
+    z-index: 10;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    color: black;
+    width: 10em;
+    height: 3em;
+    border: none;
+    padding: 0.8em;
+    text-align: start;
+  }

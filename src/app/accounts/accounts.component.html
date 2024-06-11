@@ -1,0 +1,39 @@
+<body>
+    <div class="account">
+        <mat-tab-group animationDuration="0ms" class="mat-tab" mat-stretch-tabs="false" mat-align-tabs="start"
+            preserveContent>
+            <mat-tab label="Details">
+                <ng-template matTabContent>
+                    <app-account-detail-admin></app-account-detail-admin>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Sites">
+                <ng-template matTabContent>
+                    <app-account-sites></app-account-sites>
+                </ng-template>
+
+            </mat-tab>
+            <mat-tab label="Site Ad Units">
+                <ng-template matTabContent>
+                    <app-site-ad-units></app-site-ad-units>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Apps">
+                <ng-template matTabContent>
+                    <app-account-details-apps></app-account-details-apps>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="App Ad Units">
+                <ng-template matTabContent>
+                    <app-apps-app-ad-units-list></app-apps-app-ad-units-list>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="MCM Invite">
+                <ng-template matTabContent>
+                    <app-apps-app-mcm></app-apps-app-mcm>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</body>

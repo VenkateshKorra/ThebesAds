@@ -1,0 +1,85 @@
+body {
+    color: black;
+    width: 100%;
+}
+
+nav {
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    
+    box-sizing: border-box;
+}
+
+.dropdown a {
+    /*border: 1px solid black;*/
+    text-decoration: none;
+    padding: 8px 1em;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 95%;
+    margin: 0.3em auto 0 auto;
+
+}
+.dropdown>a img {
+    margin-right: 0.5em;
+}
+.dropdown>a p {
+    margin: 0;
+}
+
+.text {
+    display: flex;
+    flex-direction: row;
+}
+
+.dropdown-options a{
+    width: 100%;
+    padding: 5px 0;
+    margin: 15px 0px;
+    padding-left: 25%;
+    justify-content: start;
+}
+.dropdown-options img {
+    margin-right: 10px;
+}
+
+.arrow {
+    border: 1px solid #707070;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-135deg);
+  }
+
+.bg-color {
+    background-color: #4377bc12;
+    border: #70707011;
+}
+
+
+/* Add this style to change the color of link text when clicked */
+/* Add this style to make the borders of SVG images blue */
+.dropdown-options.clicked-options img {
+    border: 1px solid blue;
+}
+/* Add this style to make the fill color of SVG images blue */
+
+
+.blue-image {/* blue color of icons svg and text */
+    filter: brightness(0) saturate(100%) invert(17%) sepia(85%) saturate(2897%) hue-rotate(198deg) brightness(95%) contrast(94%);
+}
+
+
+.clicked.span {
+    border-right: 4px solid #0856A2;
+    
+}
+/* Add this style to change the color and right border color of the clicked link */
+
+.heading {
+    color: #0856A2;
+}

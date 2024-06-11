@@ -1,0 +1,38 @@
+<body>
+    <div class="container">
+        <h1>Do you really want to Reject?</h1>
+        <h2 mat-dialog-title>Contact Details</h2>
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <!-- <p>Id: <span>{{data.id || 'NA'}}</span></p> -->
+                <p>Name: <span>{{ data.name || 'NA' }}</span></p>
+                <p>Email Id: <span>{{data.email || 'NA'}}</span></p>
+                <!-- <p>Phone: <span>{{data.phone || 'NA'}}</span></p>
+                <p>Country: <span>{{data.country || 'NA'}}</span></p>
+                <p>Created On: <span>{{data.created_on || 'NA'}}</span></p>
+                <p>Created By: <span>{{data.created_by || 'NA'}}</span></p>
+                <p>Invited On: <span>{{data.invited_on || 'NA'}}</span></p>
+                <p>Status: <span>{{data.status || 'NA'}}</span></p>
+                <p>App Mediation Platform: <span>{{data.app_mediation_platform || 'NA'}}</span></p>
+                <p>Est Daily User: <span>{{data.est_daily_user || 'NA' | thousandSuff : 2}}</span></p>
+                <p>Invited: <span>{{data.invited === 'Y' ? 'Yes' : (data.invited === 'N' ? 'No' : 'NA')}}</span></p>
+                <p>Product Type: <span>{{data.product_type === 'A' ? 'App' : (data.product_type === 'W' ? 'Web' : 'NA')}}</span></p>
+                <p>URL: <span>{{data.url || 'NA'}}</span></p>
+                <p>Web Monthly Page View: <span>{{data.web_monthly_page_view || 'NA' | thousandSuff : 2}}</span></p>
+                <p>Top Country: <span>{{data.top_country || 'NA'}}</span></p> -->
+            </div>
+       
+            <h3 mat-dialog-title>Reject Contact</h3>
+            <mat-dialog-content class="content">
+                <mat-form-field appearance="outline" class="full-width rejection-box">
+                    <mat-label>Reason for Rejection</mat-label>
+                    <textarea matInput [(ngModel)]="reason"></textarea>
+                </mat-form-field>
+            </mat-dialog-content>
+            <mat-dialog-actions align="end">
+                <button mat-button (click)="onCancel()" class="cancel-button">Cancel</button>
+                <button mat-button (click)="onReject()" class="reject-button">Reject</button>
+            </mat-dialog-actions>
+        </div>
+    </div>
+</body>

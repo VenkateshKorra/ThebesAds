@@ -1,0 +1,96 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <div  #container class="container">
+        <div class="heading">
+            <div class="part1">
+                <p>Billed From: {{billed_from}} </p>
+                <p>Name: {{name}} </p>
+                <p>Address: {{address}} </p>
+                <p>Contact Person: {{contact_person}} </p>
+            </div>
+            <div classs="part2">
+                <p>Date: {{date}} </p>
+                <p>Invoice No. {{invoice_no}} </p>
+            </div>
+        </div>
+        <section class="info">
+            <p>Billed To: {{billed_to}} </p>
+            <p class="text-wrap">Address: <span>{{billed_to_address}}</span> </p>
+            <p>TRN No: <span>{{trn_no}}</span> </p>
+            <p>Email ID: <span>{{email_id}}</span> </p>
+        </section>
+
+        <section class="table-data">
+            <table class="user-data-table">
+                <tr>
+                    <th width="15%">S.no.</th>
+                    <th width="25%">Payment to child(Total Revenue by Months)</th>
+                    <th width="17%">IVT Deductions (-)</th>
+                    <th width="17%">Ad serving cost</th>
+                    <th width="25%">Payable Amount (USD)</th>
+                </tr>
+
+                <tr *ngFor="let item of userPaymentData">
+                    <td>{{item.id}}</td>
+                    <td>{{item.total_payment}}</td>
+                    <td>{{item.deduction}}</td>
+                    <td>{{item. revenue_share}}</td>
+                    <td>{{item.payable_amount}}</td>
+                </tr>
+
+                <tr>
+                    <td>Total</td>
+                    <td>{{total_revenue_calculated}} </td>
+                    <td>{{total_deduction}}</td>
+                    <td>{{0.3}}</td>
+                    <td>{{total_payable_amount}} </td>
+                </tr>
+
+                <tr>
+                    <td colspan="5" style="text-align: start; padding-left: 0.5em;">Amount in words: {{numberToWord}}</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="account-data">
+            <table class="user-account-data">
+                <tr><td colspan="2" class="column-1">Payment Details</td></tr>
+                <tr>
+                    <td class="column-1">Bank Account No.</td>
+                    <td class="column-2">{{bank_account_no}}</td>
+                </tr>
+                <tr>
+                    <td class="column-1">Account Holder Name</td>
+                    <td class="column-2">{{account_holder_name}}</td>
+                </tr>
+                <tr>
+                    <td class="column-1">IFSC Code</td>
+                    <td class="column-2">{{ifsc_code}}</td>
+                </tr>
+                <tr>
+                    <td class="column-1">PAN</td>
+                    <td class="column-2">{{pan}}</td>
+                </tr>
+                <tr>
+                    <td class="column-1">Branch Address</td>
+                    <td class="column-2">{{branch_address}}</td>
+                </tr>
+                <tr>
+                    <td class="column-1">Swift Code</td>
+                    <td class="column-2">{{swift_code}}</td>
+                </tr>
+            </table>
+
+        </section>
+
+        <section class="footer">
+            <p style="margin-bottom: 3em">For ......</p>
+            <p>Sd/-</p>
+            <p>Signature</p>
+            <p>Name: </p>
+        </section>
+       
+    </div>
+
+    <!-- <button (click)="generatePDF()" >Generate</button> -->
+</body>

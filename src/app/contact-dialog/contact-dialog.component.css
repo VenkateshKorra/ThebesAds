@@ -1,0 +1,73 @@
+.container {
+    width: 100%;
+    text-align: center;
+    margin: 2em 0;
+    font-family: 'Overpass', sans-serif;
+    padding: 0 1em;
+}
+
+h1, h2 {
+    font-size: 1.5em;
+    font-weight: 500;
+    font-family: 'Overpass', sans-serif;
+    margin: 0.5em 0;
+}
+
+h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    font-family: 'Overpass', sans-serif;
+    margin: 0.5em 0;
+    margin-left: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+p {
+    margin: 0.5em 0;
+}
+
+span {
+    color: #0856A2;
+}
+
+.mat-mdc-button:not(:disabled) {
+    color: white !important;
+    border-radius: 15px;
+}
+
+.cancel-button {
+    background-color: #0856A2;
+    color: #0856A2;
+    border: 1px solid #0856A2;
+    border-radius: 15px;
+    padding: 0.5em 1em;
+    margin-right: 1em;
+}
+
+.reject-button {
+    background-color: #0856A2;
+    color: white;
+    border-radius: 15px;
+    padding: 0.5em 1em;
+}
+
+.full-width {
+    width: 70%;
+}
+
+.rejection-box {
+    margin-left: 20px; /* Adjust the value as needed to move it to the right */
+}
+
+.scrollable-content {
+    max-height: 200px; /* Adjust the max-height as needed */
+    overflow-y: auto;
+    margin-top: 1em;
+    padding-right: 1em; /* Ensure the scroll bar doesn't overlap content */
+}
