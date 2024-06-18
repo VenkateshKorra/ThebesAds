@@ -115,9 +115,15 @@
         
         <div class="form-grp" *ngIf="userType=='AdOpsManager' || userType =='Distributor' ">
           <label for="assign-publisher">Assign Publishers <span>*</span></label>
-          <input type="text" id="assign-publisher" [(ngModel)]="assign_publisher_string" name="assign-publisher">
-          
+          <input type="text" id="assign-publisher" [(ngModel)]="assign_publisher_string" name="assign-publisher">    
         </div>
+
+        <div class="form-grp" *ngIf="userType =='Distributor' ">
+          <label for="assign-margin">Margin <span>*</span></label>
+          <input type="number" id="assign-publisher" [(ngModel)]="assign_margin" required name="assign-margin">
+        </div>
+
+
 
         <div class="form-grp">
           <label for="password">Password <span>*</span></label>
@@ -164,6 +170,11 @@
           <label for="assigned-publisher">Assigned Publishers <span>*</span></label>
           <input type="text" id="assigned-publisher" [(ngModel)]="edit_assigned_publisher_string" name="assigned-publisher">
           
+        </div>
+
+        <div class="form-grp" *ngIf="edit_userType =='Distributor' ">
+          <label for="edit-margin">Margin <span>*</span></label>
+          <input type="number" id="aedit-margin" [(ngModel)]="edit_assigned_margin" required name="edit-margin">
         </div>
 
         <div class="form-grp">

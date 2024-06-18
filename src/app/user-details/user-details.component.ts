@@ -19,6 +19,7 @@ export interface UserData {
   status: string;
   attempts: number;
   assignedPublishers: string;
+  managerMargin: any;
   showOptions: boolean;
 }
 
@@ -46,6 +47,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
   userType = '';
   userPassword = '';
   assign_publisher_string='';
+  assign_margin = 0;
   assign_publisher_list:number[] = [];
 
   edit_id: any;
@@ -54,6 +56,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
   edit_userType = '';
   edit_userPassword = '';
   edit_assigned_publisher_string='';
+  edit_assigned_margin = '';
   edit_assigned_publisher_list: number[]=[];
 
   editClicked = false;
@@ -119,7 +122,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
           assignedPublishers: user.assignedPublishers,
           status: user.Status, // Assuming there's a property named "Status" in the fetched data
           attempts: user.Failed_Login_Attempts,
-
+          managerMargin: user.ManagerMargin,
           showOptions: false
         }));
         this.dataSource.data = mappedUsers;
@@ -202,11 +205,18 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
           this.edit_userName = element.name;
           this.edit_userEmail = element.email;
           this.edit_userType = element.type;
+          this.edit_assigned_margin = element.managerMargin;
           this.edit_assigned_publisher_string = element.assignedPublishers.join(',');
           // this.edit_userPassword = element.password
-          console.log('fetched assigned: ', element.assignedPublishers);
+          // console.log('fetched assigned: ', element.assignedPublishers);
+          console.log('log: ', element);
           
-          console.log('edit assigned string: ', this.edit_assigned_publisher_string);
+          console.log('Margin assigned: ',this.edit_assigned_margin);
+          console.log('Got margin: ', element.ManagerMargin);
+          
+          
+          
+          // console.log('edit assigned string: ', this.edit_assigned_publisher_string);
           
     }
     
@@ -262,7 +272,8 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
         Email: this.userEmail,
         Type: this.userType,
         Password: this.userPassword,
-        PublisherAccountIds: this.assign_publisher_list
+        PublisherAccountIds: this.assign_publisher_list,
+        Margin: this.assign_margin
       }
       console.log('DataPayload is: ', DataPayload);
       this.userService.addUserCredentials(DataPayload).subscribe(
@@ -285,6 +296,7 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
     this.userType='';
     this.userPassword='';
     this.assign_publisher_string='';
+    this.assign_margin=0;
     this.assign_publisher_list=[];
   }
 
@@ -310,7 +322,8 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
       User_Name : this.edit_userName,
       Email: this.edit_userEmail,
       Type : this.edit_userType,
-      Password: this.edit_userPassword, 
+      Password: this.edit_userPassword,
+      Margin: this.edit_assigned_margin, 
       PublisherAccountIds: this.edit_assigned_publisher_list
 
     }
