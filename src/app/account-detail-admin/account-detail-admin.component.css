@@ -1,0 +1,81 @@
+
+body  {
+  margin: 0;
+  font-family: 'Overpass', sans-serif;
+}
+.container {
+  width: 100%;
+  margin: auto;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding-left:1em;
+    padding-bottom:1.5em;
+    box-sizing: border-box;
+    border: 1px solid #E5E5E5;
+    background-color: #FCFCFC;
+}
+
+h2 {
+  font-size: 20px;
+  font-family: "Hind", sans-serif;
+  font-weight: 400;
+}
+label {
+  font-size: 12px;
+  font-family: "Overpass", sans-serif;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+}
+.Input {
+    display: flex;
+    flex-direction: column; 
+    width: 50%;
+}
+.payment-heading {
+  margin-top: 1.2em;  
+}
+
+input, select {
+    width: 95%;
+    height: 32px;
+    padding-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 2em;
+    outline: none;
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #5F616E;
+  }
+span {
+  color: red;
+}
+  .save{
+    background-color: #0856A2;
+    color: white;
+    width: 78px;
+    height: 32px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    
+  }
+  .btn {
+    text-align: end;
+    margin-right: 40px;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button, 
+  input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+  }

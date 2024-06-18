@@ -1,0 +1,186 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <div class="container">
+        <div class="heading">
+            <h2>Accounts</h2>
+            <div class="btn">
+                <button (click)="onInviteSend()">Send New Invite</button>
+            </div>
+            
+
+        </div>
+        <div class="top-selection">
+            <div class="search">
+                <div class="find">
+                    <label for="search">Search</label>
+                    <div class="search-icon">
+                        <input type="text" matInput (keyup)="applyFilter($event)" id="search" name="search" placeholder="Search by keywords" #search>
+                        <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+                    </div>
+
+                </div>
+
+                <div class="select">
+                    <label for="status">Status</label>
+                    <select (change)="applyFilterByStatus(status.value)" id="status" name="status" #status>
+                        <option value="" selected disabled>Select Status</option>
+                        <option *ngFor="let option of status_options" [value]="option.value">{{option.value}}</option>
+                    </select>
+                </div>
+
+                <div class="select">
+                    <label for="country">Country</label>
+                    <select (change)="applyFilterByCountry(country.value)" id="country" name="country" #country>
+                        <!-- <option selected value="" >Please Select</option> -->
+                        <option value="" selected disabled>Select Country</option>
+                        <option *ngFor="let option of countries_list" [value]="option.value" >{{option.value}}</option>
+                    </select>
+                </div>
+
+                <div class="clear">
+                    <button (click)="clearSearch()">Clear search</button>
+                </div>
+                
+            </div>
+
+            
+
+
+        </div>
+        <div class="table">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Position Column -->
+                <!-- <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Account ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="publisher_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header >GAM Publisher ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.publisher_id}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="publisher_name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Account Name </th>
+                    <td mat-cell *matCellDef="let element"> <a routerLink="/accounts" (click)="setPublisherName(element)">{{element.publisher_name}}</a> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="network_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > GAM Network ID </th>
+                    <td mat-cell *matCellDef="let element">{{element.network_id}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                    <td mat-cell *matCellDef="let element" ><p
+                        [ngStyle]="getStatusBackgroundColor(element.status)">
+                        {{element.status}}
+                </p></td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="mcm_status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> 	GAM status </th>
+                    <td mat-cell *matCellDef="let element"> <p
+                        [ngStyle]="getmcmStatusBackgroundColor(element.mcm_status)">
+                        {{element.mcm_status}}
+                </p> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="country">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+                    <td mat-cell *matCellDef="let element"> {{element.country}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="margin">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Margin </th>
+                    <td mat-cell *matCellDef="let element"> {{element.margin}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="sites">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Sites </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sites}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="apps">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Apps </th>
+                    <td mat-cell *matCellDef="let element"> {{element.apps}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="phone">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+                    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="gross">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header > Gross/Net </th>
+                    <td mat-cell *matCellDef="let element"> {{element.gross}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="approved_on">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Approved on </th>
+                    <td mat-cell *matCellDef="let element"> {{element.approved_on}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="created_on">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Created on </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_on}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="created_by">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Created By </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_by}} </td>
+                </ng-container>
+
+                <!-- Action button -->
+
+                <ng-container matColumnDef="action" class="action">
+                    <th mat-header-cell *matHeaderCellDef > Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div >
+                            <button (click)="performAction(element)" class="image-button"><img src="assets/action-button.svg" class="action-image"  alt="action button"></button>
+                        </div>
+                        
+                        <div class="button-group" *ngIf="element.showOptions">
+                            <button (click)="resendInvite(element)">Resend Invite</button>
+                            <button (click)="checkStatus(element)"  >Check Status</button>
+                            <button (click)="revokeInvite(element)">Revoke Invite</button>
+                            <button (click)="disable(element)">Disable</button>
+                        </div>
+                    </td>
+                </ng-container>
+
+
+               
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter</td>
+                  </tr>
+            </table>
+
+            
+        </div>
+        <mat-paginator [pageSizeOptions]="[ 30, 50, 100]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+    </div>
+
+    <div *ngIf="inviteSend">
+        <app-send-invite [isOpen]="inviteSend" (inviteClosed)="onDialogClosed()"></app-send-invite>
+    </div>
+
+
+</body>

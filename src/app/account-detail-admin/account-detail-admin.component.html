@@ -1,0 +1,145 @@
+<body>
+    <div class="container">
+        <p-toast position="top-center"></p-toast>
+        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <div>
+                <h2>Edit Account</h2>
+            </div>
+
+            <div class="form-group">
+                <div class="Input">
+                    <label for="name">Name &nbsp;<span>*</span></label>
+                    <input type="text" name="name" id="name" [(ngModel)]="Name" readonly>
+                </div>
+
+                <div class="Input">
+                    <label for="status">Status &nbsp;<span>*</span></label>
+                    <select id="status" name="status" [(ngModel)]="Status" >
+                        <option value="" selected disabled>Select Status</option>
+                    <option *ngFor="let option of statusOptions" [value]="option.value">{{option.value}}</option>
+                    </select>
+                </div>
+                
+            </div>
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="margin">Margin &nbsp;<span>*</span></label>
+                    <input type="number" name="margin" id="margin" [(ngModel)]="Margin">
+                </div>
+
+                <div class="Input">
+                    <label for="country">Country &nbsp;<span>*</span></label>
+                    <select id="country" name="country" [(ngModel)]="Country" > <!--[(ngModel)]="country"-->
+                        <option disabled selected value="">Select your country</option>
+                        <option *ngFor="let option of countries_options" [value]="option.value">{{option.value}}</option>
+                    </select>
+                </div>
+                
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="phone">Phone</label>
+                    <input type="text" name="phone" id="phone" [(ngModel)]="Phone">
+                </div>
+                <div class="Input">
+                    <label for="email">Email&nbsp;<span>*</span></label>
+                    <input type="email" name="email" id="email" [(ngModel)]="Email"  readonly>
+
+                </div>
+            </div>
+
+            <div class="payment-heading">
+                <h2>Payment Information</h2>
+            </div>
+            <div class="form-group">
+                <div class="Input">
+                    <label for="payment_method">Payment Method &nbsp;<span>*</span></label>
+                    <select id="payment_method" name="payment_method" required [(ngModel)]="payment_method">
+                        <option value="Bank_transfer" selected>Bank Transfer</option>
+                    </select>
+
+                </div>
+                <div class="Input">
+                    <label for="payment_term">Payment Term &nbsp;<span>*</span></label>
+                    <select id="payment_term" name="payment_term" required [(ngModel)]="payment_term" >
+                        <option value="30_days" selected>30 days</option>
+                        <option value="60_days">60 days</option>
+                    </select>
+                </div>
+
+            </div>
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="bank_name">Bank name</label>
+                    <input type="text" name="bank_name" id="bank_name" required [(ngModel)]="bank_name">
+                </div>
+                <div class="Input">
+                    <label for="swift_code">SWIFT Code</label>
+                    <input type="text" name="swift_code" id="swift_code" required [(ngModel)]="swift_code" >
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="bank_address">Bank address</label>
+                    <input type="text" name="bank_address" id="bank_address" required [(ngModel)]="bank_address">
+                </div>
+                <div class="Input">
+                    <label for="zipcode">Bank Zipcode</label>
+                    <input type="text" name="zipcode" id="zipcode" required [(ngModel)]="bank_zipcode" >
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="bank_code">Bank Code</label>
+                    <input type="text" name="bank_code" id="bank_code" required [(ngModel)]="bank_code">
+                </div>
+                <div class="Input">
+                    <label for="branch_name">Branch Name</label>
+                    <input type="text" name="branch_name" id="branch_name" required [(ngModel)]="branch_name">
+                </div>
+            </div>
+
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="account_number">Account number</label>
+                    <input type="number" name="account_number" id="account_number"   required [(ngModel)]="account_number">
+                </div>
+                <div class="Input">
+                    <label for="account_type">Account Type</label>
+                    <select id="account_type" name="account_type" required [(ngModel)]="account_type" >
+                        <option value="savings" selected>Savings account</option>
+                        <option value="current">Current account</option>
+                    </select>
+                </div>
+            </div>
+            <!---->
+            <div class="form-group">
+                <div class="Input">
+                    <label for="holder_name">Account Holder Name</label>
+                    <input type="text" id="holder_name" name="holder_name" required [(ngModel)]="account_holder_name">
+                </div>
+                <div class="Input">
+                    <label for="pan_no">PAN Number</label>
+                    <input type="text" id="pan_no" name="pan_no" required [(ngModel)]="pan_no">
+                </div>
+            </div>
+
+            <!---->
+            <div class="btn">
+                <button class="save" [disabled]="!Active" [ngStyle]="{'background-color': Active ? '' : 'gray', 'cursor': Active ? 'pointer' : 'default'}">Save</button>
+
+            </div>
+
+        </form>
+
+    </div>
+</body>

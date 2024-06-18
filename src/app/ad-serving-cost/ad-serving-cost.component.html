@@ -1,0 +1,155 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <div class="container">
+        <div class="header">
+            <button (click)="openAddDialog()">Add Serving Cost</button>
+        </div>
+
+        <div class="table">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="month">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Month </th>
+                    <td mat-cell *matCellDef="let element"> {{element.month}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="serving_cost">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Serving_Cost </th>
+                    <td mat-cell *matCellDef="let element"> {{element.serving_cost}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="created_by">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created_By </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_by}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="user_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> User_Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.user_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="created_on">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created_On </th>
+                    <td mat-cell *matCellDef="let element"> {{element.created_on}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="updated_on">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated_On </th>
+                    <td mat-cell *matCellDef="let element"> {{element.updated_on}} </td>
+                </ng-container>
+
+
+                <!-- <ng-container matColumnDef="parentAdUnitId">
+                    <th mat-header-cell *matHeaderCellDef> ParentAdUnitID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.parentAdUnitId}} </td>
+                </ng-container> -->
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action" class="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div>
+                            <button (click)="performAction(element)" class="image-button"><img
+                                    src="assets/action-button.svg" class="action-image" alt="action button"></button>
+                        </div>
+
+                        <div class="button-group" *ngIf="element.showOptions">
+                            <button (click)="editRecord(element)">Edit</button>
+                            <button (click)="deleteRecord(element)">Delete</button>
+
+                        </div>
+                    </td>
+                </ng-container>
+
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+
+        </div>
+        <!--         
+
+    </div> -->
+
+
+
+
+
+
+        <!--  -->
+        <div *ngIf="isOpen">
+            <div class="background-overlay" [ngClass]="{'show': isOpen}"></div>
+            <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                <h2>Create Ad-Serving Record</h2>
+                <div class="form-group">
+                    <label for="month">Month </label>
+                    <select name="month" [(ngModel)]="month_selected" id="month" required>
+                        <option selected value="" disabled>Select Month</option>
+                        <option *ngFor="let item of month_list" [value]="item.value">{{item.value}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="year"> Year</label>
+                    <input name="year" [(ngModel)]="year_selected" type="number" id="year" required>
+                </div>
+                <div class="form-group">
+                    <label for="ad_serving_cost">Ad Serving Cost</label>
+                    <input type="number" [(ngModel)]="ad_serving_cost" (input)="checkAdCost()" min="0" max="100" name="ad_serving_cost" required>
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="ad_cost_TextLength">Ad Cost should be in range 0-100</p>
+                    </div>
+                </div>
+
+                <div class="btn">
+                    <button class="save">Save</button>
+                    <button class="cancel" (click)="onCancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div *ngIf="isEdit">
+            <div class="background-overlay" [ngClass]="{'show': isEdit}"></div>
+            <form #form1="ngForm" (ngSubmit)="onUpdate(form1)">
+                <h2>Edit Ad Serving Record</h2>
+                <div class="form-group">
+                    <label for="edit_month">Month </label>
+                    <select name="edit_month" [(ngModel)]="editMonth" id="edit_month" required>
+                        <option selected value="" disabled>Select Month</option>
+                        <option *ngFor="let item of month_list" [value]="item.value">{{item.value}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit_year"> Year</label>
+                    <input name="edit_year" [(ngModel)]="editYear" type="number" id="edit_year" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_ad_serving_cost">Ad Serving Cost</label>
+                    <input type="number" [(ngModel)]="editAdServingCost" (input)="checkEditAdCost()" min="0" max="100" name="edit_ad_serving_cost" id="edit_ad_serving_cost" required>
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="edit_ad_cost_length">Ad Cost should be in range 0-100</p>
+                    </div>
+                </div>
+
+                <div class="btn">
+                    <button class="save">Save</button>
+                    <button class="cancel" (click)="onCancelEdit()">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>

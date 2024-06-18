@@ -1,0 +1,32 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <div class="main">
+        <!-- <button (click)="close()">Click to open dialog</button> -->
+    <div class="background-overlay"  [ngClass]="{'show': isOpen}"><img src="assets/Logo.svg" alt="logo"></div>
+
+    <div class="background">
+        <dialog [open]="isOpen" *ngIf="isOpen"  class="modal">
+            <div class="container">
+            <div class="image">
+                <img src="assets/add-mail-icon.svg" alt="mail icon">
+            </div>
+            <div class="text">
+                <p>We have received your request</p>
+                  <p>our team will get back to you shortly</p>
+            </div>
+            <div class="link">
+                <a href="/login" routerLink="/login" (click)="close()">Visit Website</a>
+            </div>
+
+            <div class="btn">
+                <button (click)="goBack()">Back</button>
+            </div>
+        </div>
+       
+        
+
+        </dialog>
+
+    </div>
+</div>
+</body>

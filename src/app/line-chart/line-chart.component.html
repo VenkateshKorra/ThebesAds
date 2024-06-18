@@ -1,0 +1,8 @@
+<div>
+  <input type="file" accept=".pdf" (change)="onFileSelected($event)">
+  <button (click)="uploadInvoice()">Upload Invoice</button>
+</div>
+
+<div *ngIf="uploadMessage">
+  {{ uploadMessage }}
+</div>

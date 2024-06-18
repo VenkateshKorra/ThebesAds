@@ -1,0 +1,197 @@
+body {
+    /* font-family: Arial, sans-serif; */
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  section {
+    margin-bottom: 3em;
+  }
+  
+  
+  h1 {
+    color: #0856A2; 
+    font-size: 0.9em;
+    margin: 10;
+    margin-left: 0%;
+    font-weight: 200;
+    font-family: 'Overpass-Regular', sans-serif; 
+  }
+  
+  a {
+    text-decoration: none; /* Remove underline from links */
+    color: blue; /* Blue color for links */
+  }
+  
+
+  button {
+    border: none;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    transition: transform 0.1s ease;
+    border-radius: 5px;
+    background-color: #0855a294;
+    color: white;
+    cursor: pointer;
+    
+  }
+  
+  button:hover {
+    z-index: 100;
+    transform:  scale(1.3);
+    background-color: #0855a294;
+  }
+  button img{
+    width: 15px;
+    height: auto;
+    border: none;
+  }
+  
+  #download  {
+    border: none;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    background-color: #0855a294;
+    transition: transform 0.1s ease;
+    border-radius: 5px;
+  }
+  
+  #download:hover  {
+    z-index: 100;
+    transform:  scale(1.3);
+  }
+  
+  
+  #download img  {
+    width: 15px;
+    height: auto;
+    border: none;
+  }
+  table {
+    width: 100%;
+    height: auto;
+  }
+  
+  
+  thead {
+    border: 1px solid #E7EBFF;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+    
+  }
+  
+  th {
+    background-color: #FFFFFF;
+  }
+  
+  /* td,
+  th {
+    width: auto;
+  } */
+  
+  td {
+    border: none;
+    white-space: nowrap;
+  }
+  
+
+  
+  .table, .revenue-table {
+    border: 1px solid #E5E5E5;
+    table-layout: auto; /* Allow the table to adjust column width automatically */
+    overflow-x: auto; 
+  }
+  
+  .anchor {
+    width: 11em !important;
+    display:inline-block;
+    margin-right: 15px;
+  }
+  .file-actions {
+    margin-top: auto;
+    margin-top: 15px;   
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    height: 100%; /* Ensure buttons are aligned at the same height */
+  }
+  
+  .file-actions button {
+    margin-right: 10px; /* Add margin between the buttons */
+    vertical-align: middle; /* Align buttons vertically in the middle */
+  }
+  
+  
+  .anchor, .delete-btn {
+    /* Additional styles for links and buttons, if necessary */
+    text-decoration: none; /* Removes underline from anchor tag */
+    color: inherit; /* Inherits color from parent for consistency */
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .delete-btn img {
+    vertical-align: middle; /* Aligns the image vertically in the middle of the line */
+  }
+  
+  .file-link {
+    display: inline-block; 
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    color: #0056b3; /* Bootstrap default blue */
+    text-decoration: none; /* Optional: removes underline */
+    font-weight: normal; /* Optional: makes the text bold */
+    vertical-align: middle;
+    clear: both;  
+  }
+  
+  
+  .file-link:hover {
+    
+    color:#007BFF;  /* A darker blue on hover */
+  }
+  .delete-btn {
+    background-color: #0855a294; 
+    margin-top: auto;
+    border: none; 
+    padding: 5px; 
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+  
+  .delete-btn:hover {
+    transform:  scale(1.3);
+   
+  }
+
+
+  .upload-button {
+    display: block; /* Make sure the button is displayed by default */
+  }
+  
+  .upload-button.hidden {
+    display: none; /* Hide the button when the 'hidden' class is applied */
+  }
+  
+  .disable{
+    background-color: gray;
+    cursor: default;
+  }
+  .disable:hover{
+    background-color: gray;
+    cursor: default;
+  }
+
+  .distributor-revenue {
+    /* margin-right: 20%; */
+    width: 80%;
+    text-align: end;
+  }

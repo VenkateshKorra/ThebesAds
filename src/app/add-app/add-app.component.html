@@ -1,0 +1,145 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <!-- Background overlay -->
+    <div class="background-overlay" [ngClass]="{'show': isOpen}"></div>
+
+    <div class="background">
+        <dialog [open]="isOpen" *ngIf="isOpen" class="modal">
+            <form #form="ngForm" (ngSubmit)="onSave(form)">
+                <!-- <p>{{form.valid |json}}</p> -->
+                <div class="heading">
+                    <h2>Add App</h2>
+                </div>
+                <div class="form-group">
+                    <label for="account">Account<span>&nbsp;*</span></label>
+                    <div>
+                        <select id="account" name="account" [(ngModel)]="accountSelected" required (change)="setAccountName()">
+                            <option selected disabled value="">Select an Account</option>
+                            <option *ngFor="let option of account_names"  [ngValue]="option"  >{{option.account_id_name}}</option>
+
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <label for="app_name">App Name <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="app_name" (input)="checkAppNameTextLength()"  name="app_name" id="app_name" required>
+                    <div *ngIf="appNameTextLength" class="warning">
+                        <p class="warning-text">
+                        App Name should not exceed 500 character length
+                        </p>
+                      </div>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category <span>&nbsp;*</span></label>
+                    <select name="category" id="category" [(ngModel)]="category" required>
+                        <option selected disabled value="">Choose Your Category</option>
+                        <option *ngFor="let option of category_list" [value]="option.value">{{option.label}}</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="android_checkbox || other_checkbox ">
+                    <label for="package_name">Package name <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="package_name" (input)="checkPackageNameTextLength()"  name="package_name" id="package_name" required>
+                    <div *ngIf="packageNameTextLength" class="warning">
+                        <p class="warning-text">Package Name should not exceed 500 character length</p>
+                        
+                      </div>
+                </div>
+
+                <div class="form-group" *ngIf="ios_checkbox">
+                    <label for="store_id">Store Id <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="store_id" name="store_id" id="store_id" required>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="app_name">App name <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="app_name" name="app_name" id="app_name" required>
+                </div> -->
+
+                <div class="form-group checkbox">
+                    <div class="android">
+                        <input type="radio" id="android" name="radio" class="rounded-checkbox" checked value="android"
+                            (click)="androidCheckbox()" />
+                        <img src="assets/android.svg" alt="android image">
+                        <label for="android">Android</label>
+                    </div>
+                    <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
+                            (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="Ios image">
+                        <label for="ios">iOS</label>
+                    </div>
+
+                    <div class="other">
+                        <input type="radio" id="other" name="radio" class="rounded-checkbox" value="other"
+                            (click)="otherCheckbox()" />
+                        <img src="assets/ios.svg" alt="Other image">
+                        <label for="other">Other</label>
+                    </div>
+
+                    <!-- <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
+                            (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="android image">
+                        <label for="ios">Amazon Appstore</label>
+                    </div>
+
+                    <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
+                            (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="android image">
+                        <label for="ios"> OPPO App Market</label>
+                    </div>
+
+                    <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
+                            (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="android image">
+                        <label for="ios">Samsung Galaxy Store</label>
+                    </div>
+
+                    <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
+                            (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="android image">
+                        <label for="ios">VIVO App Store</label>
+                    </div>
+
+                    <div class="ios">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
+                            (click)="iosCheckbox()" />
+                        <img src="assets/ios.svg" alt="android image">
+                        <label for="ios">Xiaomi GetApps</label>
+                    </div> -->
+
+
+                    
+                </div>
+
+                <div  *ngIf="other_checkbox">
+                    <label for="platform">Platform <span>&nbsp;*</span></label>
+                    <select id="platform" name="platform" [(ngModel)]="otherPlatformSelected">
+                        <option selected disabled value="">Select a Platform</option>
+                        <option *ngFor="let option of other_platforms"  [ngValue]="option.value"  >{{option.label}}</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="app_url">Store Link URL <span>&nbsp;*</span></label>
+                    <input type="text" [(ngModel)]="app_url" (input)="checkStoreUrlTextLength()" name="app_url" id="app_url" required>
+                    <div *ngIf="StoreUrlTextLength" class="warning">
+                        <p class="warning-text">Store Link Url should not exceed 1000 character length</p>
+                        
+                      </div>
+                </div>
+
+                <div class="btn">
+                    <button class="send" type="submit">Save</button>
+                    <button class="cancel" (click)="onCancel()">Cancel</button>
+                </div>
+            </form>
+        </dialog>
+    </div>
+</body>

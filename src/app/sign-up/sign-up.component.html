@@ -1,0 +1,159 @@
+<body>
+    <p-toast position="top-center"></p-toast>
+    <div class="container">
+        <div class="heading">
+            <h3>Sign Up</h3>
+        </div>
+
+        <form  class="form" #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <div class="row1">
+                <div class="Input">
+                    <label for="Name">* Your name / Company name</label>
+                    <input type="text" id="Name" name="Name"  (input)="checkNameTextLength()"  [(ngModel)]="Name" required />
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="nameTextLength">Name should not exceed 500 character length</p>
+                    </div>
+                    
+                </div>
+
+                <div class="Input">
+                    <label for="email">* Email</label>
+                    <input type="email" id="email" name="email" (input)="checkEmailTextLength()" [(ngModel)]="Email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="emailTextLength">Email should not exceed 500 character length</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row2">
+                <div class="Input">
+                    <label for="phone">* Phone</label>
+                    <input type="text" id="phone" name="phone" (input)="checkPhoneTextLength()"  [(ngModel)]="Phone" required />
+                    <div class="warning-div">
+                        <p class="warning-text" *ngIf="phoneTextLength">Phone should not exceed 15 character length</p>
+                    </div>
+                </div>
+
+                <div class=" select1 Input">
+                    <label for="country">* Country</label>
+                    <select id="country" name="country" [(ngModel)]="Country" required>
+                        <option value="" disabled selected>Select your country</option>
+                        <option *ngFor="let option of countriesOption"  [value]="option.value" >{{option.value}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row3">
+
+                <div class="round1">
+                    <label for="app/game">App/Game</label>
+                    <input type="radio" id="app/game" name="radio" class="rounded-checkbox" value="app/game" checked
+                        (click)="onAppGameClicked()" />
+                </div>
+
+                <div class="round2">
+                    <label for="website">Website</label>
+                    <input type="radio" id="website" name="radio" class="rounded-checkbox" value="website"
+                        (click)="onWebsiteClicked()" />
+                </div>
+            </div>
+
+
+            <div *ngIf="appGameChecked else website">
+                <div class="row4">
+                    <div class="Input">
+                        <label for="app_url">* App / Game store URL</label>
+                        <input type="text" id="app_url" name="app_url"  (input)="checkAppUrlTextLength()" [(ngModel)]="app_url" required />
+                        <div class="warning-div">
+                            <p class="warning-text" *ngIf="appUrlTextLength">App url should not exceed 2000 character length</p>
+                        </div>
+
+                    </div>
+
+                    <div class="Input">
+                        <label for="active_users">* Estimated Daily Active Users</label>
+                        <input type="number" id="active_users" name="active_users" [(ngModel)]=app_active_users required />
+                    </div>
+                </div>
+                <div class="row5">
+                    <div class="select1 Input">
+                        <label>* Which mediation platform are you using</label>
+                        <select [(ngModel)]="app_select1" name="app_select1" required>
+                            <option value="" disabled selected>Select your adFormat</option>
+                            <option *ngFor="let option of adOption"  [value]="option.value" >{{option.value}}</option>
+                        </select>
+
+                    </div>
+                    <div class="select2 Input">
+                        <label>* Users from Top Country</label>
+                        <select [(ngModel)]="app_select2" name="app_select2" required>
+                            <option value="" disabled selected>Select your country</option>
+                            <option *ngFor="let option of countriesOption"  [value]="option.value" >{{option.value}}</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <ng-template #website>
+                <div class="row7">
+                    <div class="Input">
+                        <label for="web_url">* Site URL</label>
+                        <input type="text" id="web_url" name="web_url"  (input)="checkWebUrlTextLength()" [(ngModel)]="web_url" required />
+                        <div class="warning-div">
+                            <p class="warning-text" *ngIf="webUrlTextLength">Site url should not exceed 2000 character length</p>
+                        </div>
+                    </div>
+
+                    <div class="Input">
+                        <label for="web_active_users">* Estimated Daily Active Users</label>
+                        <input type="number" id="web_active_users" name="web_active_users" required
+                            [(ngModel)]="web_active_users" />
+                    </div>
+                </div>
+                <div class="row8">
+                    <div class="Input">
+                        <label>* Monthly Page Views</label>
+                        <input type="number" [(ngModel)]="page_views" name="page_views" required />
+
+                    </div>
+                    <div class="select2 Input">
+                        <label>* Users from Top Country</label>
+                        <select [(ngModel)]="web_select2" name="web_select2" required>
+                            <option value="" disabled selected>Select your country</option>
+                            <option *ngFor="let option of countriesOption"  [value]="option.value" >{{option.value}}</option>
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </ng-template>
+
+            <div *ngIf="isPlatformBrowser(platformId)" class="captcha">
+                <form [formGroup]="aFormGroup" (ngSubmit)="onSubmit(form)">
+                    <ngx-recaptcha2 #captchaElem    
+                        [siteKey]="siteKey"
+                        (success)="handleSuccess($event)"
+                        formControlName="recaptcha">
+                    </ngx-recaptcha2>
+                </form>
+            </div>
+
+            <div class="row6" >
+                    <button *ngIf="hideBackButton" (click)="back()">Back</button>
+                    <button [disabled]="submitted" type="submit"><p>Submit</p></button>
+            </div>
+            
+
+
+
+        </form>
+        <div class="Image">
+            <img src="assets/Logo.svg" alt="Logo image">
+        </div>
+
+    </div>
+
+</body>

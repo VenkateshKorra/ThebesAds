@@ -1,0 +1,79 @@
+<div class="container">
+    <p-toast position="top-center"></p-toast>
+    <form [formGroup]="reactForm">
+      <div formArrayName="formArray">
+        <div *ngFor="let address of formArray.controls; let i = index" [formGroupName]="i">
+          <div class="form">
+            <h2>User Address {{ i + 1 }}</h2>
+            <div class="address-delete">
+              <p>Remove Address <button (click)="removeItem(i)" class="delete-button"><img src="assets/bin.png" alt="Delete icon" class="delete-icon"></button></p>
+  
+              <button *ngIf="!editEnabled" (click)="clickedEdit(i)" class="edit-button"><img src="assets/editing.svg" alt="edit icon" class="edit-icon"></button>
+              <div *ngIf="isEnable(i)" class="update-buttons">
+                <button class="edit-save-btn" (click)="saveUserUpdate(i)">Save</button>
+                <button class="edit-cancel-btn" (click)="cancelEdit(i)">Cancel</button>
+              </div>
+            </div>
+            <div>
+              <input type="hidden" formControlName="id">
+              <div class="checkbox">
+                <label>Make Default: </label>
+                <input type="checkbox" name="checkbox" formControlName="checkbox">
+              </div>
+  
+              <div class="form-group">
+                <div class="Input-field">
+                  <label>Name <span>&nbsp;*</span></label>
+                  <input type="text" formControlName="name" [readonly]="fetched && i < fetchedLength && !isEnable(i)" placeholder="Enter Address">
+                  <div *ngIf="address.get('name')?.errors?.['maxLength']">
+                    <small class="error-message">Name should not exceed 100 characters</small>
+                  </div>
+                </div>
+                <div class="Input-field">
+                  <label>Email <span>&nbsp;*</span></label>
+                  <input type="text" formControlName="email" [readonly]="fetched && i < fetchedLength && !isEnable(i)" placeholder="Enter Address">
+                  <div *ngIf="address.get('email')?.errors?.['maxLength']">
+                    <small class="error-message">Email should not exceed 100 characters</small>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="Input-field">
+                  <label>Phone Number <span>&nbsp;*</span></label>
+                  <input  type="text" [readonly]="fetched && i < fetchedLength && !isEnable(i)" formControlName="phoneNo">
+                  <div *ngIf="address.get('phoneNo')?.errors?.['maxLength']">
+                    <small class="error-message">PhoneNo should not exceed 20 characters</small>
+                  </div>
+                </div>
+                <div class="Input-field">
+                  <label>Designation</label>
+                  <input  type="text" [readonly]="fetched && i < fetchedLength && !isEnable(i)" formControlName="designation">
+                  <div *ngIf="address.get('designation')?.errors?.['maxLength']">
+                    <small class="error-message">Designation should not exceed 500 characters</small>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="Input-field">
+                  <label>Address</label>
+                  <input type="text" formControlName="address" [readonly]="fetched && i < fetchedLength && !isEnable(i)" name="address">
+                  <div *ngIf="address.get('address')?.errors?.['maxLength']">
+                    <small class="error-message">Address should not exceed 500 characters</small>
+                  </div>
+                </div>
+                <!-- <div class="Input-field">
+                  <label>Zip/Postal Code</label>
+                  <input type="number" formControlName="zipcode" [readonly]="fetched && i < fetchedLength && !isEnable(i)" name="zipcode">
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="button-group">
+      <button (click)="onSubmit()" [disabled]="!enableSave || editEnabled" [ngClass]="{'disable': !enableSave}">Save</button>
+      <button (click)="addNewContacts()" [disabled]="editEnabled" [ngClass]="{'disable': editEnabled}">Add Contacts</button>
+    </div>
+  </div>
+  

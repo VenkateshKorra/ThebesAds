@@ -1,0 +1,25 @@
+<body>
+    <div class="container">
+        <h1>Do you really want to Reject?</h1>
+        <h2 mat-dialog-title>Contact Details</h2>
+        <div mat-dialog-content class="content">
+            <div class="row">
+                <!-- <p>Id: <span>{{data.id || 'NA'}}</span></p> -->
+                <p>Name: <span>{{ data.name || 'NA' }}</span></p>
+                <p>Email Id: <span>{{data.email || 'NA'}}</span></p>
+            </div>
+       
+            <h3 mat-dialog-title>Reject Contact</h3>
+            <div mat-dialog-content class="content">
+                <mat-form-field appearance="outline" class="full-width rejection-box">
+                    <mat-label>Reason for Rejection</mat-label>
+                    <textarea matInput [(ngModel)]="reason"></textarea>
+                </mat-form-field>
+            </div>
+            <div mat-dialog-actions align="end">
+                <button mat-button (click)="onCancel()" class="cancel-button">Cancel</button>
+                <button mat-button (click)="onReject()" class="reject-button">Reject</button>
+            </div>
+        </div>
+    </div>
+</body>

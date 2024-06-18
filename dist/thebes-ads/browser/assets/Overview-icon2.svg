@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.92" height="15.679" viewBox="0 0 17.92 15.679">
+  <g id="credit-card_1_" data-name="credit-card (1)" transform="translate(0 -26.004)">
+    <g id="Group_542" data-name="Group 542" transform="translate(0 -6)">
+      <g id="Group_531" data-name="Group 531" transform="translate(0 35.364)">
+        <g id="Group_530" data-name="Group 530">
+          <path id="Path_1190" data-name="Path 1190" d="M17.36,134.716a.56.56,0,0,0-.56.56v3.92H1.12v-6.72H7.28a.56.56,0,0,0,0-1.12H1.12v-2.24H7.28a.56.56,0,1,0,0-1.12H1.12A1.12,1.12,0,0,0,0,129.116V139.2a1.12,1.12,0,0,0,1.12,1.12H16.8a1.12,1.12,0,0,0,1.12-1.12v-3.92A.56.56,0,0,0,17.36,134.716Z" transform="translate(0 -127.996)" fill="#707070"/>
+        </g>
+      </g>
+      <g id="Group_533" data-name="Group 533" transform="translate(2.24 42.083)">
+        <g id="Group_532" data-name="Group 532">
+          <path id="Path_1191" data-name="Path 1191" d="M66.8,320H64.56a.56.56,0,1,0,0,1.12H66.8a.56.56,0,1,0,0-1.12Z" transform="translate(-64 -319.996)" fill="#707070"/>
+        </g>
+      </g>
+      <g id="Group_535" data-name="Group 535" transform="translate(8.96 32.004)">
+        <g id="Group_534" data-name="Group 534">
+          <path id="Path_1192" data-name="Path 1192" d="M264.62,33.729l-3.92-1.68a.572.572,0,0,0-.442,0l-3.92,1.68a.561.561,0,0,0-.338.515v2.24c0,3.081,1.139,4.882,4.2,6.646a.563.563,0,0,0,.558,0c3.062-1.759,4.2-3.56,4.2-6.646v-2.24A.561.561,0,0,0,264.62,33.729Zm-.781,2.755c0,2.586-.856,4.01-3.36,5.51-2.5-1.5-3.36-2.928-3.36-5.51v-1.87l3.36-1.44,3.36,1.44Z" transform="translate(-256 -32.004)" fill="#707070"/>
+        </g>
+      </g>
+      <g id="Group_537" data-name="Group 537" transform="translate(11.2 35.364)">
+        <g id="Group_536" data-name="Group 536">
+          <path id="Path_1193" data-name="Path 1193" d="M324.281,128.138a.564.564,0,0,0-.787.087l-1.761,2.2-.7-1.042a.56.56,0,1,0-.932.62l1.12,1.68a.565.565,0,0,0,.442.25h.023a.56.56,0,0,0,.438-.211l2.24-2.8A.56.56,0,0,0,324.281,128.138Z" transform="translate(-320.011 -128.016)" fill="#707070"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

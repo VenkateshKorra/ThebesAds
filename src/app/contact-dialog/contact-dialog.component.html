@@ -1,0 +1,33 @@
+<body>
+    <div class="container">
+        <h1 mat-dialog-title>Contact Details</h1>
+        <div mat-dialog-content>
+            <div class="row">
+                <p>Id: <span>{{data.id || 'NA'}}</span></p>
+                <p>Name: <span>{{ data.name || 'NA' }}</span></p>
+                <p>Email Id: <span>{{data.email || 'NA'}}</span></p>
+                <p>Phone: <span>{{data.phone || 'NA'}}</span></p>
+                <p>Country: <span>{{data.country || 'NA'}}</span></p>
+                <p>Created On: <span>{{data.created_on || 'NA'}}</span></p>
+                <p>Created By: <span>{{data.created_by || 'NA'}}</span></p>
+                <p>Invited On: <span>{{data.invited_on || 'NA'}}</span></p>
+                <p>Status: <span>{{data.status || 'NA'}}</span></p>
+                <p>App Mediation Platform: <span>{{data.app_mediation_platform || 'NA'}}</span></p>
+                <p>Est Daily User: <span>{{data.est_daily_user|| 'NA' |  thousandSuff : 2}}</span></p>
+                <p>Invited: <span>{{data.invited === 'Y' ? 'Yes' : (data.invited === 'N' ? 'No' : 'NA')}}</span></p>
+                <p>Product Type: <span>{{data.product_type === 'A' ? 'App' : (data.product_type === 'W' ? 'Web' : 'NA')}}</span></p>
+                <p>URL: <span>{{data.url || 'NA'}}</span></p>
+                <p>Web Monthly Page View: <span>{{data.web_monthly_page_view || 'NA' |  thousandSuff : 2}}</span></p>
+                <p>Top Country: <span>{{data.top_country || 'NA'}}</span></p>
+                
+
+
+            </div>
+
+            <!-- Display other properties of the row data as needed -->
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="closeDialog()">Close</button>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,100 @@
+<div class="container">
+  <p-toast position="top-center"></p-toast>
+  <form [formGroup]="reactForm">
+    <div formArrayName="formArray">
+      <div *ngFor="let address of formArray.controls; let i = index" [formGroupName]="i">
+        <div class="form">
+          <h2>User Address {{ i + 1 }}</h2>
+          <div class="address-delete">
+            <p>Remove Address 
+              <button (click)="removeItem(i)" class="delete-button">
+                <img src="assets/bin.png" alt="Delete icon" class="delete-icon">
+              </button>
+            </p>
+            <button *ngIf="!editEnabled" (click)="clickedEdit(i)" class="edit-button">
+              <img src="assets/editing.svg" alt="edit icon" class="edit-icon">
+            </button>
+            <div *ngIf="isEnable(i)" class="update-buttons">
+              <button class="edit-save-btn" (click)="saveUserUpdate(i)">Save</button>
+              <button class="edit-cancel-btn" (click)="cancelEdit(i)">Cancel</button>
+            </div>
+          </div>
+          <div>
+            <input type="hidden" formControlName="id">
+            <div class="checkbox">
+              <label>Make Default: </label>
+              <input type="checkbox" name="checkbox" formControlName="checkbox" [readonly]="fetched && i < fetchedLength && !isEnable(i)">
+            </div>
+
+            <div class="form-group">
+              <div class="Input-field">
+                <label>Address Line 1 <span>&nbsp;*</span></label>
+                <input type="text" formControlName="address_line_1" 
+                       [readonly]="fetched && i < fetchedLength && !isEnable(i)" placeholder="Enter Address">
+                <div *ngIf="address.get('address_line_1')?.errors?.['maxLength']">
+                  <small class="error-message">Address Line 1 should not exceed 1000 characters</small>
+                </div>
+              </div>
+              <div class="Input-field">
+                <label>Address Line 2</label>
+                <input type="text" formControlName="address_line_2" 
+                       [readonly]="fetched && i < fetchedLength && !isEnable(i)" placeholder="Enter Address">
+                <div *ngIf="address.get('address_line_2')?.errors?.['maxLength']">
+                  <small class="error-message">Address Line 2 should not exceed 1000 characters</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="Input-field">
+                <label>Country <span>&nbsp;*</span></label>
+                <select *ngIf="i >= fetchedLength || isEnable(i)" (change)="onCountryChange($event, i)" formControlName="country">
+                  <option selected disabled value="">Select your Country</option>
+                  <option *ngFor="let option of countryDropdown" [value]="option">{{option}}</option>
+                </select>
+                <input *ngIf="i < fetchedLength && !isEnable(i)" type="text" 
+                       [readonly]="fetched && i < fetchedLength" formControlName="country">
+                <!-- <div *ngIf="address.get('country')?.errors?.['maxLength']">
+                  <small class="error-message">Country should not exceed 10 characters</small>
+                </div> -->
+              </div>
+              <div class="Input-field">
+                <label>State <span>&nbsp;*</span></label>
+                <select *ngIf="i >= fetchedLength || isEnable(i)" formControlName="state">
+                  <option selected disabled value="">Select State</option>
+                  <option *ngFor="let state of stateDropdown[i]">{{state}}</option>
+                </select>
+                <input *ngIf="i < fetchedLength && !isEnable(i)" type="text" 
+                       [readonly]="fetched && i < fetchedLength" formControlName="state">
+                <!-- <div *ngIf="address.get('state')?.errors?.['maxLength']">
+                  <small class="error-message">State should not exceed 10 characters</small>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="Input-field">
+                <label>City <span>&nbsp;*</span></label>
+                <input type="text" formControlName="city" 
+                       [readonly]="fetched && i < fetchedLength && !isEnable(i)" name="city">
+                <div *ngIf="address.get('city')?.errors?.['maxLength']">
+                  <small class="error-message">City should not exceed 100 characters</small>
+                </div>
+              </div>
+              <div class="Input-field">
+                <label>Zip/Postal Code <span>&nbsp;*</span></label>
+                <input type="number" formControlName="zipcode" 
+                       [readonly]="fetched && i < fetchedLength && !isEnable(i)" name="zipcode">
+                <div *ngIf="address.get('zipcode')?.errors?.['maxLength']">
+                  <small class="error-message">Zip/Postal Code should not exceed 10 characters</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="button-group">
+    <button (click)="onSubmit()" [disabled]="!enableSave || editEnabled" [ngClass]="{'disable': !enableSave}">Save</button>
+    <button (click)="addNewAddress()" [disabled]="editEnabled" [ngClass]="{'disable': editEnabled}">Add Address</button>
+  </div>
+</div>

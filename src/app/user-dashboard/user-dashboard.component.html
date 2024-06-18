@@ -1,0 +1,573 @@
+<body>
+  <p-toast position="top-center"></p-toast>
+    <div class="container">
+        <!-- <div class="heading">Dashboard</div> -->
+        <div class="metrics">
+            <div class="daily-metrics">
+                <div class="daiy-heading-container">
+                    <div class="daily-metrics-heading">
+                        <p>Dashboard</p>
+                        <div class="daily-select">
+                            <div class="adUnit">
+                                <div class="adUnitSelect">
+                                    <input type="search" placeholder="Ad Unit" readonly
+                                        [(ngModel)]="selectedAdUnitValue" (click)="toggleDropdown('ad unit')">
+                                    <img src="assets/select-arrow.svg" alt="select arrow">
+
+                                </div>
+                                <div *ngIf="adUnitDropdownVisible" class="dropdown">
+                                    <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..."
+                                        (input)="adUnitFilter($event)">
+                                    <p *ngFor="let value of adUnitFilteredOptions" (click)="adUnitSelectOption(value)">
+                                        {{value.name}}</p>
+                                </div>
+                            </div>
+
+                            <!-- Sites -->
+                            <div class="site">
+                                <div class="siteSelect">
+                                    <input type="search" placeholder="Site" readonly [(ngModel)]="selectedSiteValue"
+                                        (click)="toggleDropdown('site')">
+                                    <img src="assets/select-arrow.svg" alt="select arrow">
+
+                                </div>
+                                <div *ngIf="siteDropdownVisible" class="dropdown">
+                                    <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..."
+                                        (input)="siteFilter($event)">
+                                    <p *ngFor="let value of siteFilteredOptions" (click)="siteSelectOption(value)">
+                                        {{value.name}}</p>
+                                </div>
+                            </div>
+                            <!-- Apps -->
+
+                            <div class="app">
+                                <div class="appSelect">
+                                    <input type="search" placeholder="app" readonly [(ngModel)]="selectedAppValue"
+                                        (click)="toggleDropdown('app')">
+                                    <img src="assets/select-arrow.svg" alt="select arrow">
+                                </div>
+                                <div *ngIf="appDropdownVisible" class="dropdown">
+                                    <input type="text" id="search_adUnit" name="search_adUnit" placeholder="Search..."
+                                        (input)="appFilter($event)">
+                                    <p *ngFor="let value of appFilteredOptions" (click)="appSelectOption(value)">
+                                        {{value.name}}</p>
+                                </div>
+                            </div>
+                            <!--  -->
+                            <div class="date-icon">
+                                <img src="assets/calendar-icon.svg" alt="calendar-icon">
+                                <select name="time period" [(ngModel)]="time_period"
+                                    (ngModelChange)="onTimePeriodChange()">
+                                    <option *ngFor="let option of time_period_options" [value]="option.value">{{
+                                        option.label }}</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <button class="clear-filter" (click)="clearFilter()">Clear Filter</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="latest-data">
+                      <div class="flex-row">
+                        <p class="text-para">Report data is fetched every 4 hours.</p>
+                        
+                        <p class="text-para">Last Updated On: {{last_update_data_time}}</p>
+                        <p class="text-para">⁠Get right now data from GAM by clicking on Refresh button</p>
+                        <button class="request-btn" [disabled]="latest_data" [ngClass]="{'disable': latest_data }" (click)="requestLatestData()">Refresh</button>
+                        <!-- <p *ngIf="!isLengthZero" class="text-para">Last Requested On: {{requested_date_time}}</p> -->
+                        <p class="text-para" *ngIf="latest_data">Status:&nbsp; <span class="status-color">{{Request_status}}</span> </p>
+                       
+                      </div>
+                      <!-- <div style="margin-top: 1em;">
+                        <p-messages [(value)]="messages"  class="p-message" [enableService]="false"> 
+                        </p-messages>
+                      </div> -->
+                      
+    
+                    </div>
+                    <div class="black-line"></div>
+                </div>
+                
+                <div class="block1">
+                    <div class="daily-metrics-1">
+                        <div class="row1">
+                            <div class="box1">
+                                <p>Impressions</p>
+                                {{impressions | thousandSuff : 2}}
+                            </div>
+                            <div class="box1">
+                                <p>Clicks</p>
+                                {{clicks | thousandSuff : 2}}
+                            </div>
+                            <div class="box1 end">
+                                <p>Revenue</p>
+                                {{revenue | currency: 'USD' : 'symbol': '1.0-0' }}
+                            </div>
+                        </div>
+                        <div class="row2">
+                            <div class="box1">
+                                <p>Fill Rate (%)</p>
+                                {{fill_rate/100 | percent: '.1-1' }}
+                            </div>
+                            <div class="box1">
+                                <p>CTR (%)</p>
+                                {{ctr /100 | percent: '.1-1'}}
+                            </div>
+                            <div class="box1 end">
+                                <p>CPM</p>
+                                {{cpm | currency: 'USD' : 'symbol' : '1.1-2'}}
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row3">
+                          <div class="box1">
+                            <p>Ad Requests</p>
+                            {{ad_request | thousandSuff : 2}}
+                          </div>
+                          <div class="box1">
+                            <p>Ad Response</p>
+                            {{ad_response | thousandSuff : 2}}
+                          </div>
+                          <div class="box1 end">
+                            <p>Error Rate (%)</p>
+                            {{ error_rate/100 | percent: '.1-3' }}
+                          </div>
+                        </div>
+            
+                        <div class="row4">
+                          <div class="box1">
+                            <p>Viewability (%)</p>
+                            {{total_viewable /100 | percent: '.1-1'}}
+                          </div>
+                          <div class="box1">
+                            <p>Viewable Impressions</p>
+                            {{ viewable_impressions | thousandSuff : 2}}
+                          </div>
+                          <div class="box1 end">
+                            <p>Measurable Impressions</p>
+                            {{ measurable_impressions | thousandSuff : 2 }}
+                          </div>
+                        </div>
+
+                    </div>
+                    <div class="daily-metrics-2">
+                        <div class="daily-2-select">
+                            <p style="margin: 0">Overall Metrics</p>
+                            <div class="overall-select">
+                                <select name="overall_metrics" id="overall_metrics" [(ngModel)]="overall_metrics"
+                                    (change)="overall_metrics_changed()">
+                                    <option *ngFor="let options of metrics_options" [value]="options.value">
+                                        {{options.label}}</option>
+                                </select>
+                            </div>
+                            <button id="dw1" (click)="downloadChart1()"><img src="assets/download-icon.svg"
+                                    alt="download button"></button>
+
+                        </div>
+                        <div class="black-line">
+                        </div>
+                        <div class="image">
+                            <canvas #canvas1 id="canvas1"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="block2">
+                <div class="device-metrics">
+                    <div class="device-metrics-top">
+                        <div class="device-heading">
+                            <p>Device Metrics</p>
+                        </div>
+                        <div class="device-select">
+                            <select name="device_metrics" id="device_metrics" [(ngModel)]="device_metrics"
+                                (change)="device_metrics_changed()">
+                                <option *ngFor="let options of metrics_options" [value]="options.value">
+                                    {{options.label}}</option>
+                            </select>
+                        </div>
+                        <button id="dw2" (click)="downloadChart2()"><img src="assets/download-icon.svg"
+                                alt="download button"></button>
+                    </div>
+                    <div class="black-line"></div>
+                    <div class="image">
+
+                        <canvas #canvas2 id="canvas2"></canvas>
+                    </div>
+                </div>
+
+
+                <div class="country-metrics">
+                    <div class="country-metrics-top">
+                        <div class="country-heading">
+                            <p>Country Metrics</p>
+
+                        </div>
+
+                        <div class="country-select">
+                            <select name="country_metrics" id="country_metrics" [(ngModel)]="country_metrics"
+                                (change)="country_metrics_changed()">
+                                <option *ngFor="let options of metrics_options" [value]="options.value">
+                                    {{options.label}}</option>
+                            </select>
+                        </div>
+                        <button id="dw3" (click)="downloadChart3()"><img src="assets/download-icon.svg"
+                                alt="download button"></button>
+                    </div>
+                    <div class="black-line">
+                    </div>
+                    <div class="image">
+
+                        <canvas #canvas3 id="canvas3"></canvas>
+                    </div>
+
+                    <div class="country-data">
+                        <button (click)="prevData()"><img src="assets/previous-arrow.svg" alt="previous arrow"></button>
+                        <button (click)="nextData()"><img src="assets/next-arrow.svg" alt="next arrow"></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--  -->
+        <!--  -->
+        <!-- <div class="top_10_sites">
+          <div class="top-table-headers">
+            <h1 class="adunit-heading">Top Sites</h1>
+          <button id="top_sites_dw" (click)="downloadTopSites()"><img src="assets/download-icon.svg"
+              alt="download button"></button>
+          </div>
+
+          <div class="search">
+            <div class="find">
+                <input type="text" matInput (keyup)="applyFilter1($event)" #search placeholder="Search by keywords">
+                <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+            </div>
+        </div>
+            <div class="mat-elevation-z8" class="table">
+              <table mat-table #sort1="matSort" [dataSource]=" top10SitesDataSource" matSort>
+      
+
+                <ng-container matColumnDef="site_name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.site_name}} </td>
+                </ng-container>
+      
+ 
+                <ng-container matColumnDef="ctr">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CTR </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ctr/100 |  percent: '.1-1'}} </td>
+                </ng-container>
+      
+
+                <ng-container matColumnDef="cpm">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CPM </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cpm | currency : 'USD' : 'symbol': '1.1-2'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="error_percentage">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Error % </th>
+                  <td mat-cell *matCellDef="let element"> {{element.error_percentage/100 | percent: '.1-3'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="fill_rate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Fill Rate </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fill_rate /100| percent: '.1-1'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="measurable_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Measured Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.measurable_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="viewable_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Viewable Impressions </th>
+                  <td mat-cell *matCellDef="let element"> {{element.viewable_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="ad_request">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Request </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ad_request | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_clicks">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Clicks </th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_clicks | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_error">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Error</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_error | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_response_served">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Response</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_response_served | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_revenue">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_revenue  | currency : 'USD' : 'symbol': '1.0-0'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="unfilled_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Unfilled Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.unfilled_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="viewability_percentage">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Viewability %</th>
+                  <td mat-cell *matCellDef="let element"> {{element.viewability_percentage/100 |  percent: '.1-1' }} </td>
+                </ng-container>
+      
+      
+                <tr mat-header-row *matHeaderRowDef="top10SitesDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: top10SitesDisplayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter</td>
+                </tr>
+
+              </table>
+      
+      
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" #paginator2 showFirstLastButtons
+              aria-label="Select page of periodic elements">
+            </mat-paginator>
+      
+          </div>
+      
+
+          <div class="top_10_apps">
+            <div class="top-table-headers">
+              <h1 class="app-heading">Top Apps</h1>
+            <button id="top_apps_dw" (click)="downloadTopApps()"><img src="assets/download-icon.svg"
+                alt="download button"></button>
+            </div>
+            <div class="search">
+              <div class="find">
+                  <input type="text" matInput (keyup)="applyFilter2($event)" #search placeholder="Search by keywords">
+                  <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+              </div>
+          </div>
+            
+            <div class="mat-elevation-z8" class="table">
+              <table mat-table #sort2="matSort" [dataSource]="top10AppsDataSource" matSort>
+      
+
+                <ng-container matColumnDef="app_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.app_name}} </td>
+                      </ng-container>
+      
+
+                 <ng-container matColumnDef="ctr">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CTR </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ctr/100 |  percent: '.1-1'}} </td>
+                </ng-container>
+      
+
+                <ng-container matColumnDef="cpm">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CPM </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cpm | currency : 'USD' : 'symbol': '1.1-2'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="error_percentage">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Error % </th>
+                  <td mat-cell *matCellDef="let element"> {{element.error_percentage/100 | percent: '.1-3'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="fill_rate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Fill Rate </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fill_rate /100| percent: '.1-1'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="measurable_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Measured Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.measurable_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="viewable_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Viewable Impressions </th>
+                  <td mat-cell *matCellDef="let element"> {{element.viewable_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="ad_request">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Request </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ad_request | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_clicks">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Clicks </th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_clicks | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_error">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Error</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_error | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_response_served">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Response</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_response_served | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_revenue">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_revenue  | currency : 'USD' : 'symbol': '1.0-0'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="unfilled_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Unfilled Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.unfilled_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="viewability_percentage">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Viewability %</th>
+                  <td mat-cell *matCellDef="let element"> {{element.viewability_percentage/100 |  percent: '.1-1' }} </td>
+                </ng-container>
+      
+                <tr mat-header-row *matHeaderRowDef="top10AppsDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: top10AppsDisplayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter</td>
+                </tr>
+
+              </table>
+      
+      
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" #paginator3 showFirstLastButtons
+              aria-label="Select page of periodic elements">
+            </mat-paginator>
+          </div>
+      
+
+          <div class="top_10_adunits">
+            <div class="top-table-headers">
+              <h1 class="adunit-heading">Top Ad Units</h1>
+            <button id="top_adUnits_dw" (click)="downloadTopAdUnits()"><img src="assets/download-icon.svg"
+                alt="download button"></button>
+            </div>
+            <div class="search">
+              <div class="find">
+                  <input type="text" matInput (keyup)="applyFilter3($event)" #search placeholder="Search by keywords">
+                  <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+              </div>
+          </div>
+           
+            <div class="mat-elevation-z8" class="table">
+              <table mat-table #sort3="matSort"  [dataSource]="top10AdUnitsDataSource" matSort>
+      
+
+                <ng-container matColumnDef="adUnit_name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.adUnit_name}} </td>
+                </ng-container>
+      
+
+                <ng-container matColumnDef="ctr">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CTR </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ctr/100 |  percent: '.1-1'}} </td>
+                </ng-container>
+      
+
+                <ng-container matColumnDef="cpm">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CPM </th>
+                  <td mat-cell *matCellDef="let element"> {{element.cpm | currency : 'USD' : 'symbol': '1.1-2'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="error_percentage">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Error % </th>
+                  <td mat-cell *matCellDef="let element"> {{element.error_percentage/100 | percent: '.1-3'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="fill_rate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Fill Rate </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fill_rate /100| percent: '.1-1'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="measurable_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Measured Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.measurable_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="viewable_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Viewable Impressions </th>
+                  <td mat-cell *matCellDef="let element"> {{element.viewable_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="ad_request">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Request </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ad_request | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_clicks">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Clicks </th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_clicks | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_error">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Error</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_error | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_response_served">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Response</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_response_served | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="total_revenue">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+                  <td mat-cell *matCellDef="let element"> {{element.total_revenue  | currency : 'USD' : 'symbol': '1.0-0'}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="unfilled_impressions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Unfilled Impressions</th>
+                  <td mat-cell *matCellDef="let element"> {{element.unfilled_impressions | thousandSuff: 2}} </td>
+                </ng-container>
+      
+                <ng-container matColumnDef="viewability_percentage">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Viewability %</th>
+                  <td mat-cell *matCellDef="let element"> {{element.viewability_percentage/100 |  percent: '.1-1' }} </td>
+                </ng-container>
+                
+                <tr mat-header-row *matHeaderRowDef="top10AdUnitsDisplayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: top10AdUnitsDisplayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter</td>
+                </tr>
+                
+              </table>
+      
+      
+            </div>
+            <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" #paginator4 showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+
+        </div> -->
+    </div>
+</body>
