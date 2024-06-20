@@ -1302,4 +1302,43 @@ export class UsersService {
     const options = { headers: headers };
     return this.http.post('http://localhost/apps/users/DistributorRevenue.php', Data, options);
   }
+
+  get_receipt_upload(): Observable<any> {
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json', // Adjust content type as needed
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    return this.http.get('http://localhost/apps/users/receiptUploadList.php', options);
+  }
+
+
+  uploadReceipt(Data: any) {
+    this.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.tokenValue}`
+    });
+    const options = { headers: headers };
+    // console.log('options is: ', options, this.tokenValue);
+    const formData = new FormData();
+    formData.append('invoice_file', Data.selectedFile);
+    formData.append('publisher_id', Data.publisher_id);
+    formData.append('month', Data.Month);
+    formData.append('year', Data.Year);
+    return this.http.post('http://localhost/apps/users/receiptUploadAdd.php', formData, options);
+}
+
+delete_receipt_record(Data: any): Observable<any> {
+  this.getToken();
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Adjust content type as needed
+    'Authorization': `Bearer ${this.tokenValue}`
+  });
+  const options = { headers: headers };
+  return this.http.post('http://localhost/apps/users/receiptUploadDelete.php', Data, options);
+}
+
+
+
 }

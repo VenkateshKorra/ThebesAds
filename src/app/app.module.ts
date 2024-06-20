@@ -66,6 +66,7 @@ import { AdServingCostComponent } from './ad-serving-cost/ad-serving-cost.compon
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { TopPerformersComponent } from './top-performers/top-performers.component';
 import { DistributorPaymentPageComponent } from './distributor-payment-page/distributor-payment-page.component';
+import { ReceiptUploadComponent } from './receipt-upload/receipt-upload.component';
 
 
 
@@ -108,7 +109,7 @@ import { DistributorPaymentPageComponent } from './distributor-payment-page/dist
     ForgotYourPasswordComponent,
     ResetPasswordComponent,
     ReportDownloadComponent, 
-    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent, ContactsTabComponent, ContactRejectComponent, AdServingCostComponent, TopPerformersComponent, DistributorPaymentPageComponent,
+    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent, ContactsTabComponent, ContactRejectComponent, AdServingCostComponent, TopPerformersComponent, DistributorPaymentPageComponent, ReceiptUploadComponent,
   ],
   imports: [
     BrowserModule,

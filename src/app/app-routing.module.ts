@@ -38,6 +38,7 @@ import { ContactsTabComponent } from './contacts-tab/contacts-tab.component';
 import { AdServingCostComponent } from './ad-serving-cost/ad-serving-cost.component';
 import { TopPerformersComponent } from './top-performers/top-performers.component';
 import { DistributorPaymentPageComponent } from './distributor-payment-page/distributor-payment-page.component';
+import { ReceiptUploadComponent } from './receipt-upload/receipt-upload.component';
 
 
 const routes: Routes = [
@@ -84,6 +85,7 @@ const routes: Routes = [
   { path: 'ad-serving-cost', component: AdServingCostComponent, canActivate: [authenticationGuard]},
   { path: 'top-performers', component: TopPerformersComponent, canActivate: [authenticationGuard]},
   { path: 'distributor-payment', component: DistributorPaymentPageComponent},
+  { path: 'receipt-upload',  component: ReceiptUploadComponent },
   { path: '**', component: UsersComponent, canActivate: [authenticationGuard] }
 
 ];
