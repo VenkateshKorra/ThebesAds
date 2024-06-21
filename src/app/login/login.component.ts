@@ -84,6 +84,19 @@ export class LoginComponent {
               
             }
 
+            else if(response.data.Type=='Finance' && response.data.Status!=='Disabled') {
+              this.role= 'Finance';
+              localStorage.setItem('userData', JSON.stringify(response.data));
+              localStorage.setItem('userName', 'Finance');
+              localStorage.setItem('PublisherID','Publisher ID');
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Logged in Successfully', life: 5000});
+              setTimeout(() => {
+                this.router.navigate(['/receipt-upload']);
+              }, 1000);
+              // this.getAssignedPublishers(response.data.Email_Id);
+              
+            }
+
 
             else if(response.data.Type=='Publisher' && response.data.Status!=='Disabled') {
               localStorage.setItem('userData', JSON.stringify(response.data));

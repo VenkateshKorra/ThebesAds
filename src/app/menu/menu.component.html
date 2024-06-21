@@ -1,96 +1,167 @@
 <body>
     <nav>
         <!--Overview start-->
-        <div class="dropdown">
-            <a href="javascript:void(0)"  (click)="clicked1()" [ngClass]="{'bg-color': item1}">
-                <div class="text" [ngClass]="{'heading': firstItem, 'blue-image':firstItem}">
-                    <img src="assets/Overview-main.svg" alt="Overview icon">
-                    <p>Overview</p>
+        <div *ngIf="type=='Finance'; else firstElse">
+            <div class="dropdown">
+                <a href="javascript:void(0)" (click)="clicked1()" [ngClass]="{'bg-color': item1}">
+                    <div class="text" [ngClass]="{'heading': firstItem, 'blue-image':firstItem}">
+                        <img src="assets/Overview-main.svg" alt="Overview icon">
+                        <p>Overview</p>
+                    </div>
+                    <div>
+                        <p class="arrow"></p>
+                    </div>
+                </a>
+                <div class="dropdown-options">
+                    <a href="/receipt-upload" routerLink="/receipt-upload" (click)="check(0, 'overView')"
+                        [ngClass]="{'clicked': overView[0], 'span':overView[0], 'blue-image': overView[0]}">
+                        <img src="assets/Overview-icon1.svg">
+                        <span class="span">Receipt</span>
+                    </a>
+                    <a href="/ad-serving-cost" routerLink="/ad-serving-cost" (click)="check(1, 'overView')"
+                        [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
+                        <img src="assets/Overview-icon2.svg">
+                        <span class="span">Ad Serving Cost</span>
+                    </a>
+                    <!-- Other links -->
                 </div>
-                <div>
-                    <p class="arrow"></p>
-                </div>
-            </a>
-            <div class="dropdown-options" *ngIf="item1 && (type=='AdOpsManager' || type=='Admin'); else elseblock1">
-                <a href="/admin-dashboard" routerLink="/admin-dashboard" (click)="check(0, 'overView')" [ngClass]="{'clicked': overView[0], 'span':overView[0], 'blue-image': overView[0]}">
-                    <img src="assets/Overview-icon1.svg">
-                    <span class="span">Dashboard</span>
-                </a>
-                <a href="/home" routerLink="/admin-payment" (click)="check(1, 'overView')" [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
-                    <img src="assets/Overview-icon2.svg">
-                    <span class="span">Payment</span>
-                </a>
-
-                <a href="/top-performers" routerLink="/top-performers" (click)="check(2, 'overView')" [ngClass]="{'clicked': overView[2], 'span':overView[2], 'blue-image': overView[2]}">
-                    <img src="assets/graph.svg">
-                    <span class="span">Top Performers</span>
-                </a>
-                <!-- Other links -->
             </div>
-            
-            <ng-template #elseblock1>
-                <div class="dropdown-options" *ngIf="item1">
-                    <a href="/user-dashboard" routerLink="/user-dashboard" (click)="check(0, 'overView')" [ngClass]="{'clicked': overView[0], 'span':overView[0], 'blue-image': overView[0]}">
+        </div>
+
+        <ng-template #firstElse>
+            <div class="dropdown">
+                <a href="javascript:void(0)" (click)="clicked1()" [ngClass]="{'bg-color': item1}">
+                    <div class="text" [ngClass]="{'heading': firstItem, 'blue-image':firstItem}">
+                        <img src="assets/Overview-main.svg" alt="Overview icon">
+                        <p>Overview</p>
+                    </div>
+                    <div>
+                        <p class="arrow"></p>
+                    </div>
+                </a>
+                <div class="dropdown-options" *ngIf="item1 && (type=='AdOpsManager' || type=='Admin'); else elseblock1">
+                    <a href="/admin-dashboard" routerLink="/admin-dashboard" (click)="check(0, 'overView')"
+                        [ngClass]="{'clicked': overView[0], 'span':overView[0], 'blue-image': overView[0]}">
                         <img src="assets/Overview-icon1.svg">
                         <span class="span">Dashboard</span>
                     </a>
-                    <a href="/home" *ngIf="type=='Publisher'" routerLink="/payment" (click)="check(1, 'overView')" [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
-                        <img src="assets/Overview-icon2.svg">
-                        <span class="span">Payment</span>
-                    </a>
-                    <a href="/home" *ngIf="type=='Distributor'" routerLink="/distributor-payment" (click)="check(1, 'overView')" [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
+                    <a href="/home" routerLink="/admin-payment" (click)="check(1, 'overView')"
+                        [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
                         <img src="assets/Overview-icon2.svg">
                         <span class="span">Payment</span>
                     </a>
 
-                    <a href="/top-performers" routerLink="/top-performers" (click)="check(2, 'overView')" [ngClass]="{'clicked': overView[2], 'span':overView[2], 'blue-image': overView[2]}">
+                    <a href="/top-performers" routerLink="/top-performers" (click)="check(2, 'overView')"
+                        [ngClass]="{'clicked': overView[2], 'span':overView[2], 'blue-image': overView[2]}">
                         <img src="assets/graph.svg">
                         <span class="span">Top Performers</span>
                     </a>
                     <!-- Other links -->
                 </div>
-            </ng-template>
-            
-        </div>
-        
-      <!--Monetize start-->  
 
-        <div class="dropdown">
-            <a href="javascript:void(0)"  (click)="clicked2()" [ngClass]="{'bg-color': item2}">
-                <div class="text" [ngClass]="{'heading': secondItem, 'blue-image':secondItem}">
-                    <img src="assets/Monetize-main.svg" alt="Monetize">
-                    <p>Monetize</p>
-                </div>
-                <div>
-                    <p class="arrow"></p>
-                </div>
-            </a>
+                <ng-template #elseblock1>
+                    <div class="dropdown-options" *ngIf="item1">
+                        <a *ngIf="type=='Publisher'" href="/user-dashboard" routerLink="/user-dashboard"
+                            (click)="check(0, 'overView')"
+                            [ngClass]="{'clicked': overView[0], 'span':overView[0], 'blue-image': overView[0]}">
+                            <img src="assets/Overview-icon1.svg">
+                            <span class="span">Dashboard</span>
+                        </a>
 
-            <div class="dropdown-options" *ngIf="item2 && (type=='AdOpsManager' || type=='Admin' || type=='Distributor') ; else elseblock">
-                <a *ngIf="type!='Distributor'" href="/contacts" routerLink="/contacts" (click)="check(0, 'monetize')" [ngClass]="{'clicked': monetize[0], 'span':monetize[0], 'blue-image':monetize[0]}"><img src="assets/Monetize-icon1.svg"><span class="span">Contacts</span></a>
-                <!-- <a href="/contacts" routerLink="/contacts" (click)="check(1, 'monetize')" [ngClass]="{'clicked': monetize[1], 'span':monetize[1], 'blue-image':monetize[1]}"><img src="assets/Monetize-icon2.svg"><span class="span">Accounts</span></a> -->
-                <a href="/admin-accounts-list" routerLink="/admin-accounts-list" (click)="check(1, 'monetize')" [ngClass]="{'clicked': monetize[1], 'span':monetize[1], 'blue-image':monetize[1]}"><img src="assets/Monetize-icon2.svg"><span class="span">Accounts</span></a>
-                <a href="/account-details-apps" routerLink="/account-details-apps"  (click)="check(2, 'monetize')" [ngClass]="{'clicked': monetize[2], 'span':monetize[2], 'blue-image':monetize[2]}"><img src="assets/Monetize-icon3.svg"><span class="span">Apps</span></a>
-                <a href="/account-sites" routerLink="/account-sites" (click)="check(3, 'monetize')" [ngClass]="{'clicked': monetize[3], 'span':monetize[3], 'blue-image':monetize[3]}"><img src="assets/Monetize-icon4.svg"><span class="span">Sites</span></a>
-                <a href="/site-ad-units" routerLink="/site-ad-units" (click)="check(4, 'monetize')" [ngClass]="{'clicked': monetize[4], 'span':monetize[4], 'blue-image':monetize[4]}"><img src="assets/Monetize-icon5.svg"><span class="span">Site Ad Unit</span></a>
-                <a href="/apps-app-ad-units-list" routerLink="/apps-app-ad-units-list" (click)="check(5, 'monetize')" [ngClass]="{'clicked': monetize[5], 'span':monetize[5], 'blue-image':monetize[5]}"><img src="assets/Monetize-icon6.svg"><span class="span">App Ad Unit</span></a>
+                        <a *ngIf="type=='Distributor'" href="/admin-dashboard" routerLink="/admin-dashboard"
+                            (click)="check(0, 'overView')"
+                            [ngClass]="{'clicked': overView[0], 'span':overView[0], 'blue-image': overView[0]}">
+                            <img src="assets/Overview-icon1.svg">
+                            <span class="span">Dashboard</span>
+                        </a>
+
+                        <a href="/home" *ngIf="type=='Publisher'" routerLink="/payment" (click)="check(1, 'overView')"
+                            [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
+                            <img src="assets/Overview-icon2.svg">
+                            <span class="span">Payment</span>
+                        </a>
+                        <a href="/home" *ngIf="type=='Distributor'" routerLink="/distributor-payment"
+                            (click)="check(1, 'overView')"
+                            [ngClass]="{'clicked': overView[1], 'span':overView[1], 'blue-image': overView[1]}">
+                            <img src="assets/Overview-icon2.svg">
+                            <span class="span">Payment</span>
+                        </a>
+
+                        <a href="/top-performers" routerLink="/top-performers" (click)="check(2, 'overView')"
+                            [ngClass]="{'clicked': overView[2], 'span':overView[2], 'blue-image': overView[2]}">
+                            <img src="assets/graph.svg">
+                            <span class="span">Top Performers</span>
+                        </a>
+                        <!-- Other links -->
+                    </div>
+                </ng-template>
 
             </div>
 
-            <ng-template #elseblock>
-                <div class="dropdown-options" *ngIf="item2">
-                    <!-- <a href="/contacts" routerLink="/contacts" (click)="check(0, 'monetize')" [ngClass]="{'clicked': monetize[0], 'span':monetize[0], 'blue-image':monetize[0]}"><img src="assets/Monetize-icon1.svg"><span class="span">Contacts</span></a>
+            <!--Monetize start-->
+
+            <div class="dropdown">
+                <a href="javascript:void(0)" (click)="clicked2()" [ngClass]="{'bg-color': item2}">
+                    <div class="text" [ngClass]="{'heading': secondItem, 'blue-image':secondItem}">
+                        <img src="assets/Monetize-main.svg" alt="Monetize">
+                        <p>Monetize</p>
+                    </div>
+                    <div>
+                        <p class="arrow"></p>
+                    </div>
+                </a>
+
+                <div class="dropdown-options"
+                    *ngIf="item2 && (type=='AdOpsManager' || type=='Admin' || type=='Distributor') ; else elseblock">
+                    <a *ngIf="type!='Distributor'" href="/contacts" routerLink="/contacts"
+                        (click)="check(0, 'monetize')"
+                        [ngClass]="{'clicked': monetize[0], 'span':monetize[0], 'blue-image':monetize[0]}"><img
+                            src="assets/Monetize-icon1.svg"><span class="span">Contacts</span></a>
+                    <!-- <a href="/contacts" routerLink="/contacts" (click)="check(1, 'monetize')" [ngClass]="{'clicked': monetize[1], 'span':monetize[1], 'blue-image':monetize[1]}"><img src="assets/Monetize-icon2.svg"><span class="span">Accounts</span></a> -->
+                    <a href="/admin-accounts-list" routerLink="/admin-accounts-list" (click)="check(1, 'monetize')"
+                        [ngClass]="{'clicked': monetize[1], 'span':monetize[1], 'blue-image':monetize[1]}"><img
+                            src="assets/Monetize-icon2.svg"><span class="span">Accounts</span></a>
+                    <a href="/account-details-apps" routerLink="/account-details-apps" (click)="check(2, 'monetize')"
+                        [ngClass]="{'clicked': monetize[2], 'span':monetize[2], 'blue-image':monetize[2]}"><img
+                            src="assets/Monetize-icon3.svg"><span class="span">Apps</span></a>
+                    <a href="/account-sites" routerLink="/account-sites" (click)="check(3, 'monetize')"
+                        [ngClass]="{'clicked': monetize[3], 'span':monetize[3], 'blue-image':monetize[3]}"><img
+                            src="assets/Monetize-icon4.svg"><span class="span">Sites</span></a>
+                    <a href="/site-ad-units" routerLink="/site-ad-units" (click)="check(4, 'monetize')"
+                        [ngClass]="{'clicked': monetize[4], 'span':monetize[4], 'blue-image':monetize[4]}"><img
+                            src="assets/Monetize-icon5.svg"><span class="span">Site Ad Unit</span></a>
+                    <a href="/apps-app-ad-units-list" routerLink="/apps-app-ad-units-list"
+                        (click)="check(5, 'monetize')"
+                        [ngClass]="{'clicked': monetize[5], 'span':monetize[5], 'blue-image':monetize[5]}"><img
+                            src="assets/Monetize-icon6.svg"><span class="span">App Ad Unit</span></a>
+
+                </div>
+
+                <ng-template #elseblock>
+                    <div class="dropdown-options" *ngIf="item2">
+                        <!-- <a href="/contacts" routerLink="/contacts" (click)="check(0, 'monetize')" [ngClass]="{'clicked': monetize[0], 'span':monetize[0], 'blue-image':monetize[0]}"><img src="assets/Monetize-icon1.svg"><span class="span">Contacts</span></a>
                      <a href="/contacts" routerLink="/contacts" (click)="check(1, 'monetize')" [ngClass]="{'clicked': monetize[1], 'span':monetize[1], 'blue-image':monetize[1]}"><img src="assets/Monetize-icon2.svg"><span class="span">Accounts</span></a> 
                     <a href="/admin-accounts-list" routerLink="/admin-accounts-list" (click)="check(1, 'monetize')" [ngClass]="{'clicked': monetize[1], 'span':monetize[1], 'blue-image':monetize[1]}"><img src="assets/Monetize-icon2.svg"><span class="span">Accounts</span></a> -->
-                    <a href="/account-details-apps" routerLink="/account-details-apps"  (click)="check(2, 'monetize')" [ngClass]="{'clicked': monetize[2], 'span':monetize[2], 'blue-image':monetize[2]}"><img src="assets/Monetize-icon3.svg"><span class="span">Apps</span></a>
-                    <a href="/account-sites" routerLink="/account-sites" (click)="check(3, 'monetize')" [ngClass]="{'clicked': monetize[3], 'span':monetize[3], 'blue-image':monetize[3]}"><img src="assets/Monetize-icon4.svg"><span class="span">Sites</span></a>
-                    <a href="/site-ad-units" routerLink="/site-ad-units" (click)="check(4, 'monetize')" [ngClass]="{'clicked': monetize[4], 'span':monetize[4], 'blue-image':monetize[4]}"><img src="assets/Monetize-icon5.svg"><span class="span">Site Ad Unit</span></a>
-                    <a href="/apps-app-ad-units-list" routerLink="/apps-app-ad-units-list" (click)="check(5, 'monetize')" [ngClass]="{'clicked': monetize[5], 'span':monetize[5], 'blue-image':monetize[5]}"><img src="assets/Monetize-icon6.svg"><span class="span">App Ad Unit</span></a>
-    
-                </div>
-            </ng-template>
+                        <a href="/account-details-apps" routerLink="/account-details-apps"
+                            (click)="check(2, 'monetize')"
+                            [ngClass]="{'clicked': monetize[2], 'span':monetize[2], 'blue-image':monetize[2]}"><img
+                                src="assets/Monetize-icon3.svg"><span class="span">Apps</span></a>
+                        <a href="/account-sites" routerLink="/account-sites" (click)="check(3, 'monetize')"
+                            [ngClass]="{'clicked': monetize[3], 'span':monetize[3], 'blue-image':monetize[3]}"><img
+                                src="assets/Monetize-icon4.svg"><span class="span">Sites</span></a>
+                        <a href="/site-ad-units" routerLink="/site-ad-units" (click)="check(4, 'monetize')"
+                            [ngClass]="{'clicked': monetize[4], 'span':monetize[4], 'blue-image':monetize[4]}"><img
+                                src="assets/Monetize-icon5.svg"><span class="span">Site Ad Unit</span></a>
+                        <a href="/apps-app-ad-units-list" routerLink="/apps-app-ad-units-list"
+                            (click)="check(5, 'monetize')"
+                            [ngClass]="{'clicked': monetize[5], 'span':monetize[5], 'blue-image':monetize[5]}"><img
+                                src="assets/Monetize-icon6.svg"><span class="span">App Ad Unit</span></a>
 
-        </div>
+                    </div>
+                </ng-template>
+
+            </div>
+        </ng-template>
 
     </nav>
 </body>

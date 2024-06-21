@@ -17,8 +17,8 @@ export class MenuComponent implements OnInit {
   firstItem:boolean=false;
   secondItem: boolean=false;
   
-  item1: boolean =false;
-  item2: boolean = false;
+  item1: boolean =true;
+  item2: boolean = true;
   isUp1: boolean=false;
 
   constructor(private userService: UsersService) {}

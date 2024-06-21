@@ -62,7 +62,7 @@ export const authenticationGuard: CanActivateFn = (route, state) => {
         case 'Finance':
           // Finance has access to specific routes
           const allowedRoutesForFinance = [
-            'finance-dashboard', 'finance-reports', 'payment-overview', 'invoice-management', 'ad-serving-cost'
+           'ad-serving-cost', 'receipt-upload', 'profile'
           ];
           const requestedRouteFinance = state.url.substring(1); // Remove leading slash
           if (allowedRoutesForFinance.includes(requestedRouteFinance)) {
@@ -79,5 +79,6 @@ export const authenticationGuard: CanActivateFn = (route, state) => {
 
   // Redirect to login page if user is not authorized
   _router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+  // localStorage.clear();
   return false;
 };

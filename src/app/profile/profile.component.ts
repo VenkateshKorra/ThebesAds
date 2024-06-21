@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit{
   name="";
   status="";
   publisher_id: any;
-  percent : any;
+  percent = 0;
   Phone ='';
   address = '';
   country = '';
@@ -34,16 +34,20 @@ export class ProfileComponent implements OnInit{
   const publisherId = typeof localStorage != undefined ? localStorage.getItem('PublisherID'): null;
   const userAllData = typeof localStorage != undefined ? localStorage.getItem('UserInfo'): null;
   this.typeOfUser = this.userService.getType();
-  if(userData && userName && userAllData) {
+  if(userData && userName) {
     const user =JSON.parse(userData);
-    const userInfoData = JSON.parse(userAllData);
+    if(userAllData) {
+      const userInfoData = JSON.parse(userAllData);
+      this.publisher_id = userInfoData['GAM_Publisher ID'];
+    }
+    
     this.email= user.Email_Id;
     this.name=userName;
     this.status=user.Status;
-    this.publisher_id = userInfoData['GAM_Publisher ID'];
-    // console.log('name and mail is', this.email, this.name);
+    
+    console.log('name and mail is', this.email, this.name);
   }
-  if(this.userService.getType()!='Admin' && userAllData) {
+  if(this.userService.getType()=='Publisher' && userAllData) {
     const userInfo = JSON.parse(userAllData);
     this.percent = userInfo.Margin || 0;
     this.Phone = userInfo.Phone;

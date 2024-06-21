@@ -14,7 +14,7 @@ export class ChangePasswordComponent implements OnInit {
 
   email='';
   publisher_id: any;
-  percent: any;
+  percent =0;
   showPassword1: boolean = true;
   showPassword2: boolean = true;
   showPassword3: boolean = true;
@@ -23,21 +23,27 @@ export class ChangePasswordComponent implements OnInit {
   repeat_password = '';
   status="";
   //two_factor = false;
+  typeOfUser = '';
 
 
   constructor(private userService: UsersService, private route: Router, private messageService: MessageService) {}
 
   ngOnInit(): void {
+    this.typeOfUser = this.userService.getType();
     const userData = typeof localStorage !=undefined ? localStorage.getItem('userData'): null;
     const userName = typeof localStorage !=undefined ? localStorage.getItem('userName'): null;
     const publisherId = typeof localStorage != undefined ? localStorage.getItem('PublisherID'): null;
     const userAllData = typeof localStorage != undefined ? localStorage.getItem('UserInfo'): null;
     if(userData && userName) {
       const user =JSON.parse(userData);
+      if(userAllData) {
+        const userInfoData = JSON.parse(userAllData);
+        this.publisher_id = userInfoData['GAM_Publisher ID'];
+      }
       this.email= user.Email_Id;
       // this.name=userName;
       this.status=user.Status;
-      this.publisher_id = publisherId;
+
       // console.log('name and mail is', this.email, this.name);
       
     }

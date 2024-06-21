@@ -143,6 +143,7 @@ deleteRecord(element: Receipt_upload) {
   // console.log('year and month is: ', year, month);
   const Data = {
     Id: element.id,
+    filePath: element.file_path
     // Month: month,
     // Year: year,
   }

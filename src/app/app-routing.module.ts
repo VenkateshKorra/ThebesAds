@@ -84,8 +84,8 @@ const routes: Routes = [
   { path: 'contacts-tab', component: ContactsTabComponent, canActivate: [authenticationGuard]},
   { path: 'ad-serving-cost', component: AdServingCostComponent, canActivate: [authenticationGuard]},
   { path: 'top-performers', component: TopPerformersComponent, canActivate: [authenticationGuard]},
-  { path: 'distributor-payment', component: DistributorPaymentPageComponent},
-  { path: 'receipt-upload',  component: ReceiptUploadComponent },
+  { path: 'distributor-payment', component: DistributorPaymentPageComponent, canActivate: [authenticationGuard]},
+  { path: 'receipt-upload',  component: ReceiptUploadComponent, canActivate: [authenticationGuard] },
   { path: '**', component: UsersComponent, canActivate: [authenticationGuard] }
 
 ];
