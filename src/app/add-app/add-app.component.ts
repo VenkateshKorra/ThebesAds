@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, PACKAGE_ROOT_URL } from '@angular/core';
 import { UsersService } from '../users.service';
 import { AddAppsCategory, OtherPlatforms } from '../sign-up-dropdown';
 import { MessageService } from 'primeng/api';
@@ -48,6 +48,11 @@ export class AddAppComponent implements OnInit, AfterViewInit {
   appNameTextLength =false;
   packageNameTextLength = false;
   StoreUrlTextLength = false;
+  samsung_checkbox: any;
+  xiaomi_checkbox: any;
+  amazon_checkbox: any;
+  oppo_checkbox: any;
+  vivo_checkbox: any;
 
   constructor(private userService: UsersService, private messageService: MessageService) { }
 
@@ -62,9 +67,9 @@ export class AddAppComponent implements OnInit, AfterViewInit {
     }
     
     console.log('Type of user is: ', this.type);
-
+    if(this.type=='Admin') {
       this.getAccountNames();
-
+    }
   }
 
   ngAfterViewInit(): void {
@@ -109,12 +114,78 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       this.StoreUrlTextLength = false;
     }
   }
+
+  selectPlatform(platformValue: string) {
+    this.os = platformValue;
+    this.android_checkbox = platformValue === 'GOOGLE_PLAY';
+    this.ios_checkbox = platformValue === 'APPLE_ITUNES';
+    this.xiaomi_checkbox = platformValue === 'XIAOMI_APP_STORE';
+    this.samsung_checkbox = platformValue === 'SAMSUNG_APP_STORE';
+    this.amazon_checkbox = platformValue === 'AMAZON_FIRETV';
+    this.oppo_checkbox = platformValue === 'OPPO_APP_STORE';
+    this.vivo_checkbox = platformValue === 'VIVO_APP_STORE';
+    this.other_checkbox = !this.android_checkbox && !this.ios_checkbox;
+  
+    if (this.other_checkbox) {
+      const platform = this.other_platforms.find((p: any) => p.value === platformValue);
+      if (platform) {
+        this.selectedPlatformLabel = platform.label;
+        this.package_name = platform.packageExample || '';
+      }
+    } else {
+      this.package_name = '';
+      this.store_id = '';
+    }
+  }
+  
+  generateStoreUrl() {
+    const storeUrls: { [key: string]: string } = {
+      'GOOGLE_PLAY': 'https://play.google.com/store/apps/details?id=',
+      'APPLE_ITUNES'   : 'https://apps.apple.com/in/app/',
+      'AMAZON_FIRETV'  : 'https://www.amazon.com/dp/',
+      'SAMSUNG_APP_STORE': 'https://galaxystore.samsung.com/detail/',
+      'OPPO_APP_STORE'     : 'https://developers.oppomobile.com/',
+      'XIAOMI_APP_STORE' : 'https://global.app.mi.com/details?lo=IN&la=en&id=',
+      'VIVO_APP_STORE': 'https://developer.vivo.com/',
+      'LG_TV'          : 'https://www.lgappstv.com/app/Details/',
+      'PLAYSTATION'    : 'https://store.playstation.com/en-us/product/',
+      'XBOX'           : 'https://www.microsoft.com/store/apps/',
+      // Add other platforms as needed
+    };
+
+    let storeUrl =  '';
+    if (this.os == 'GOOGLE_PLAY') {
+      storeUrl += storeUrls[this.os] + this.package_name;
+    }
+    if (this.os == 'APPLE_ITUNES') {
+      storeUrl += storeUrls[this.os] + this.app_name.toLowerCase()+ '/id' + this.store_id;
+    }
+    if (this.os == 'AMAZON_FIRETV') {
+      storeUrl += storeUrls[this.os]  + this.package_name;
+    }
+    if (this.os == 'SAMSUNG_APP_STORE') {
+      storeUrl += storeUrls[this.os] + this.package_name;
+    }
+    if (this.os == 'OPPO_APP_STORE') {
+      storeUrl += storeUrls[this.os] + this.app_name.toLowerCase()+ '/id' + this.store_id;
+    }
+    if (this.os == 'XIAOMI_APP_STORE') {
+      storeUrl += storeUrls[this.os]  + this.package_name;
+    }
+    if (this.os == 'VIVO_APP_STORE') {
+      storeUrl += storeUrls[this.os] + this.app_name.toLowerCase()+ '/id' + this.store_id;
+    }
+    this.app_url = storeUrl;
+  }
+
   
 
   androidCheckbox() {
     this.ios_checkbox = false;
     this.other_checkbox = false;
     this.android_checkbox=true;
+    this.os = 'GOOGLE_PLAY';
+    this.generateStoreUrl();
     console.log(`Android clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
     
 
@@ -123,6 +194,8 @@ export class AddAppComponent implements OnInit, AfterViewInit {
     this.android_checkbox= false;
     this.other_checkbox = false;
     this.ios_checkbox = true;
+    this.os = 'APPLE_ITUNES';
+    this.generateStoreUrl();
     
     console.log(`IOS clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
   }
@@ -131,8 +204,61 @@ export class AddAppComponent implements OnInit, AfterViewInit {
     this.android_checkbox= false;
     this.ios_checkbox = false;
     this.other_checkbox = true;
+    this.os = this.otherPlatformSelected;
+    this.generateStoreUrl();
     console.log(`IOS clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
   }
+
+  amazonCheckbox() {
+    this.android_checkbox= true;
+    this.other_checkbox = false;
+    this.ios_checkbox = false;
+    this.os = 'AMAZON_FIRETV';
+    this.generateStoreUrl();
+    
+    console.log(`Amazon clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
+  }
+
+  oppoCheckbox() {
+    this.android_checkbox= false;
+    this.other_checkbox = false;
+    this.ios_checkbox = true;
+    this.os = 'OPPO_APP_STORE';
+    this.generateStoreUrl();
+    
+    console.log(`Oppo clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
+  }
+
+  samsungCheckbox() {
+    this.android_checkbox= true;
+    this.other_checkbox = false;
+    this.ios_checkbox = false;
+    this.os = 'SAMSUNG_APP_STORE';
+    this.generateStoreUrl();
+    
+    console.log(`Samsung clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
+  }
+   
+  vivoCheckbox() {
+    this.android_checkbox= false;
+    this.other_checkbox = false;
+    this.ios_checkbox = true;
+    this.os = 'VIVO_APP_STORE';
+    this.generateStoreUrl();
+    
+    console.log(`Vivo clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
+  }
+
+  xiaomiCheckbox() {
+    this.android_checkbox= true;
+    this.other_checkbox = false;
+    this.ios_checkbox = false;
+    this.os = 'XIAOMI_APP_STORE';
+    this.generateStoreUrl();
+    
+    console.log(`Xiaomi clicked, android status is : ${this.android_checkbox} and ios status is: ${this.ios_checkbox}, other is ${this.other_checkbox}`);
+  }
+  
   // otherOptionCheckbox() {
   //   console.log('Other clicked');
 
@@ -164,7 +290,7 @@ export class AddAppComponent implements OnInit, AfterViewInit {
     // else if(this.os =='XBOX') {
     //   this.selectedPlatformLabel = 'Xbox';
     // }
-    // else if(this.os =='SAMSUNG_TV') {
+    // else if(this.os =='SAMSUNG_APP_STORE') {
     //   this.selectedPlatformLabel = 'Samsung';
     // }
     // else if(this.os =='LG_TV') {
@@ -186,39 +312,100 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       //   app_store: this.app_url,
 
       // }
+      
+      const appData = {
+        app_name: this.app_name,
+        app_store_id: this.package_name,
+        app_store: this.os,
+        app_url: this.app_url,
+        publisher_id: this.publisher_id,
+      };
+      
       if(this.android_checkbox) {
-        this.os = 'GOOGLE_PLAY';
+        // this.os = 'GOOGLE_PLAY';
         const androidData = {
-          app_name: this.app_name,
-          app_store_id: this.package_name,
-          app_store: 'GOOGLE_PLAY', 
-          // publisher_id: this.publisher_id
-        }
-        console.log('Android Data: ', androidData);   
-        this.callNewMobileApp(androidData);
-      }
-      else if(this.ios_checkbox) {
-        this.os = 'APPLE_ITUNES';
-        const iosData = {
-          app_name: this.app_name, 
-          app_store_id: this.store_id, 
-          app_store: 'APPLE_ITUNES',
-          // publisher_id: this.publisher_id
-        }
-        console.log('IOS Data: ', iosData);
-        this.callNewMobileApp(iosData);
-      }
-      else {
-        this.os = this.otherPlatformSelected;
-        const otherPlatformData = {
           app_name: this.app_name,
           app_store_id: this.package_name,
           app_store: this.os, 
           // publisher_id: this.publisher_id
-
         }
-         console.log('Other Data: ', otherPlatformData);
-         this.callNewMobileApp(otherPlatformData);
+        console.log('Data: ', androidData);   
+        this.callNewMobileApp(androidData);
+      }
+       if(this.ios_checkbox) {
+        // this.os = 'APPLE_ITUNES';
+        const iosData = {
+          app_name: this.app_name, 
+          app_store_id: this.store_id, 
+          app_store: this.os,
+          // publisher_id: this.publisher_id
+        }
+        console.log('Data: ', iosData);
+        this.callNewMobileApp(iosData);
+      }
+       if (this.samsung_checkbox) {
+        this.os = 'SAMSUNG_APP_STORE';
+        const androidData = {
+          app_name: this.app_name,
+          app_store_id: this.package_name,
+          app_store: 'SAMSUNG_APP_STORE', 
+          // publisher_id: this.publisher_id
+        
+        }
+        console.log('Android Data: ', androidData);   
+        this.callNewMobileApp(androidData);
+      }
+
+       if (this.xiaomi_checkbox) {
+        this.os = 'XIAOMI_APP_STORE';
+        const androidData = {
+          app_name: this.app_name,
+          app_store_id: this.package_name,
+          app_store: 'XIAOMI_APP_STORE', 
+          // publisher_id: this.publisher_id
+        
+        }
+        console.log('Android Data: ', androidData);   
+        this.callNewMobileApp(androidData);
+      }
+
+       if (this.amazon_checkbox) {
+        this.os = 'AMAZON_FIRETV';
+        const androidData = {
+          app_name: this.app_name,
+          app_store_id: this.package_name,
+          app_store: 'AMAZON_FIRETV', 
+          // publisher_id: this.publisher_id
+        
+        }
+        console.log('Android Data: ', androidData);   
+        this.callNewMobileApp(androidData);
+      }
+
+      if (this.vivo_checkbox) {
+        this.os = 'VIVO_APP_STORE';
+        const androidData = {
+          app_name: this.app_name,
+          app_store_id: this.package_name,
+          app_store: 'VIVO_APP_STORE', 
+          // publisher_id: this.publisher_id
+        
+        }
+        console.log('Android Data: ', androidData);   
+        this.callNewMobileApp(androidData);
+      }
+      
+      if (this.oppo_checkbox) {
+        this.os = 'OPPO_APP_STORE';
+        const androidData = {
+          app_name: this.app_name,
+          app_store_id: this.package_name,
+          app_store: 'OPPO_APP_STORE', 
+          // publisher_id: this.publisher_id
+        
+        }
+        console.log('Android Data: ', androidData);   
+        this.callNewMobileApp(androidData);
       }
 
     }
@@ -247,7 +434,6 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log("Error in saving app in add_app", error);
-        this.userService.logoutUser(error.error.error);
         // alert('Error in creating App');
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error in creating App', life: 5000  });
         this.dialogClosed.emit();
@@ -270,12 +456,9 @@ export class AddAppComponent implements OnInit, AfterViewInit {
         // console.log('Sucessful in getting Account Names: ',this.account_names);
 
         this.account_names = mappedData;
-        // console.log('Account names are: ', this.account_names);
-        
-      }, 
+      },
       (error) => {
         // alert('Error: '+ error.error.error);
-        this.userService.logoutUser(error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
       }
     )
@@ -316,7 +499,6 @@ export class AddAppComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         console.log('Error in adding app', error);
-        this.userService.logoutUser(error.error.error);
         // alert('Error: ' + error.error.error);
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
         this.dialogClosed.emit();

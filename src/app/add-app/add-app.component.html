@@ -12,7 +12,10 @@
                 </div>
                 <div class="form-group">
                     <label for="account">Account<span>&nbsp;*</span></label>
-                    <div>
+                    <div *ngIf="type!='Admin'">
+                        <input type="text" [(ngModel)]="accountSelected" readonly name="account" id="account">
+                    </div>
+                    <div *ngIf="type=='Admin'">
                         <select id="account" name="account" [(ngModel)]="accountSelected" required (change)="setAccountName()">
                             <option selected disabled value="">Select an Account</option>
                             <option *ngFor="let option of account_names"  [ngValue]="option"  >{{option.account_id_name}}</option>
@@ -38,7 +41,7 @@
                         <option *ngFor="let option of category_list" [value]="option.value">{{option.label}}</option>
                     </select>
                 </div>
-                <div class="form-group" *ngIf="android_checkbox || other_checkbox ">
+                <div class="form-group" *ngIf="android_checkbox || other_checkbox  ">
                     <label for="package_name">Package name <span>&nbsp;*</span></label>
                     <input type="text" [(ngModel)]="package_name" (input)="checkPackageNameTextLength()"  name="package_name" id="package_name" required>
                     <div *ngIf="packageNameTextLength" class="warning">
@@ -58,63 +61,50 @@
                 </div> -->
 
                 <div class="form-group checkbox">
-                    <div class="android">
-                        <input type="radio" id="android" name="radio" class="rounded-checkbox" checked value="android"
-                            (click)="androidCheckbox()" />
-                        <img src="assets/android.svg" alt="android image">
+                    <div class="radio-item">
+                        <input type="radio" id="android" name="radio" class="rounded-checkbox" checked value="android" (click)="androidCheckbox()" />
+                        <img src="assets\android (1).png" alt="android image">
                         <label for="android">Android</label>
                     </div>
-                    <div class="ios">
-                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
-                            (click)="iosCheckbox()" />
-                        <img src="assets/ios.svg" alt="Ios image">
+                    <div class="radio-item">
+                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios" (click)="iosCheckbox()" />
+                        <img src="assets\apple.png" alt="Ios image">
                         <label for="ios">iOS</label>
                     </div>
-
-                    <div class="other">
-                        <input type="radio" id="other" name="radio" class="rounded-checkbox" value="other"
-                            (click)="otherCheckbox()" />
-                        <img src="assets/ios.svg" alt="Other image">
+                    <!-- <div class="radio-item">
+                        <input type="radio" id="other" name="radio" class="rounded-checkbox" value="other" (click)="otherCheckbox()" />
+                        <img src="assets\windows-logo-silhouette.png" alt="Other image">
                         <label for="other">Other</label>
-                    </div>
-
-                    <!-- <div class="ios">
-                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
-                            (click)="iosCheckbox()" />
-                        <img src="assets/ios.svg" alt="android image">
-                        <label for="ios">Amazon Appstore</label>
-                    </div>
-
-                    <div class="ios">
-                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
-                            (click)="iosCheckbox()" />
-                        <img src="assets/ios.svg" alt="android image">
-                        <label for="ios"> OPPO App Market</label>
-                    </div>
-
-                    <div class="ios">
-                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
-                            (click)="iosCheckbox()" />
-                        <img src="assets/ios.svg" alt="android image">
-                        <label for="ios">Samsung Galaxy Store</label>
-                    </div>
-
-                    <div class="ios">
-                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
-                            (click)="iosCheckbox()" />
-                        <img src="assets/ios.svg" alt="android image">
-                        <label for="ios">VIVO App Store</label>
-                    </div>
-
-                    <div class="ios">
-                        <input type="radio" id="ios" name="radio" class="rounded-checkbox" value="ios"
-                            (click)="iosCheckbox()" />
-                        <img src="assets/ios.svg" alt="android image">
-                        <label for="ios">Xiaomi GetApps</label>
                     </div> -->
+                    <div class="radio-item">
+                        <input type="radio" id="samsung" name="radio" class="rounded-checkbox" value="samsung" (click)="samsungCheckbox()" />
+                        <img src="assets\samsung.png" alt="Samsung image">
+                        <label for="samsung">Samsung Galaxy</label>
+                    </div>
 
-
+                    <div class="radio-item">
+                        <input type="radio" id="xiaomi" name="radio" class="rounded-checkbox" value="xiaomi" (click)="xiaomiCheckbox()" />
+                        <img src="assets\xiaomi.png" alt="Xiaomi image">
+                        <label for="xiaomi">Xiaomi GetApps</label>
+                    </div>
+                    <div class="radio-item amazon">
+                        <input type="radio" id="amazon" name="radio" class="rounded-checkbox" value="amazon" (click)="amazonCheckbox()" />
+                        <img src="assets\social.png" alt="Amazon image">
+                        <label for="amazon">Amazon Appstore</label>
+                    </div>
+                    <div class="radio-item oppo">
+                        <input type="radio" id="oppo" name="radio" class="rounded-checkbox" value="oppo" (click)="oppoCheckbox()" />
+                        <img src="assets\OPPO.svg" alt="OPPO image">
+                        <label for="oppo">OPPO App Market</label>
+                    </div>
                     
+                    <div class="radio-item vivo">
+                        <input type="radio" id="vivo" name="radio" class="rounded-checkbox" value="vivo" (click)="vivoCheckbox()" />
+                        <img src="assets\vivo.png" alt="VIVO image">
+                        <label for="vivo">VIVO App Store</label>
+                    </div>
+                    
+           
                 </div>
 
                 <div  *ngIf="other_checkbox">
@@ -128,7 +118,7 @@
 
                 <div class="form-group">
                     <label for="app_url">Store Link URL <span>&nbsp;*</span></label>
-                    <input type="text" [(ngModel)]="app_url" (input)="checkStoreUrlTextLength()" name="app_url" id="app_url" required>
+                    <input type="text" [(ngModel)]="app_url" (input)="checkStoreUrlTextLength()" name="app_url" id="app_url" readonly>
                     <div *ngIf="StoreUrlTextLength" class="warning">
                         <p class="warning-text">Store Link Url should not exceed 1000 character length</p>
                         
