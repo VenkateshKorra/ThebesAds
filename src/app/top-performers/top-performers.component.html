@@ -4,134 +4,148 @@
             <div class="date-icon">
                 <img src="assets/calendar-icon.svg" alt="calendar-icon">
                 <select name="time period" [(ngModel)]="time_period" (ngModelChange)="onTimePeriodChange()">
-                    <option *ngFor="let option of time_period_options" [value]="option.value">{{ option.label }}</option>
+                    <option *ngFor="let option of time_period_options" [value]="option.value">{{ option.label }}
+                    </option>
                 </select>
             </div>
         </section>
-        
-
-        <div class="top_10_publishers" *ngIf="typeOfUser!=='Publisher'">
-            <div class="top-table-headers">
-                <h1 class="publisher-heading">Top Publishers</h1>
-                <button id="top_publishers_dw" (click)="downloadTopPublishers()"><img src="assets/download-icon.svg"
-                        alt="download button"></button>
-            </div>
-
-            <div class="search">
-                <div class="find">
-                    <input type="text" matInput (keyup)="applyFilter($event)" #search placeholder="Search by keywords">
-                    <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
-                </div>
-            </div>
-
-            <div class="mat-elevation-z8" class="table">
-                <table mat-table #sort1="matSort" [dataSource]="top10PublishersDataSource" matSort>
-
-                    <ng-container matColumnDef="rank">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Rank </th>
-                        <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
-                    </ng-container>
-
-                    <!-- Name Column -->
-                    <ng-container matColumnDef="publisher_name">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.publisher_name}} </td>
-                    </ng-container>
-
-                    <!-- Weight Column -->
-                    <ng-container matColumnDef="ctr">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> CTR </th>
-                        <td mat-cell *matCellDef="let element"> {{element.ctr/100 | percent: '.1-1'}} </td>
-                    </ng-container>
-
-                    <!-- Symbol Column -->
-                    <ng-container matColumnDef="cpm">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> CPM </th>
-                        <td mat-cell *matCellDef="let element"> {{element.cpm | currency : 'USD' : 'symbol': '1.1-2'}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="error_percentage">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Error % </th>
-                        <td mat-cell *matCellDef="let element"> {{element.error_percentage/100 | percent: '.1-3'}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="fill_rate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fill Rate </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fill_rate /100| percent: '.1-1'}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="measurable_impressions">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Measured Impressions</th>
-                        <td mat-cell *matCellDef="let element"> {{element.measurable_impressions | thousandSuff: 2}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="viewable_impressions">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Viewable Impressions </th>
-                        <td mat-cell *matCellDef="let element"> {{element.viewable_impressions | thousandSuff: 2}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="ad_request">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Request </th>
-                        <td mat-cell *matCellDef="let element"> {{element.ad_request | thousandSuff: 2}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total_clicks">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Clicks </th>
-                        <td mat-cell *matCellDef="let element"> {{element.total_clicks | thousandSuff: 2}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total_error">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Error</th>
-                        <td mat-cell *matCellDef="let element"> {{element.total_error | thousandSuff: 2}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total_impressions">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Impressions</th>
-                        <td mat-cell *matCellDef="let element"> {{element.total_impressions | thousandSuff: 2}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total_response_served">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Response</th>
-                        <td mat-cell *matCellDef="let element"> {{element.total_response_served | thousandSuff: 2}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="total_revenue">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
-                        <td mat-cell *matCellDef="let element"> {{element.total_revenue | currency : 'USD' : 'symbol':
-                            '1.0-0'}}
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="unfilled_impressions">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Unfilled Impressions</th>
-                        <td mat-cell *matCellDef="let element"> {{element.unfilled_impressions | thousandSuff: 2}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="viewability_percentage">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Viewability %</th>
-                        <td mat-cell *matCellDef="let element"> {{element.viewability_percentage/100 | percent: '.1-1'
-                            }}
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="top10PublishersDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: top10PublishersDisplayedColumns;"></tr>
-
-                    <tr class="mat-row" *matNoDataRow>
-                        <td class="mat-cell" colspan="4">No data matching the filter</td>
-                    </tr>
-                </table>
-
-
-            </div>
-            <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" #paginator1 showFirstLastButtons
-                aria-label="Select page of periodic elements">
-            </mat-paginator>
-
+        <!-- <div *ngIf="typeOfUser == 'Publisher'; else publisher_container">
         </div>
+
+
+        <ng-template #publisher_container > -->
+
+            <div class="top_10_publishers" [hidden]="typeOfUser=='Publisher'">
+                <div class="top-table-headers">
+                    <h1 class="publisher-heading">Top Publishers</h1>
+                    <button id="top_publishers_dw" (click)="downloadTopPublishers()"><img src="assets/download-icon.svg"
+                            alt="download button"></button>
+                </div>
+
+                <div class="search">
+                    <div class="find">
+                        <input type="text" matInput (keyup)="applyFilter($event)" #search
+                            placeholder="Search by keywords">
+                        <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+                    </div>
+                </div>
+
+                <div class="mat-elevation-z8" class="table">
+                    <table mat-table #sort1="matSort" [dataSource]="top10PublishersDataSource" matSort>
+
+                        <ng-container matColumnDef="rank">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Rank </th>
+                            <td mat-cell *matCellDef="let element"> {{element.rank}} </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="publisher_name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.publisher_name}} </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="ctr">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> CTR </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ctr/100 | percent: '.1-1'}} </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="cpm">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> CPM </th>
+                            <td mat-cell *matCellDef="let element"> {{element.cpm | currency : 'USD' : 'symbol':
+                                '1.1-2'}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="error_percentage">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Error % </th>
+                            <td mat-cell *matCellDef="let element"> {{element.error_percentage/100 | percent: '.1-3'}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="fill_rate">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fill Rate </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fill_rate /100| percent: '.1-1'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="measurable_impressions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Measured Impressions</th>
+                            <td mat-cell *matCellDef="let element"> {{element.measurable_impressions | thousandSuff: 2}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="viewable_impressions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Viewable Impressions </th>
+                            <td mat-cell *matCellDef="let element"> {{element.viewable_impressions | thousandSuff: 2}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ad_request">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ad Request </th>
+                            <td mat-cell *matCellDef="let element"> {{element.ad_request | thousandSuff: 2}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="total_clicks">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Clicks </th>
+                            <td mat-cell *matCellDef="let element"> {{element.total_clicks | thousandSuff: 2}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="total_error">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Error</th>
+                            <td mat-cell *matCellDef="let element"> {{element.total_error | thousandSuff: 2}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="total_impressions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Impressions</th>
+                            <td mat-cell *matCellDef="let element"> {{element.total_impressions | thousandSuff: 2}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="total_response_served">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Response</th>
+                            <td mat-cell *matCellDef="let element"> {{element.total_response_served | thousandSuff: 2}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="total_revenue">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Revenue</th>
+                            <td mat-cell *matCellDef="let element"> {{element.total_revenue | currency : 'USD' :
+                                'symbol':
+                                '1.0-0'}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="unfilled_impressions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Unfilled Impressions</th>
+                            <td mat-cell *matCellDef="let element"> {{element.unfilled_impressions | thousandSuff: 2}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="viewability_percentage">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Viewability %</th>
+                            <td mat-cell *matCellDef="let element"> {{element.viewability_percentage/100 | percent:
+                                '.1-1'
+                                }}
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="top10PublishersDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: top10PublishersDisplayedColumns;"></tr>
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No data matching the filter</td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" #paginator1 showFirstLastButtons
+                    aria-label="Select page of periodic elements">
+                </mat-paginator>
+
+            </div>
+        <!-- </ng-template> -->
 
         <!--  -->
         <div class="top_10_sites">

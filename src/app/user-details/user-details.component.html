@@ -114,8 +114,16 @@
         </div>
         
         <div class="form-grp" *ngIf="userType=='AdOpsManager' || userType =='Distributor' ">
-          <label for="assign-publisher">Assign Publishers <span>*</span></label>
-          <input type="text" id="assign-publisher" [(ngModel)]="assign_publisher_string" name="assign-publisher">    
+          <!-- <label for="assign-publisher">Assign Publishers <span>*</span></label>
+          <input type="text" id="assign-publisher" [(ngModel)]="assign_publisher_string" name="assign-publisher">     -->
+          <mat-form-field class="custom-form-field">
+            <mat-label>Publishers</mat-label>
+            <mat-select [formControl]="Publishers" multiple>
+              @for (topping of account_names; track topping) {
+                <mat-option [value]="topping.Account_Id">{{topping.Account_Name}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="form-grp" *ngIf="userType =='Distributor' ">
@@ -167,9 +175,16 @@
         </div>
 
         <div class="form-grp" *ngIf="edit_userType=='AdOpsManager' || edit_userType =='Distributor' ">
-          <label for="assigned-publisher">Assigned Publishers <span>*</span></label>
-          <input type="text" id="assigned-publisher" [(ngModel)]="edit_assigned_publisher_string" name="assigned-publisher">
-          
+          <!-- <label for="assigned-publisher">Assigned Publishers <span>*</span></label>
+          <input type="text" id="assigned-publisher" [(ngModel)]="edit_assigned_publisher_string" name="assigned-publisher"> -->
+          <mat-form-field class="custom-form-field">
+            <mat-label>Publishers</mat-label>
+            <mat-select [formControl]="edit_Publishers" multiple>
+              @for (topping of account_names; track topping) {
+                <mat-option [value]="topping.Account_Id">{{topping.Account_Name}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="form-grp" *ngIf="edit_userType =='Distributor' ">

@@ -67,6 +67,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { TopPerformersComponent } from './top-performers/top-performers.component';
 import { DistributorPaymentPageComponent } from './distributor-payment-page/distributor-payment-page.component';
 import { ReceiptUploadComponent } from './receipt-upload/receipt-upload.component';
+import { NotificationDashboardAdminComponent } from './notification-dashboard-admin/notification-dashboard-admin.component';
 
 
 
@@ -109,7 +110,7 @@ import { ReceiptUploadComponent } from './receipt-upload/receipt-upload.componen
     ForgotYourPasswordComponent,
     ResetPasswordComponent,
     ReportDownloadComponent, 
-    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent, ContactsTabComponent, ContactRejectComponent, AdServingCostComponent, TopPerformersComponent, DistributorPaymentPageComponent, ReceiptUploadComponent,
+    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent, ContactsTabComponent, ContactRejectComponent, AdServingCostComponent, TopPerformersComponent, DistributorPaymentPageComponent, ReceiptUploadComponent, NotificationDashboardAdminComponent,
   ],
   imports: [
     BrowserModule,

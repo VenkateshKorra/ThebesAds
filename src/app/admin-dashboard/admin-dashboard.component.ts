@@ -81,6 +81,26 @@ interface TopAdUnit {
   viewability_percentage: any;
 }
 
+interface PublisherOption {
+  name: string;
+  account_id: number;
+}
+
+interface SiteOption {
+  name: string;
+  site_id: number;
+}
+
+interface AppOption {
+  name: string;
+  app_id: number;
+}
+
+interface AdUnitOption {
+  name: string;
+  adUnit_id: number;
+}
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -174,16 +194,16 @@ export class AdminDashboardComponent implements OnInit {
 
 
   //contains data values
-  adUnitDropDown: string[] = [];
-  siteDropDown: string[] = [];
-  publisherDropDown: string[] = [];
-  appDropDown: string[] = [];
+  adUnitDropDown: AdUnitOption[] = [];
+  siteDropDown: SiteOption[] = [];
+  publisherDropDown: PublisherOption[] = [];
+  appDropDown: AppOption[] = [];
 
 
-  publisherFilteredOptions: any;
-  adUnitFilteredOptions: any;
-  siteFilteredOptions: any;
-  appFilteredOptions: any;
+  publisherFilteredOptions: PublisherOption[] = [];
+  adUnitFilteredOptions: AdUnitOption[] = [];
+  siteFilteredOptions: SiteOption[] = [];
+  appFilteredOptions: AppOption[] = [];
 
 
   selectedPublisherValue: any;
@@ -383,12 +403,16 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  publisherFilter(searchTerm: Event) {  // filter adunit for value
+  publisherFilter(searchTerm: Event) {
     const search = (searchTerm.target as HTMLInputElement).value;
+    // console.log('search is: ', search);
+  
     if (!search) {
       this.publisherFilteredOptions = this.publisherDropDown;
     } else {
-      this.publisherFilteredOptions = this.publisherDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.publisherFilteredOptions = this.publisherDropDown.filter(option => 
+        option.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
   }
   adUnitFilter(searchTerm: Event) {  //filter site for value
@@ -396,7 +420,9 @@ export class AdminDashboardComponent implements OnInit {
     if (!search) {
       this.adUnitFilteredOptions = this.adUnitDropDown;
     } else {
-      this.adUnitFilteredOptions = this.adUnitDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.adUnitFilteredOptions = this.adUnitDropDown.filter(option => 
+        option.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
   }
   siteFilter(searchTerm: Event) {  // filter adunit for value
@@ -404,7 +430,9 @@ export class AdminDashboardComponent implements OnInit {
     if (!search) {
       this.siteFilteredOptions = this.siteDropDown;
     } else {
-      this.siteFilteredOptions = this.siteDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.siteFilteredOptions = this.siteDropDown.filter(option => 
+        option.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
   }
   appFilter(searchTerm: Event) {  //filter site for value
@@ -412,7 +440,9 @@ export class AdminDashboardComponent implements OnInit {
     if (!search) {
       this.appFilteredOptions = this.appDropDown;
     } else {
-      this.appFilteredOptions = this.appDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.appFilteredOptions = this.appDropDown.filter(option => 
+        option.name.toLowerCase().includes(search.toLowerCase())
+      );
     }
   }
   publisherSelectOption(value: any) {  //assign adunit with the selected value

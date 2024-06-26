@@ -80,6 +80,8 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit{
       this.id = state.id;
       this.name = state.name;
       this.date_received = state.date;
+      this.ad_serving_cost = state.ad_cost;
+      this.total_ad_serving_cost = this.ad_serving_cost;
       this.extractMonthAndYear(this.date_received);
       console.log('id is: ',this.id);
       console.log('Name is: ', this.name);
@@ -192,9 +194,9 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit{
             {
               id: 1, // Set id to 1 as it's the only element
               total_payment: response.data.Total_Payment,
-              ad_serving_cost_calculated: response.data.calculated_serving_cost,
+              ad_serving_cost_calculated: this.ad_serving_cost,
               deduction: response.data.Deductions,
-              payable_amount: Math.floor(Number(response.data.Total_Payment) + Number(response.data.Deductions) + response.data.calculated_serving_cost)
+              payable_amount: Math.floor(Number(response.data.Total_Payment) + Number(response.data.Deductions) + Number(this.ad_serving_cost))
             }
           ];
           console.log('mapped data is: ', mappedUsers);
@@ -221,7 +223,7 @@ export class DownloadInvoiceComponent implements OnInit, AfterViewInit{
     for (let i = 0; i < this.userPaymentData.length; i++) {
       this.total_revenue_calculated += Number(this.userPaymentData[i].total_payment);
       this.total_deduction += Number(this.userPaymentData[i].deduction);
-      this.total_ad_serving_cost += this.userPaymentData[i].ad_serving_cost_calculated;
+      // this.total_ad_serving_cost += Number(this.ad_serving_cost);
       this.total_payable_amount += this.userPaymentData[i].payable_amount;
     }
     //  this.convertToWords(this.total_payable_amount);

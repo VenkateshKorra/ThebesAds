@@ -62,6 +62,20 @@ interface TopAdUnit {
   unfilled_impressions: any;
   viewability_percentage: any;
 }
+interface SiteOption {
+  name: string;
+  site_id: number;
+}
+
+interface AppOption {
+  name: string;
+  app_id: number;
+}
+
+interface AdUnitOption {
+  name: string;
+  adUnit_id: number;
+}
 
 @Component({
   selector: 'app-user-dashboard',
@@ -150,14 +164,15 @@ export class UserDashboardComponent implements OnInit {
   siteDropdownVisible: boolean = false;
   appDropdownVisible: boolean = false;
 
-  adUnitDropDown: string[] = [];
-  siteDropDown: string[] = [];
-  appDropDown: string[] = [];
+
+  adUnitDropDown: AdUnitOption[] = [];
+  siteDropDown: SiteOption[] = [];
+  appDropDown: AppOption[] = [];
 
 
-  adUnitFilteredOptions: any;
-  siteFilteredOptions: any;
-  appFilteredOptions: any;
+  adUnitFilteredOptions: AdUnitOption[] = [];
+  siteFilteredOptions: SiteOption[] = [];
+  appFilteredOptions: AppOption[] = [];
 
 
   selectedAdUnitValue: any;
@@ -245,8 +260,8 @@ export class UserDashboardComponent implements OnInit {
     }
     this.callFunctionInterval = setInterval(() => {
       if (this.latest_data == true) {
-          console.log('Inside Latest Data');
-          this.getLastestDataDetails();
+        console.log('Inside Latest Data');
+        this.getLastestDataDetails();
       }
     }, 30000);
   }
@@ -327,7 +342,7 @@ export class UserDashboardComponent implements OnInit {
     if (!search) {
       this.adUnitFilteredOptions = this.adUnitDropDown;
     } else {
-      this.adUnitFilteredOptions = this.adUnitDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.adUnitFilteredOptions = this.adUnitDropDown.filter(option => option.name.toLowerCase().includes(search.toLowerCase()));
     }
   }
   siteFilter(searchTerm: Event) {  // filter adunit for value
@@ -335,7 +350,8 @@ export class UserDashboardComponent implements OnInit {
     if (!search) {
       this.siteFilteredOptions = this.siteDropDown;
     } else {
-      this.siteFilteredOptions = this.siteDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.siteFilteredOptions = this.siteDropDown.filter(option => option.name.toLowerCase().includes(search.toLowerCase()));
+      
     }
   }
   appFilter(searchTerm: Event) {  //filter site for value
@@ -343,7 +359,7 @@ export class UserDashboardComponent implements OnInit {
     if (!search) {
       this.appFilteredOptions = this.appDropDown;
     } else {
-      this.appFilteredOptions = this.appDropDown.filter(option => option.toLowerCase().includes(search.toLowerCase()));
+      this.appFilteredOptions = this.appDropDown.filter(option => option.name.toLowerCase().includes(search.toLowerCase()));
     }
   }
 
@@ -460,7 +476,7 @@ export class UserDashboardComponent implements OnInit {
   get_daily_data(Data: any) {
     // if(this.typeOfUser=='AdOpsManager' || this.userService.getType()=='Distributor') {
     //   console.log('Inside adsOpsmanager');
-      
+
     //   this.userService.manager_distributor(Data).subscribe(
     //     (response) => {
     //       // console.log('Data Received in daily_data is: ', response);
@@ -472,17 +488,17 @@ export class UserDashboardComponent implements OnInit {
     //       // this.top_10_sites = response.Top10Site;
     //       // this.top_10_apps = response.Top10App;
     //       // this.top_10_adUnits = response.Top10AdUnit;
-  
+
     //       // console.log('Response Data is: ', this.responseData);
     //       this.setMetrics(this.responseData);
     //       this.revenue_chart(this.overallMetricsData);
     //       this.device_chart(this.deviceMetricsData);
     //       this.country_chart(this.countryMetricsData);
-  
+
     //       this.top_sites(this.top_10_sites);
     //       this.top_apps(this.top_10_apps);
     //       this.top_adUnits(this.top_10_adUnits);
-  
+
     //     },
     //     (error) => {
     //       // console.log('Error in getting data: ', error);
@@ -494,7 +510,7 @@ export class UserDashboardComponent implements OnInit {
     //       this.overallMetricsData = ''; // Storing 'overallMetrics' data
     //       this.deviceMetricsData = ''; // Storing 'deviceMetrics' data
     //       this.countryMetricsData = '';
-  
+
     //     }
     //   )
     // }
@@ -649,7 +665,7 @@ export class UserDashboardComponent implements OnInit {
           }
 
           console.log('Latest Data is: ', this.latest_data);
-          
+
         }
       },
       (error) => {
@@ -674,17 +690,17 @@ export class UserDashboardComponent implements OnInit {
       (response) => {
         console.log('Response: ', response);
         this.getLastestDataDetails();
-        
+
         // this.messages =[{ severity: 'success', summary: 'Success', detail: 'Latest Data Updated' }];
       },
       (error) => {
         console.log('Error got: ', error);
         this.getLastestDataDetails();
         this.userService.logoutUser(error.error.error);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured: '+error.error.error, life: 5000 });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error occured: ' + error.error.error, life: 5000 });
       }
     )
-    
+
 
   }
 

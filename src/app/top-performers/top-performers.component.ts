@@ -274,7 +274,7 @@ export class TopPerformersComponent implements OnInit, AfterViewInit {
         }
       )
     }
-    if(this.typeOfUser=='AdOpsManager' || this.userService.getType()=='Distributor') {
+    else if(this.typeOfUser=='AdOpsManager' || this.typeOfUser=='Distributor') {
       console.log('Inside adsOpsmanager');
       
       this.userService.manager_distributor(Data).subscribe(

@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UsersService } from '../users.service';
 import { MessageService } from 'primeng/api';
 import { userTypedropdown } from '../sign-up-dropdown';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 
 
 
@@ -41,12 +41,13 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
   userTypeOptions : any;
 
   updateChanged = {}
+  typeOfUser='';
 
   userName = '';
   userEmail = '';
   userType = '';
   userPassword = '';
-  assign_publisher_string='';
+  // assign_publisher_string='';
   assign_margin = 0;
   assign_publisher_list:number[] = [];
 
@@ -55,12 +56,15 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
   edit_userEmail = '';
   edit_userType = '';
   edit_userPassword = '';
-  edit_assigned_publisher_string='';
+  // edit_assigned_publisher_string='';
+  account_names: any;
   edit_assigned_margin = '';
-  edit_assigned_publisher_list: number[]=[];
+  // edit_assigned_publisher_list: number[]=[];
 
   editClicked = false;
 
+  Publishers = new FormControl('');
+  edit_Publishers = new FormControl('');
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -74,10 +78,11 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     // Fetch and display contacts when component initializes
+    this.typeOfUser = this.userService.getType();
     this.userTypeOptions = userTypedropdown;
-    // if (isPlatformBrowser(this.platformId)) {
-      this.show_user_details();
-    // }
+    this.getAccountNames();
+    this.show_user_details();
+
   }
 
   ngAfterViewInit() {
@@ -166,6 +171,28 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
   }
 }
 
+getAccountNames() {
+  const Data = {
+    type: this.typeOfUser
+  }
+  this.userService.getAccountNames(Data).subscribe(
+    (response) => {
+       const mappedData = response.map((user: any) => ({
+          Account_Id: user.Account_Id,
+          Account_Name: user['Account_Name'],
+          account_id_name : user.Account_Id + '-' + user['Account_Name']
+       }));
+      // console.log('Sucessful in getting Account Names: ',this.account_names);
+
+      this.account_names = mappedData;
+    },
+    (error) => {
+      // alert('Error: '+ error.error.error);
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
+    }
+  )
+}
+
   disable(element: any) {
     if(element.status=='Disabled') {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Account is already Disabled', life: 5000  });
@@ -206,13 +233,14 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
           this.edit_userEmail = element.email;
           this.edit_userType = element.type;
           this.edit_assigned_margin = element.managerMargin;
-          this.edit_assigned_publisher_string = element.assignedPublishers.join(',');
+          // this.edit_assigned_publisher_string = element.assignedPublishers.join(',');
+          this.edit_Publishers.setValue(element.assignedPublishers);
           // this.edit_userPassword = element.password
-          // console.log('fetched assigned: ', element.assignedPublishers);
-          console.log('log: ', element);
+          // console.log('fetched assigned: ', this.edit_Publishers.value);
+          // console.log('log: ', element);
           
-          console.log('Margin assigned: ',this.edit_assigned_margin);
-          console.log('Got margin: ', element.ManagerMargin);
+          // console.log('Margin assigned: ',this.edit_assigned_margin);
+          // console.log('Got margin: ', element.ManagerMargin);
           
           
           
@@ -263,19 +291,20 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
 
   onSubmit(form: NgForm) {
     this.click = false;
+    
     if(form.valid) {
-      if(this.assign_publisher_string) {
-        this.assign_publisher_list = this.assign_publisher_string.split(',').map(Number);
-      }
+      // if(this.assign_publisher_string) {
+      //   this.assign_publisher_list = this.assign_publisher_string.split(',').map(Number);
+      // }
       const DataPayload = {
         User_Name: this.userName,
         Email: this.userEmail,
         Type: this.userType,
         Password: this.userPassword,
-        PublisherAccountIds: this.assign_publisher_list,
+        PublisherAccountIds: this.Publishers.value,
         Margin: this.assign_margin
       }
-      console.log('DataPayload is: ', DataPayload);
+      // console.log('DataPayload is: ', DataPayload);
       this.userService.addUserCredentials(DataPayload).subscribe(
         (response) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User Added Successfully!!', life: 5000  });
@@ -295,13 +324,22 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
     this.userEmail='';
     this.userType='';
     this.userPassword='';
-    this.assign_publisher_string='';
+    this.Publishers.setValue('');
+    // this.assign_publisher_string='';
     this.assign_margin=0;
-    this.assign_publisher_list=[];
+    // this.assign_publisher_list=[];
   }
 
   onCancelAdd() {
     this.click = false;
+    this.userName='';
+    this.userEmail='';
+    this.userType='';
+    this.userPassword='';
+    this.Publishers.setValue('');
+    // this.assign_publisher_string='';
+    this.assign_margin=0;
+    // this.assign_publisher_list=[];
   }
 
   onCancelEdit() {
@@ -310,13 +348,13 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
 
   onSubmitEdit(form: NgForm) {
     this.editClicked = false;
-    this.edit_assigned_publisher_list=[];
-    console.log('assigend publishers in submit: ',this.edit_assigned_publisher_string );
+    // this.edit_assigned_publisher_list=[];
+    // console.log('assigend publishers in submit: ',this.edit_assigned_publisher_string );
     
 
-    if(this.edit_assigned_publisher_string) {
-      this.edit_assigned_publisher_list = this.edit_assigned_publisher_string.split(',').map(Number);
-    }
+    // if(this.edit_assigned_publisher_string) {
+    //   this.edit_assigned_publisher_list = this.edit_assigned_publisher_string.split(',').map(Number);
+    // }
     const DataEdit = {
       Id: this.edit_id,
       User_Name : this.edit_userName,
@@ -324,11 +362,11 @@ export class UserDetailsComponent implements AfterViewInit, OnInit {
       Type : this.edit_userType,
       Password: this.edit_userPassword,
       Margin: this.edit_assigned_margin, 
-      PublisherAccountIds: this.edit_assigned_publisher_list
+      PublisherAccountIds: this.edit_Publishers.value
 
     }
 
-    console.log('Edit payload is: ', DataEdit);
+    // console.log('Edit payload is: ', DataEdit);
     if(form.valid) {
       this.userService.userCredentialsEdit(DataEdit).subscribe(
         (response) => {

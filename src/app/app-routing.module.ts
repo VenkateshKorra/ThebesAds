@@ -39,6 +39,7 @@ import { AdServingCostComponent } from './ad-serving-cost/ad-serving-cost.compon
 import { TopPerformersComponent } from './top-performers/top-performers.component';
 import { DistributorPaymentPageComponent } from './distributor-payment-page/distributor-payment-page.component';
 import { ReceiptUploadComponent } from './receipt-upload/receipt-upload.component';
+import { NotificationDashboardAdminComponent } from './notification-dashboard-admin/notification-dashboard-admin.component';
 
 
 const routes: Routes = [
@@ -86,6 +87,7 @@ const routes: Routes = [
   { path: 'top-performers', component: TopPerformersComponent, canActivate: [authenticationGuard]},
   { path: 'distributor-payment', component: DistributorPaymentPageComponent, canActivate: [authenticationGuard]},
   { path: 'receipt-upload',  component: ReceiptUploadComponent, canActivate: [authenticationGuard] },
+  { path: 'admin-noification', component: NotificationDashboardAdminComponent},
   { path: '**', component: UsersComponent, canActivate: [authenticationGuard] }
 
 ];

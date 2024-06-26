@@ -89,9 +89,17 @@
             <form #form="ngForm" >
                 <h2>Create Receipt Record</h2>
 
-                <div class="form-group">
-                    <label for="publisher_id"> Publisher Id</label>
-                    <input name="publisher_id" [(ngModel)]="publisher_id" type="number" id="publisher_id" required>
+                <div class="form-group" style="margin-bottom:1em;">
+                    <label for="publisher_id" style="margin-bottom: 0.3em;"> Publisher Name</label>
+                    <!-- <input name="publisher_id" [(ngModel)]="publisher_id" type="number" id="publisher_id" required> -->
+                    <mat-form-field class="custom-form-field">
+                        <mat-label>Publishers</mat-label>
+                        <mat-select [formControl]="select_publisher" multiple>
+                          @for (topping of account_names; track topping) {
+                            <mat-option [value]="topping.Account_Id">{{topping.Account_Name}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
                 </div>
                 <div class="form-group">
                     <label for="month">Month </label>
@@ -113,7 +121,6 @@
                 </div> -->
 
                 <div class="form-group ">
-                    <label> Add Recepit</label>
                     <div class="upload-grp">
                         <button class="upload-btn" (click)="uploadButtonClicked()" >Upload Receipt</button>
                     <p class="upload-para">{{uploaded_file_name}}</p>

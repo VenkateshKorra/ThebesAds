@@ -268,7 +268,8 @@ export class PaymentComponent {
       state: {
         id: element.publisher_id,
         name: element.publisher_name,
-        date: element.month
+        date: element.month,
+        ad_cost: element.ad_serving_cost
       }
     };
     const baseUrl = window.location.origin;

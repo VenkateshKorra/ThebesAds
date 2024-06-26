@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UsersService } from '../users.service';
 import { MessageService } from 'primeng/api';
 import { Months } from '../sign-up-dropdown';
-import { NgForm } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 
 
 
@@ -35,10 +35,14 @@ export class ReceiptUploadComponent {
   upload_file : any;
   publisher_id = '';
   isEdit = false;
+  typeOfUser = '';
 
   selectedFile: File | null = null;
   uploadMessage ='';
   uploaded_file_name: any;
+  account_names: any;
+
+  select_publisher= new FormControl('');
 
 
   edit_month = '';
@@ -48,7 +52,9 @@ export class ReceiptUploadComponent {
   constructor(private userService: UsersService, private messageService: MessageService) {}
 
   ngOnInit(): void {
+    this.typeOfUser = this.userService.getType();
     this.month_list = Months;
+    this.getAccountNames();
     this.get_data();
 }
 
@@ -168,6 +174,11 @@ openAddDialog() {
 }
 onCancel() {
 this.isOpen = false;
+this.month_selected='';
+  this.year_selected='';
+  this.uploaded_file_name='';
+  this.select_publisher.setValue('');
+  this.selectedFile = null;
 }
 
 uploadButtonClicked() {
@@ -204,6 +215,29 @@ onFileSelected(event: any) {
   // this.uploadInvoice(); // Pass the element to uploadInvoice
 }
 
+getAccountNames() {
+  const Data = {
+    type: 'Admin'
+  }
+  this.userService.getAccountNames(Data).subscribe(
+    (response) => {
+       const mappedData = response.map((user: any) => ({
+          Account_Id: user.Account_Id,
+          Account_Name: user['Account_Name'],
+          account_id_name : user.Account_Id + '-' + user['Account_Name']
+       }));
+      // console.log('Sucessful in getting Account Names: ',this.account_names);
+
+      this.account_names = mappedData;
+    },
+    (error) => {
+      // alert('Error: '+ error.error.error);
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000  });
+    }
+  )
+}
+
+
 uploadInvoice() {
   if (!this.selectedFile) {
     this.uploadMessage = 'Please select a PDF file to upload.';
@@ -211,7 +245,7 @@ uploadInvoice() {
   }
   const Data = {
     selectedFile: this.selectedFile,
-    publisher_id: this.publisher_id,
+    publisher_id: this.select_publisher.value,
     Month: this.month_selected,
     Year: this.year_selected
   }
@@ -244,8 +278,8 @@ uploadInvoice() {
     }
   this.month_selected='';
   this.year_selected='';
-  this.publisher_id='';
   this.uploaded_file_name='';
+  this.select_publisher.setValue('');
   this.selectedFile = null;
 }
 

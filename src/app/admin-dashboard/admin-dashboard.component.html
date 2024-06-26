@@ -17,7 +17,7 @@
 
                 <div *ngIf="publisherDropdownVisible" class="dropdown">
                   <input type="text" id="search_adUnit" name="search_publisher" placeholder="Search..."
-                    (input)="publisherFilter($event)">
+                    (keyup)="publisherFilter($event)">
                   <p *ngFor="let value of publisherFilteredOptions" (click)="publisherSelectOption(value)">
                     {{value.name}}</p>
                 </div>

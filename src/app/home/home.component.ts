@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   current_link='';
   storage=false;
-  private readonly idleTimeout = 5 * 60 * 1000; // 5 minutes
+  private readonly idleTimeout = 30 * 60 * 1000; // 5 minutes
 
   constructor(private router: Router, private activityTracker: ActivityTrackerService) {}
 
