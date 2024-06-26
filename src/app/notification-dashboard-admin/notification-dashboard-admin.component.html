@@ -1,1 +1,30 @@
-<p>notification-dashboard-admin works!</p>
+<div class="container">
+  <p-toast position="top-center"></p-toast>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <h2>Create Notification</h2>
+      <div class="form-grp">
+        <label for="select_publisher_id">Publisher Name &nbsp;<span>*</span></label>
+        <select id="select_publisher_id" name="select_publisher_id" required [(ngModel)]="selected_publisher_id" required>
+          <option selected disabled value="">Select Publisher</option>
+          <option *ngFor="let option of account_names" [value]="option.Account_Id">{{option.Account_Name}}</option>
+        </select>
+      </div>
+  
+      <div class="form-grp">
+        <label for="subject">Subject &nbsp;<span>*</span></label>
+        <input type="text" name="subject" id="subject" required [(ngModel)]="subject">
+      </div>
+  
+      <div class="form-grp">
+        <label for="message">Message &nbsp;<span>*</span></label>
+        <!-- <input type="text" name="message" id="message" [(ngModel)]="message"> -->
+        <textarea name="message" id="message" required [(ngModel)]="message"></textarea>
+      </div>
+  
+      <div class="submit-btn">
+        <button type="submit">Submit</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>  
+  
+</div>

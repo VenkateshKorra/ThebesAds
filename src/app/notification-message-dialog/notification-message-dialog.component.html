@@ -1,0 +1,20 @@
+<body>
+    <div class="container">
+        <h1 mat-dialog-title>Notification Details</h1>
+        <div mat-dialog-content>
+            <div class="row">
+                <p>Subject: <span>{{data.subject || 'NA'}}</span></p>
+                <p>Message: <span>{{ data.message }}</span></p>
+                
+                
+
+
+            </div>
+
+            <!-- Display other properties of the row data as needed -->
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="closeDialog()">Close</button>
+        </div>
+    </div>
+</body>

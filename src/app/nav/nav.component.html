@@ -7,7 +7,8 @@
         <div class="icons">
             <div class="left">
                 <img src="assets/chat-icon.svg" alt="chat-icon">
-                <img src="assets/Mail-icon.svg" alt="Mail-icon">
+                <img *ngIf="typeOfUser=='Publisher'" src="assets/Mail-icon.svg" alt="Mail-icon" (click)="publisher_mail_clicked()" >
+                <img *ngIf="typeOfUser=='Admin'" src="assets/Mail-icon.svg" alt="Mail-icon" (click)="admin_mail_clicked()" >
             </div>
             <div class="vertical-line"></div>
             <div class="profile" (click)="profileClicked()">
@@ -29,5 +30,13 @@
             </div>
 
         </div>
+    </div>
+
+    <div *ngIf="notification_clicked" >
+        <app-notification-dashboard-admin (closeNotification)="onNotificationClose()"></app-notification-dashboard-admin>
+    </div>
+
+    <div *ngIf="publisher_notification_clicked" >
+        <app-publisher-notification (closeNotification)="onNotificationClose()"></app-publisher-notification>
     </div>
 </body>

@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { UsersService } from '../users.service';
@@ -15,6 +15,9 @@ export class NavComponent {
   clicked=false;
   email=''
   typeOfUser = '';
+
+  notification_clicked = false;
+  publisher_notification_clicked = false;
 
   constructor(private router: Router, private userService: UsersService, @Inject(PLATFORM_ID) private platformId: Object) {}
   
@@ -54,6 +57,8 @@ export class NavComponent {
     }
 }
 
+  
+
   onDocumentClick = (event: MouseEvent) => {
     const dropdownElement = document.querySelector('.dropdown');
     const profileElement = document.querySelector('.profile');
@@ -80,4 +85,21 @@ export class NavComponent {
     this.router.navigate(['/user-details']);
   }
 
+  admin_mail_clicked() {
+    this.userService.set_notification();
+    this.notification_clicked = this.userService.get_notification();
+  }
+
+  publisher_mail_clicked() {
+    this.userService.publisher_set_notification();
+    this.publisher_notification_clicked = this.userService.publisher_get_notification();
+  }
+
+  onNotificationClose() {
+    this.notification_clicked = this.userService.get_notification();
+  }
+
+  OnPublisherNotificationClose() {
+    this.publisher_notification_clicked = this.userService.publisher_get_notification();
+  }
 }

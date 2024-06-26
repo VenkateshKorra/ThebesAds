@@ -16,6 +16,8 @@ export class UsersService {
   private userName: any;
   private publisherID: any;
 
+  notification_clicked= false;
+  publisher_notification_clicked = false;
   private socket!: WebSocket;
   
   setPublisherName ='';
@@ -30,6 +32,35 @@ export class UsersService {
 
 
   constructor(private http: HttpClient, private messageService: MessageService, private route: Router) {}
+
+  public set_notification() {
+    if(this.notification_clicked) {
+      this.notification_clicked =  false;
+    }
+    else {
+      this.notification_clicked = true;
+    }
+    
+  }
+
+  public publisher_set_notification() {
+    if(this.publisher_notification_clicked) {
+      this.publisher_notification_clicked =  false;
+    }
+    else {
+      this.publisher_notification_clicked = true;
+    }
+    
+  }
+
+  public publisher_get_notification() {
+    return this.publisher_notification_clicked;
+  }
+
+
+  public get_notification() {
+    return this.notification_clicked;
+  }
 
   public logoutUser(token: string) {
     console.log('Entered tokenValid', token);
@@ -1338,6 +1369,38 @@ delete_receipt_record(Data: any): Observable<any> {
   const options = { headers: headers };
   return this.http.post('http://localhost/apps/users/receiptUploadDelete.php', Data, options);
 }
+
+create_notification(Data: any): Observable<any> {
+  this.getToken();
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Adjust content type as needed
+    'Authorization': `Bearer ${this.tokenValue}`
+  });
+  const options = { headers: headers };
+  return this.http.post('http://localhost/apps/notifications/create.php', Data, options);
+}
+
+get_notification_list(): Observable<any> {
+  this.getToken();
+  const Data='';
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Adjust content type as needed
+    'Authorization': `Bearer ${this.tokenValue}`
+  });
+  const options = { headers: headers };
+  return this.http.post('http://localhost/apps/notifications/list.php',Data , options);
+}
+
+mark_notification_read(Data: any): Observable<any> {
+  this.getToken();
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json', // Adjust content type as needed
+    'Authorization': `Bearer ${this.tokenValue}`
+  });
+  const options = { headers: headers };
+  return this.http.post('http://localhost/apps/notifications/markSeen.php',Data , options);
+}
+
 
 
 

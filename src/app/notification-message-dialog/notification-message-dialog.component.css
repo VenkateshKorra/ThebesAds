@@ -1,0 +1,38 @@
+.container{
+    width: 100%;
+    text-align: center;
+    margin:2em 0;
+    font-family: 'Overpass', sans-serif;
+    z-index: 2000;
+}
+
+h1 {
+     font-size: 1.5em;
+     font-weight: 500;
+     font-family: 'Overpass', sans-serif;
+}
+
+
+.row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+p {
+    margin-left: 2em;
+}
+
+span {
+    color: #0856A2;
+}
+
+.mat-mdc-button{
+    background-color: #0856A2;
+}
+
+.mat-mdc-button:not(:disabled) {
+    color: white !important;
+}
+
+

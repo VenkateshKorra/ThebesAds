@@ -87,7 +87,7 @@ const routes: Routes = [
   { path: 'top-performers', component: TopPerformersComponent, canActivate: [authenticationGuard]},
   { path: 'distributor-payment', component: DistributorPaymentPageComponent, canActivate: [authenticationGuard]},
   { path: 'receipt-upload',  component: ReceiptUploadComponent, canActivate: [authenticationGuard] },
-  { path: 'admin-noification', component: NotificationDashboardAdminComponent},
+  { path: 'admin-notification', component: NotificationDashboardAdminComponent},
   { path: '**', component: UsersComponent, canActivate: [authenticationGuard] }
 
 ];

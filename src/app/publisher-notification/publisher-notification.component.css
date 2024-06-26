@@ -1,0 +1,55 @@
+.container {
+    position: absolute;
+    top: 8%;
+    right: 10%;
+    z-index: 1000;
+    width: 35%;
+    height: auto;
+    background: rgb(6, 110, 166);
+    background: linear-gradient(180deg, rgba(6, 110, 166, 1) 35%, rgba(2, 62, 138, 1) 100%);
+    border-radius: 5px;
+    margin: 2em auto;
+    color: white;
+    font-family: 'Hind', sans-serif;
+    overflow: hidden; /* Ensure container clips overflow */
+}
+
+form {
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+form h2 {
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.notification_line {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text_message {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 0.9; /* Ensures the text does not wrap and tries to fit in one line */
+    margin: 0; /* Remove default margin */
+}
+
+.isSeen div {
+    width: 10px;
+    height: 10px; /* Ensure consistent size */
+    border-radius: 50%;
+    background-color: red;
+}
+
+.isNotSeen div {
+    width: 10px;
+    height: 10px; /* Ensure consistent size */
+    border-radius: 50%;
+    background-color: green;
+}
