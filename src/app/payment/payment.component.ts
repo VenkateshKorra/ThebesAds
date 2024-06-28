@@ -59,7 +59,7 @@ export class PaymentComponent {
   typeOfUser = '';
 
   
-  displayedColumns: string[] = ['month', 'publisher_id', 'publisher_name', 'publisher_networkcode', 'delegation_type', 'total_payment', 'deduction', 'ad_serving_cost',  'child_payment',  'parent_payment',  'invoice_upload_data', 'payment_data', 'download', 'upload'];
+  displayedColumns: string[] = ['month', 'publisher_id', 'publisher_name', 'publisher_networkcode',  'total_payment', 'deduction', 'ad_serving_cost',  'child_payment',  'parent_payment',  'payment_data', 'download', 'upload', 'delegation_type'];
   dataSource = new MatTableDataSource<PaymentData>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -297,6 +297,31 @@ export class PaymentComponent {
     })
   
     fileInput.click();
+  }
+
+  previewFile(filePath: string) {
+    try {
+      const startIndex = filePath.indexOf('uploads/');
+    const relativePath = filePath.substring(startIndex);
+    // console.log('filePath is: ', filePath);
+    const domain = this.userService.get_upload_domain();
+    const urlCreated =(`${domain}${relativePath}`);
+    
+    const anchor = document.createElement('a');
+    anchor.href= urlCreated;
+    anchor.target = "_blank";
+    anchor.download;
+  
+    document.body.appendChild(anchor);
+    anchor.click();
+  
+    document.body.removeChild(anchor);
+    }  
+    catch(e) {
+      console.log('Error: ', e);
+    }
+    
+  
   }
   // save() {
   //   const data = {

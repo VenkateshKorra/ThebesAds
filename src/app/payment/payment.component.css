@@ -530,7 +530,7 @@ input[type="text"], button {
   }
   
   .file-actions button {
-    margin-right: 10px; /* Add margin between the buttons */
+    margin-right: 2em; /* Add margin between the buttons */
     vertical-align: middle; /* Align buttons vertically in the middle */
   }
   

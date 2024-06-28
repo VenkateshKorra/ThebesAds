@@ -25,6 +25,9 @@ body {
     height: 3em;
 }
 
+.mail-icon {
+    cursor: pointer;
+}
 
 .vertical-line {
     border-left: 2px solid white;

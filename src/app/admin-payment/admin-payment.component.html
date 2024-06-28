@@ -11,6 +11,43 @@
         <h2></h2>
     </div>
 
+    <section class="dropdowns">
+        <select name="month_dropdown" [(ngModel)]="month_selected">
+            <option value="" selected disabled>Select Month</option>
+            <option *ngFor="let option of month_dropdown" [value]="option.value" >{{option.value}}</option>
+        </select>
+        <select name="year_Dropdown" [(ngModel)]="year_selected">
+            <option value="" selected disabled>Select Year</option>
+            <option *ngFor="let option of yearList" [value]="option" >{{option}}</option>
+        </select>
+       
+    </section>
+
+    <section class="total_heading">
+        <table>
+            <tr>
+                <th>Total gross earning</th>
+                <th>Total deduction</th>
+                <th>Total ad serving cost</th>
+                <th>Total parent payment</th>
+            </tr>
+            <tr>
+                <td>{{Total_earning | currency: 'USD' : 'symbol' : '1.1-2'}}</td>
+                <td>{{Total_deduction | currency: 'USD' : 'symbol' : '1.1-2'}}</td>
+                <td>{{Total_ad_serving_cost | currency: 'USD' : 'symbol' : '1.1-2'}}</td>
+                <td>{{Total_parent_earning | currency: 'USD' : 'symbol' : '1.1-2'}}</td>
+            </tr>
+        </table>
+    </section>
+
+    <div class="search">
+        <div class="find">
+            <input type="text" matInput (keyup)="applyFilter($event)" #search
+                placeholder="Search by keywords">
+            <img src="https://cdn-icons-png.flaticon.com/128/54/54481.png" width="10px" height="10px">
+        </div>
+    </div>
+
     <div class="table">
         <table mat-table [dataSource]="dataSource" matSort>
 
@@ -96,12 +133,13 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="invoice_upload_data">
+            <!-- <ng-container matColumnDef="invoice_upload_data">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Upload Date </th>
                 <td mat-cell *matCellDef="let element" style="text-align: center;">
                     <p>{{element.invoice_upload_data}}</p>
                 </td>
-            </ng-container>
+            </ng-container> -->
+
             <ng-container matColumnDef="payment_data">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Date </th>
                 <td mat-cell *matCellDef="let element" style="text-align: center;">
@@ -121,7 +159,7 @@
 
             <ng-container matColumnDef="upload">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Upload Invoice </th>
-                <td mat-cell *matCellDef="let element" style="text-align: center;">
+                <td mat-cell *matCellDef="let element" style="text-align: center">
                     <div class="file-actions">
                         <button id="upload" [disabled]="element.filePath !='NA' "
                             [ngClass]="{'disable':element.filePath !='NA'}" (click)="uploadButtonClicked(element)">
@@ -131,11 +169,16 @@
 
 
 
-                        <a *ngIf="element.filePath !== 'NA' && element.filePath" class="anchor file-link"
+                        <!-- <a *ngIf="element.filePath !== 'NA' && element.filePath" class="anchor file-link"
                             [href]="getDownloadLink(element.filePath)"  target="_blank" download
                             style="display: inline-block;  max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ element.fileName }}
-                        </a>
+                        </a> -->
+
+                        <button *ngIf="element.filePath !== 'NA' && element.filePath" class="delete-btn"
+                        (click)="previewFile(element.filePath)" aria-label="preview file">
+                            <img src="assets/document.svg" alt="document" style="height: 15px; width: 15px;">
+                        </button>
 
 
                         <!-- Delete button - Displayed only if file is uploaded -->
@@ -151,9 +194,12 @@
 
             <ng-container matColumnDef="payment_made">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Made </th>
-                <td mat-cell *matCellDef="let element">
-                    <input type="checkbox" [(ngModel)]="element.payment_made" (change)="updatePaymentStatus(element)">
-                    {{ element.payment_made ? 'Yes': 'No' }}
+                <td mat-cell *matCellDef="let element" class="payment_made_container">
+                    <!-- <input type="checkbox" [(ngModel)]="element.payment_made" (change)="updatePaymentStatus(element)"> -->
+                    <!-- {{ element.payment_made }} -->
+                      <img src="assets/payment-method.svg" alt="payment method" style="height: auto; width: 1.3em;" >
+                    <p class="payment-made" *ngIf="element.payment_made==1"></p>
+                    <p class="payment_not_made" *ngIf="element.payment_made==0"></p>
                 </td>
             </ng-container>
 

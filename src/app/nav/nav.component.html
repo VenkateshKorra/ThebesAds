@@ -7,8 +7,8 @@
         <div class="icons">
             <div class="left">
                 <img src="assets/chat-icon.svg" alt="chat-icon">
-                <img *ngIf="typeOfUser=='Publisher'" src="assets/Mail-icon.svg" alt="Mail-icon" (click)="publisher_mail_clicked()" >
-                <img *ngIf="typeOfUser=='Admin'" src="assets/Mail-icon.svg" alt="Mail-icon" (click)="admin_mail_clicked()" >
+                <img class="mail-icon" *ngIf="typeOfUser=='Publisher'" src="assets/Mail-icon.svg" alt="Mail-icon" (click)="publisher_mail_clicked()" >
+                <img  class="mail-icon" *ngIf="typeOfUser=='Admin'" src="assets/Mail-icon.svg" alt="Mail-icon" (click)="admin_mail_clicked()" >
             </div>
             <div class="vertical-line"></div>
             <div class="profile" (click)="profileClicked()">

@@ -222,12 +222,12 @@
                     </td>
                 </ng-container>
 
-                <ng-container matColumnDef="invoice_upload_data">
+                <!-- <ng-container matColumnDef="invoice_upload_data">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Upload Date </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
                         <p>{{element.invoice_upload_data}}</p>
                     </td>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="payment_data">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Date </th>
                     <td mat-cell *matCellDef="let element" style="text-align: center;">
@@ -263,10 +263,15 @@
                             </button>
 
                             <!-- Download link - Displayed only if file is uploaded -->
-                            <a *ngIf="element.filePath !== 'NA' && element.filePath" class="anchor file-link"
+                            <!-- <a *ngIf="element.filePath !== 'NA' && element.filePath" class="anchor file-link"
                                 [href]="getDownloadLink(element.filePath)" target="_blank" download>
                                 {{ element.fileName }}
-                            </a>
+                            </a> -->
+
+                            <button *ngIf="element.filePath !== 'NA' && element.filePath" class="delete-btn"
+                        (click)="previewFile(element.filePath)" aria-label="preview file">
+                            <img src="assets/document.svg" alt="document" style="height: 15px; width: 15px;">
+                        </button>
 
 
                             <!-- Delete button - Displayed only if file is uploaded -->

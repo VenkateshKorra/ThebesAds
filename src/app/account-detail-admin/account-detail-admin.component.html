@@ -1,7 +1,7 @@
 <body>
     <div class="container">
         <p-toast position="top-center"></p-toast>
-        <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <form #form="ngForm">
             <div>
                 <h2>Edit Account</h2>
             </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <div class="payment-heading">
+            <!-- <div class="payment-heading">
                 <h2>Payment Information</h2>
             </div>
             <div class="form-group">
@@ -71,7 +71,7 @@
                 </div>
 
             </div>
-            <!---->
+            
             <div class="form-group">
                 <div class="Input">
                     <label for="bank_name">Bank name</label>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <!---->
+            
             <div class="form-group">
                 <div class="Input">
                     <label for="bank_address">Bank address</label>
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <!---->
+           
             <div class="form-group">
                 <div class="Input">
                     <label for="bank_code">Bank Code</label>
@@ -107,7 +107,7 @@
                 </div>
             </div>
 
-            <!---->
+            
             <div class="form-group">
                 <div class="Input">
                     <label for="account_number">Account number</label>
@@ -121,7 +121,7 @@
                     </select>
                 </div>
             </div>
-            <!---->
+         
             <div class="form-group">
                 <div class="Input">
                     <label for="holder_name">Account Holder Name</label>
@@ -133,13 +133,13 @@
                 </div>
             </div>
 
-            <!---->
+            
             <div class="btn">
                 <button class="save" [disabled]="!Active" [ngStyle]="{'background-color': Active ? '' : 'gray', 'cursor': Active ? 'pointer' : 'default'}">Save</button>
 
-            </div>
+            </div> -->
 
-        </form>
+        </form> 
 
     </div>
 </body>

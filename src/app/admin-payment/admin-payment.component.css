@@ -1,8 +1,8 @@
 body {
-  /* font-family: Arial, sans-serif; */
+  font-family: 'Hind', sans-serif;
   margin: 0;
   padding: 0;
-  
+
 }
 
 .back-button {
@@ -10,12 +10,14 @@ body {
   margin-left: 10px;
   width: 5%;
 }
+
 .heading h1 {
   margin: 15px;
   text-align: start;
   display: inline;
   margin-top: 0.1em;
 }
+
 .heading h2 {
   font-weight: 200;
   color: #0856A2;
@@ -26,37 +28,79 @@ body {
 }
 
 h1 {
-  color: #0856A2; 
+  color: #0856A2;
   font-size: 0.9em;
   margin: 10;
   margin-left: 0%;
   font-weight: 200;
-  font-family: 'Overpass-Regular', sans-serif; 
+  font-family: 'Overpass-Regular', sans-serif;
 }
 
 a {
-  text-decoration: none; /* Remove underline from links */
-  color: blue; /* Blue color for links */
+  text-decoration: none;
+  /* Remove underline from links */
+  color: blue;
+  /* Blue color for links */
+}
+
+
+.find {
+  position: relative;
+}
+
+.search img {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 12.95px;
+  height: 12.95px;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  gap: 22px;
+  margin-top: 1em;
+
+}
+
+.search input {
+  width: 18em;
+  height: 32px;
+  padding: 0.5em;
+  padding-left: 2em;
+  box-sizing: border-box;
+  border: 1px solid #E7EBFF;
+  border-radius: 5px;
+  outline: none;
 }
 
 
 
 /* CSS */
 .back-button {
-  width: 32px; /* Fixed width */
-  height: 32px; /* Fixed height */
+  width: 32px;
+  /* Fixed width */
+  height: 32px;
+  /* Fixed height */
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff; /* Background color of the box */
-  border: 1px solid #cccccc; /* Border color */
-  border-radius: 1px; /* Rounded corners */
+  background-color: #ffffff;
+  /* Background color of the box */
+  border: 1px solid #cccccc;
+  /* Border color */
+  border-radius: 1px;
+  /* Rounded corners */
 }
 
 .arrow {
   text-decoration: none;
-  color: #000000; /* Arrow color */
-  font-size: 35px; 
+  color: #000000;
+  /* Arrow color */
+  font-size: 35px;
 }
 
 .header {
@@ -65,23 +109,27 @@ a {
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .left-section {
   display: flex;
-  align-items: center; /* Aligns items vertically center */
+  align-items: center;
+  /* Aligns items vertically center */
 }
 
 .back-button {
-  margin-right: 10px; /* Adds space between the back button and the title */
+  margin-right: 10px;
+  /* Adds space between the back button and the title */
 }
 
 .back-button a {
   text-decoration: none;
-  color: #000000; /* Arrow color */
+  color: #000000;
+  /* Arrow color */
   font-size: 35px;
 }
+
 /* table {
   width: 100%;
   height: auto;
@@ -120,12 +168,14 @@ td {
   overflow-x: auto;
 } */
 
-input[type="text"], button {
+input[type="text"],
+button {
   padding: 8px;
   margin-right: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
+
 /* input[type="file"]
 {
   display: none;
@@ -141,21 +191,22 @@ button {
   background-color: #0855a294;
   color: white;
   cursor: pointer;
-  
+
 }
 
 button:hover {
   z-index: 100;
-  transform:  scale(1.3);
+  transform: scale(1.3);
   background-color: #0855a294;
 }
-button img{
+
+button img {
   width: 15px;
   height: auto;
   border: none;
 }
 
-#download  {
+#download {
   border: none;
   width: 25px;
   height: 25px;
@@ -165,17 +216,18 @@ button img{
   border-radius: 5px;
 }
 
-#download:hover  {
+#download:hover {
   z-index: 100;
-  transform:  scale(1.3);
+  transform: scale(1.3);
 }
 
 
-#download img  {
+#download img {
   width: 15px;
   height: auto;
   border: none;
 }
+
 table {
   width: 100%;
   height: auto;
@@ -189,7 +241,7 @@ thead {
 .mat-mdc-form-field {
   font-size: 14px;
   width: 100%;
-  
+
 }
 
 th {
@@ -220,8 +272,9 @@ td {
 
 .table {
   border: 1px solid #E5E5E5;
-  table-layout: auto; /* Allow the table to adjust column width automatically */
-  overflow-x: auto; 
+  table-layout: auto;
+  /* Allow the table to adjust column width automatically */
+  overflow-x: auto;
 }
 
 .disabled-button {
@@ -233,70 +286,86 @@ td {
 .disabled-button:hover {
   background-color: gray;
 }
+
 .anchor {
   width: 11em !important;
-  display:inline-block;
+  display: inline-block;
   margin-right: 15px;
 }
+
 .file-actions {
   margin-top: auto;
-  margin-top: 15px;   
+  margin-top: 15px;
   display: flex;
-  align-items: center; /* Align items vertically in the center */
-  height: 100%; /* Ensure buttons are aligned at the same height */
+  align-items: center;
+  /* Align items vertically in the center */
+  height: 100%;
+  /* Ensure buttons are aligned at the same height */
 }
 
 .file-actions button {
-  margin-right: 10px; /* Add margin between the buttons */
-  vertical-align: middle; /* Align buttons vertically in the middle */
+  margin-right: 2em;
+  /* Add margin between the buttons */
+  vertical-align: middle;
+  /* Align buttons vertically in the middle */
 }
 
 
-.anchor, .delete-btn {
+.anchor,
+.delete-btn {
   /* Additional styles for links and buttons, if necessary */
-  text-decoration: none; /* Removes underline from anchor tag */
-  color: inherit; /* Inherits color from parent for consistency */
+  text-decoration: none;
+  /* Removes underline from anchor tag */
+  color: inherit;
+  /* Inherits color from parent for consistency */
   border: none;
   background: none;
   cursor: pointer;
 }
 
 .delete-btn img {
-  vertical-align: middle; /* Aligns the image vertically in the middle of the line */
+  vertical-align: middle;
+  /* Aligns the image vertically in the middle of the line */
 }
 
 .file-link {
-  display: inline-block; 
+  display: inline-block;
   max-width: 150px;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
-  color: #0056b3; /* Bootstrap default blue */
-  text-decoration: none; /* Optional: removes underline */
-  font-weight: normal; /* Optional: makes the text bold */
+  text-overflow: ellipsis;
+  color: #0056b3;
+  /* Bootstrap default blue */
+  text-decoration: none;
+  /* Optional: removes underline */
+  font-weight: normal;
+  /* Optional: makes the text bold */
   vertical-align: middle;
-  clear: both;  
+  clear: both;
 }
 
 
 .file-link:hover {
-  
-  color:#007BFF;  /* A darker blue on hover */
+
+  color: #007BFF;
+  /* A darker blue on hover */
 }
+
 .delete-btn {
-  background-color: #0855a294; 
+  background-color: #0855a294;
   margin-top: auto;
-  border: none; 
-  padding: 5px; 
+  border: none;
+  padding: 5px;
   border-radius: 5px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .delete-btn:hover {
-  transform:  scale(1.3);
- 
+  transform: scale(1.3);
+
 }
- /* .custom-file-upload {
+
+/* .custom-file-upload {
   border: none;
   width: 15px;
   height: 15px;
@@ -360,18 +429,72 @@ td {
 } */
 
 .upload-button {
-  display: block; /* Make sure the button is displayed by default */
+  display: block;
+  /* Make sure the button is displayed by default */
 }
 
 .upload-button.hidden {
-  display: none; /* Hide the button when the 'hidden' class is applied */
+  display: none;
+  /* Hide the button when the 'hidden' class is applied */
 }
 
-.disable{
+.disable {
   background-color: gray;
   cursor: default;
 }
-.disable:hover{
+
+.disable:hover {
   background-color: gray;
   cursor: default;
+}
+
+.payment-made {
+  width: 10px;
+  height: 10px;
+  background-color: #0856A2;
+  border-radius: 50%;
+}
+
+.payment_not_made {
+  width: 10px;
+  height: 10px;
+  background-color: gray;
+  border-radius: 50%;
+}
+
+.payment_made_container {
+  display: flex;
+  margin-top: 0.7em;
+  gap: 1em;
+  flex-direction: row;
+  align-items: center;
+}
+
+.total_heading {
+  margin: 3em 0;
+}
+
+.total_heading table td {
+  text-align: center;
+}
+
+.total_heading table th {
+  font-size: 1em;
+}
+
+.dropdowns {
+  float:right;
+  margin: 2em 0;
+  margin-right: 2em;
+}
+
+.dropdowns select{
+    border-color: #E5E5E5;
+    padding: 0.5em 0.5em;
+    width: 10em;
+    border-radius: 5px;
+    margin-left: 10px;
+    color: #707070;
+    font-size: 12px;
+    outline: none;
 }

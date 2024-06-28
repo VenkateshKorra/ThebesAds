@@ -70,6 +70,7 @@ import { ReceiptUploadComponent } from './receipt-upload/receipt-upload.componen
 import { NotificationDashboardAdminComponent } from './notification-dashboard-admin/notification-dashboard-admin.component';
 import { PublisherNotificationComponent } from './publisher-notification/publisher-notification.component';
 import { NotificationMessageDialogComponent } from './notification-message-dialog/notification-message-dialog.component';
+import { PaymentInfoTabComponent } from './payment-info-tab/payment-info-tab.component';
 
 
 
@@ -112,7 +113,7 @@ import { NotificationMessageDialogComponent } from './notification-message-dialo
     ForgotYourPasswordComponent,
     ResetPasswordComponent,
     ReportDownloadComponent, 
-    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent, ContactsTabComponent, ContactRejectComponent, AdServingCostComponent, TopPerformersComponent, DistributorPaymentPageComponent, ReceiptUploadComponent, NotificationDashboardAdminComponent, PublisherNotificationComponent, NotificationMessageDialogComponent,
+    ThousandSuffixesPipe, ContactDialogComponent, DownloadInvoiceComponent, AdminPaymentComponent, PaymentComponent, AddressTabComponent, ContactsTabComponent, ContactRejectComponent, AdServingCostComponent, TopPerformersComponent, DistributorPaymentPageComponent, ReceiptUploadComponent, NotificationDashboardAdminComponent, PublisherNotificationComponent, NotificationMessageDialogComponent, PaymentInfoTabComponent,
   ],
   imports: [
     BrowserModule,

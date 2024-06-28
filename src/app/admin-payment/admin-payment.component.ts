@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { UsersService } from '../users.service';
 import { NavigationExtras, Router } from '@angular/router';
+import { Months } from '../sign-up-dropdown';
 
 
 
@@ -45,9 +46,17 @@ export class AdminPaymentComponent implements OnInit {
   @ViewChild('canvas1') canvas1!: ElementRef<HTMLCanvasElement>;
   paymentData: any[] = []; // Stores the payment data
   // chart: Chart | undefined;
+
+  date = new Date();
+  currentYear = this.date.getFullYear();
+  yearList : number[] = [];
+  month_dropdown: any;
+  month_selected='';
+  year_selected ='';
+
   
 
-  displayedColumns: string[] = [ 'month', 'publisher_name',  'publisher_networkcode', 'delegation_type', 'total_payment', 'deduction', 'ad_serving_cost', 'child_payment', 'parent_payment', 'invoice_upload_data','download','upload','payment_data','payment_made'];
+  displayedColumns: string[] = [ 'month', 'publisher_name',  'publisher_networkcode',  'total_payment', 'deduction', 'ad_serving_cost', 'child_payment', 'parent_payment','download','upload','payment_data','payment_made', 'delegation_type',];
 
   
   dataSource = new MatTableDataSource<PaymentData>();
@@ -58,6 +67,10 @@ export class AdminPaymentComponent implements OnInit {
 
   selectedFile: File | null = null;
   uploadMessage ='';
+  Total_earning=0;
+  Total_deduction=0;
+  Total_ad_serving_cost=0;
+  Total_parent_earning=0;
 
   
 
@@ -66,9 +79,19 @@ export class AdminPaymentComponent implements OnInit {
   typeOfUser='';
   
   ngOnInit(): void {
+    this.month_dropdown = Months;
     this.typeOfUser = this.userService.getType();
+    this.getYearOptions();
     // console.log('Type is: ', this.userService.getType());
     this.fetchPaymentData();
+    
+  }
+
+  getYearOptions() {
+    for(let i = 2014; i <= this.currentYear; i++) {
+      this.yearList.push(i);
+    }
+    console.log('Year List is: ', this.yearList);
     
   }
 
@@ -108,6 +131,8 @@ export class AdminPaymentComponent implements OnInit {
         }));
         
         this.dataSource.data = mappedUsers;
+        this.calculate_total();
+
         if (this.dataSource.paginator) {
           this.dataSource.paginator.firstPage();
           
@@ -126,6 +151,25 @@ export class AdminPaymentComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error, life: 5000  });
       }
     });
+  }
+
+  calculate_total() {
+    for(let i =0; i < this.dataSource.data.length; i++) {
+      this.Total_earning += Number(this.dataSource.data[i].total_payment);
+      this.Total_ad_serving_cost += Number(this.dataSource.data[i].ad_serving_cost);
+      this.Total_deduction += Number(this.dataSource.data[i].deduction);
+      this.Total_parent_earning += Number(this.dataSource.data[i].parent_payment);
+    }
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+      // console.log("The filter is",this.dataSource.filter);
+    }
   }
    
   updatePaymentStatus(element: PaymentData) {
@@ -289,6 +333,29 @@ downloadPDF(element: PaymentData) {
   // Open the new tab
   window.open(fullUrl, '_blank');
   // this.route.navigate(['/download-invoice'], navigationExtras);
+}
+
+previewFile(filePath: string) {
+  try {
+    const startIndex = filePath.indexOf('uploads/');
+  const relativePath = filePath.substring(startIndex);
+  // console.log('filePath is: ', filePath);
+  const domain = this.userService.get_upload_domain();
+  const urlCreated =(`${domain}${relativePath}`);
+  
+  const anchor = document.createElement('a');
+  anchor.href= urlCreated;
+  anchor.target = "_blank";
+  anchor.download;
+
+  document.body.appendChild(anchor);
+  anchor.click();
+
+  document.body.removeChild(anchor);
+  }  
+  catch(e) {
+    console.log('Error: ', e);
+  }
 }
 
 
